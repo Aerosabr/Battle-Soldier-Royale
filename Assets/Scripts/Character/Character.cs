@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class Character : MonoBehaviour
 {
-    protected int Health;
+    protected int currentHealth;
+    protected int maxHealth;
     protected float moveSpeed = 1f;
 
 }
