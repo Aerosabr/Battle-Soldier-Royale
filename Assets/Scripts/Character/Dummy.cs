@@ -9,8 +9,8 @@ public class Dummy : Character, IDamageable
 
     private void Start()
     {
-        currentHealth = 100;
-        maxHealth = 100;
+        currentHealth = 300;
+        maxHealth = 300;
     }
 
     public void Damaged(int damage)
@@ -22,6 +22,13 @@ public class Dummy : Character, IDamageable
         });
 
         if (currentHealth <= 0)
-            Destroy(gameObject);
+            StartCoroutine(Died());
+    }
+
+    private IEnumerator Died()
+    {
+        gameObject.layer = 0;
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 }

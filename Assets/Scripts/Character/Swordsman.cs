@@ -17,6 +17,8 @@ public class Swordsman : Character, IDamageable
     private void Start()
     {
         Movable = true;
+        currentHealth = 1000;
+        maxHealth = 1000;
     }
 
     private void Update()
@@ -44,7 +46,7 @@ public class Swordsman : Character, IDamageable
     private void HandleAttack()
     {
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), new Vector3(1, 0, 0), Color.green);
-        bool canMove = !Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), new Vector3(1, 0, 0), 1);
+        bool canMove = !Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), new Vector3(1, 0, 0), 1, targetLayer);
         if (isAttacking == canMove)
         {
             isAttacking = !canMove;
@@ -61,7 +63,8 @@ public class Swordsman : Character, IDamageable
     public void Attack01()
     {
         Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), new Vector3(1, 0, 0), out RaycastHit hit, 1);
-        hit.collider.gameObject.GetComponent<IDamageable>().Damaged(10);
+        if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
+            hit.transform.GetComponent<IDamageable>().Damaged(10);
     }
 
     public void Damaged(int damage)
@@ -74,5 +77,14 @@ public class Swordsman : Character, IDamageable
 
         if (currentHealth <= 0)
             Destroy(gameObject);
+    }
+
+    public override void InitializeCharacter(LayerMask layerMask)
+    {
+        gameObject.layer = layerMask;
+        if (gameObject.layer == 6)
+            targetLayer = 1 << 7;
+        else
+            targetLayer = 1 << 6;
     }
 }
