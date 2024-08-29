@@ -12,7 +12,7 @@ public class Archer : Character, IDamageable
     private bool isAttacking;
 
     [SerializeField] private GameObject arrow;
-    [SerializeField] private ArcherAnimator anim;
+    [SerializeField] private ArcherVisual anim;
     [SerializeField] private GameObject bowPos;
 
     private void Start()

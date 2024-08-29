@@ -12,7 +12,7 @@ public class Swordsman : Character, IDamageable
     private bool isWalking;
     private bool isAttacking;
 
-    [SerializeField] private SwordsmanAnimator anim;
+    [SerializeField] private SwordsmanVisual anim;
 
     private void Start()
     {

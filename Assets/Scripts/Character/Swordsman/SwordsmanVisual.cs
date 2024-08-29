@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcherAnimator : MonoBehaviour
+public class SwordsmanVisual : MonoBehaviour
 {
     private Animator anim;
-    [SerializeField] private Archer character;
+    [SerializeField] private Swordsman character;
 
     private void Awake()
     {
@@ -20,6 +20,6 @@ public class ArcherAnimator : MonoBehaviour
     public void Attack01()
     {
         character.Attack01();
-
+        
     }
 }
