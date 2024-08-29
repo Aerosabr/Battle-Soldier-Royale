@@ -11,6 +11,6 @@ public class Character : MonoBehaviour
     protected float moveSpeed = 1f;
     protected int targetLayer;
 
-    public virtual void InitializeCharacter(LayerMask layerMask) => Debug.Log("Initialize not implemented");
+    public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation) => Debug.Log("Initialize not implemented");
     public int GetCurrentHealth() => currentHealth;
 }
