@@ -2,11 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
     public event EventHandler OnGoldChanged;
+
+    [SerializeField] private Spawner spawner;
+    [SerializeField] private List<CharacterPathSO> loadout;
+
     private int Gold;
 
     private float passiveGoldTimer;
@@ -32,6 +37,14 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void AttachButton(Button button, GameObject character)
+    {
+        button.onClick.AddListener(() =>
+        {
+            spawner.SpawnCharacter(character);
+        });
+    }
+
     public int GetGold() => Gold;
 
     public void AddGold(int gold)
@@ -49,4 +62,6 @@ public class PlayerManager : MonoBehaviour
         OnGoldChanged?.Invoke(this, EventArgs.Empty);
         return true;
     }
+
+    public List<CharacterPathSO> GetLoadout() => loadout;
 }

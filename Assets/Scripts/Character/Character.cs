@@ -10,7 +10,9 @@ public class Character : MonoBehaviour
     protected int maxHealth;
     protected float moveSpeed = 1f;
     protected int targetLayer;
+    [SerializeField] protected int cost;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation) => Debug.Log("Initialize not implemented");
     public int GetCurrentHealth() => currentHealth;
+    public int GetCost() => cost;
 }

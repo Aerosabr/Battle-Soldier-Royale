@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4cb7c77e2ad6054ea493f4bbfebe9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 50
   anim: {fileID: 3554887013305234381}
 --- !u!65 &8446009445837983641
 BoxCollider:
