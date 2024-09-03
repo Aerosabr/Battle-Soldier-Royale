@@ -5,65 +5,101 @@ using UnityEngine;
 
 public class Archer : Character, IDamageable
 {
+    private const int IS_IDLE = 0;
+    private const int IS_WALKING = 1;
+    private const int IS_ATTACKING = 2;
+
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
 
-    private bool Movable;
-    private bool isWalking;
-    private bool isAttacking;
+    private enum State
+    {
+        Idle,
+        Walking,
+        Attacking,
+        Dead
+    }
 
     [SerializeField] private GameObject arrow;
     [SerializeField] private ArcherVisual anim;
     [SerializeField] private GameObject bowPos;
+    [SerializeField] private State state;
 
+    private bool canAttack = true;
+    private float attackSpeed = 2f;
+    
     private void Start()
     {
-        Movable = true;
+        state = State.Idle;
         currentHealth = 1000;
         maxHealth = 1000;
+        attack = 10;
     }
 
     private void Update()
     {
-        HandleMovement();
-        HandleAttack();
+        switch (state)
+        {
+            case State.Idle:
+                state = State.Walking;
+                anim.AnimAction(IS_WALKING);
+                break;
+            case State.Walking:
+                Movement();
+                DetectEnemies();
+                break;
+            case State.Attacking:
+                DetectEnemies();
+                break;
+            case State.Dead:
+
+                break;
+        }
     }
 
-    private void HandleMovement()
+    private void Movement()
     {
         float moveDistance = moveSpeed * Time.deltaTime;
 
-        if (Movable)
-            transform.position += transform.forward * moveDistance;
-
-        if (isWalking != Movable)
-        {
-            isWalking = Movable;
-            anim.AnimAction("isWalking", isWalking);
-        }
-
+        transform.position += transform.forward * moveDistance;
     }
 
-    private void HandleAttack()
+    private void DetectEnemies()
     {
-        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * 3, Color.green);
-        bool canMove = !Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, 3, targetLayer);
-        if (isAttacking == canMove)
+        float attackRange = 3f;
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * attackRange, Color.green);
+
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
         {
-            isAttacking = !canMove;
-            anim.AnimAction("isAttacking", isAttacking);
-            if (isAttacking)
+            if (state == State.Walking)
             {
-                Movable = false;
+                state = State.Attacking;
+                anim.AnimAction(IS_IDLE);
             }
-            else
-                Movable = true;
+            else if (canAttack)
+            {
+                StartCoroutine(ChargeAttack());
+                anim.AnimAction(IS_ATTACKING);
+            }
         }
+        else
+        {
+            state = State.Walking;
+            anim.AnimAction(IS_WALKING);
+        }
+    }
+
+    private IEnumerator ChargeAttack()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackSpeed);
+        canAttack = true;
     }
 
     public void Attack01()
     {
         Transform arrowFired = Instantiate(arrow, bowPos.transform.position, transform.rotation).transform;
-        arrowFired.GetComponent<Arrow>().InitializeArrow(targetLayer, 10);
+        arrowFired.GetComponent<Arrow>().InitializeArrow(targetLayer, attack);
+        anim.AnimAction(IS_IDLE);
     }
 
     public void Damaged(int damage)

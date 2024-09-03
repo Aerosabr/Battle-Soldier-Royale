@@ -12,9 +12,9 @@ public class SwordsmanVisual : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(string action, bool toggle)
+    public void AnimAction(int state)
     {
-        anim.SetBool(action, toggle);
+        anim.SetInteger("State", state);
     }
 
     public void Attack01()
@@ -22,4 +22,5 @@ public class SwordsmanVisual : MonoBehaviour
         character.Attack01();
         
     }
+
 }

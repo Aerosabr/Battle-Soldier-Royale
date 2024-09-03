@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 
 public class Character : MonoBehaviour
 {
-    protected int currentHealth;
-    protected int maxHealth;
-    protected float moveSpeed = 1f;
-    protected int targetLayer;
+    [SerializeField] protected int currentHealth;
+    [SerializeField] protected int maxHealth;
+    [SerializeField] protected int attack;
     [SerializeField] protected int cost;
+
+    protected float moveSpeed = 1f;
+    [SerializeField] protected LayerMask targetLayer;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation) => Debug.Log("Initialize not implemented");
     public int GetCurrentHealth() => currentHealth;

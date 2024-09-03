@@ -2668,7 +2668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd6e2a8af9707b48bc0be2f5b08c2cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 80
+  cost: 50
   arrow: {fileID: 5328915131658977629, guid: 8604c315ab0887b4ea775560e0725cb0, type: 3}
   anim: {fileID: 4849528572422107538}
   bowPos: {fileID: 2656938501234589658}

@@ -6,66 +6,85 @@ using UnityEngine;
 
 public class Swordsman : Character, IDamageable
 {
+    private const int IS_IDLE = 0;
+    private const int IS_WALKING = 1;
+    private const int IS_ATTACKING = 2;
+
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
 
-    private bool Movable;
-    private bool isWalking;
-    private bool isAttacking;
+    private enum State
+    {
+        Idle,
+        Walking,
+        Attacking,
+        Dead
+    }
 
     [SerializeField] private SwordsmanVisual anim;
+    [SerializeField] private State state;   
 
     private void Start()
     {
-        Movable = true;
+        state = State.Idle;
         currentHealth = 1000;
         maxHealth = 1000;
     }
 
     private void Update()
     {
-        HandleMovement();
-        HandleAttack();
+        switch (state)
+        {
+            case State.Idle:
+                state = State.Walking;
+                anim.AnimAction(IS_WALKING);
+                break;
+            case State.Walking:
+                Movement();
+                DetectEnemies();
+                break;
+            case State.Attacking:
+                DetectEnemies();
+                break;
+            case State.Dead:
+
+                break;
+        }
     }
 
-    private void HandleMovement()
+    private void Movement()
     {   
         float moveDistance = moveSpeed * Time.deltaTime;
 
-        if (Movable)
-            transform.position += transform.forward * moveDistance;
-
-        if (isWalking != Movable)
-        {
-            isWalking = Movable;
-            anim.AnimAction("isWalking", isWalking);
-        }
-        
+        transform.position += transform.forward * moveDistance;
     }
 
-    private void HandleAttack()
+    private void DetectEnemies()
     {
+        float attackRange = 1f;
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward, Color.green);
-        bool canMove = !Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, 1, targetLayer);
-        if (isAttacking == canMove)
+
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
         {
-            isAttacking = !canMove;
-            anim.AnimAction("isAttacking", isAttacking);
-            if (isAttacking)
-            {
-                Movable = false;
-            }
-            else
-                Movable = true;
+            state = State.Attacking;
+            anim.AnimAction(IS_ATTACKING);
+        }
+        else
+        {
+            state = State.Walking;
+            anim.AnimAction(IS_WALKING);
         }
     }
 
     public void Attack01()
     {
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, 1))
+        float attackRange = 1f;
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange))
         {
             if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
-                hit.transform.GetComponent<IDamageable>().Damaged(10);
+                hit.transform.GetComponent<IDamageable>().Damaged(attack);
         }
+        else
+            state = State.Walking;
     }
 
     public void Damaged(int damage)

@@ -19,6 +19,7 @@ public class Spawner : MonoBehaviour
 
     public void SpawnCharacter(GameObject characterToSpawn)
     {
+        PlayerManager.Instance.SubtractGold(characterToSpawn.GetComponent<Character>().GetCost());
         Transform character = Instantiate(characterToSpawn, transform).transform;
         float spawnPos = Random.Range(-0.5f, 0.5f);
         character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);

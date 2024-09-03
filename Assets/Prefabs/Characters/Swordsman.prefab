@@ -47,8 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4cb7c77e2ad6054ea493f4bbfebe9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 50
+  currentHealth: 0
+  maxHealth: 0
+  attack: 0
+  cost: 40
   anim: {fileID: 3554887013305234381}
+  state: 0
 --- !u!65 &8446009445837983641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -190,7 +194,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1328023254706044480, guid: 257c304c754d3b247a51ef5bea7a90d0, type: 3}
       propertyPath: m_Name
-      value: FemaleCharacterPolyart
+      value: SwordsmanVisual
       objectReference: {fileID: 0}
     - target: {fileID: 1812072891626710266, guid: 257c304c754d3b247a51ef5bea7a90d0, type: 3}
       propertyPath: m_LocalPosition.x

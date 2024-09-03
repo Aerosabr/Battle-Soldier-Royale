@@ -5,31 +5,33 @@ using UnityEngine;
 
 public class Worker : Character, IDamageable
 {
+    private const int IS_IDLE = 0;
+    private const int IS_WALKING = 1;
+    private const int IS_ATTACKING = 2;
+
+    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+
     private enum State
     {
         Idle,
         Walking,
         Mining,
-        Hit
+        Dead
     }
-
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+ 
     [SerializeField] private WorkerVisual anim;
     [SerializeField] private LayerMask miningLayer;
-    private bool Movable;
-    private State state;
 
+    private State state;
     private float miningTimer;
     private float miningTimerMax = 5f;
 
     private void Start()
     {
-        Movable = true;
         currentHealth = 1000;
         maxHealth = 1000;
         state = State.Idle;
         miningTimer = 0;
-        Debug.Log((int)miningLayer);
     }
 
     private void Update()
@@ -41,7 +43,8 @@ public class Worker : Character, IDamageable
                 anim.AnimAction("isWalking", true);
                 break;
             case State.Walking:
-                HandleMovement();
+                Movement();
+                DetectWorkable();
                 break;
             case State.Mining:
                 miningTimer += Time.deltaTime;
@@ -51,23 +54,25 @@ public class Worker : Character, IDamageable
         }
     }
 
-    private void HandleMovement()
+    private void Movement()
     {
         float moveDistance = moveSpeed * Time.deltaTime;
 
-        if (Movable)
-        {
-            transform.position += transform.forward * moveDistance;
-            Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * .2f, Color.green);
-            if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, .2f, miningLayer))
-            {
-                if (hit.collider.gameObject.tag == "Mine")
-                    StartMining();
-                else if (hit.collider.gameObject.tag == "Base")
-                    Deposit();
+        transform.position += transform.forward * moveDistance;
+    }
 
-                transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
-            }
+    private void DetectWorkable()
+    {
+        float detectDistance = .2f;
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * detectDistance, Color.green);
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, miningLayer))
+        {
+            if (hit.collider.gameObject.tag == "Mine")
+                StartMining();
+            else if (hit.collider.gameObject.tag == "Base")
+                Deposit();
+
+            transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
         }
     }
 
@@ -94,7 +99,7 @@ public class Worker : Character, IDamageable
     {
         Debug.Log("Deposited");
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
-        PlayerManager.Instance.AddGold(20);
+        PlayerManager.Instance.AddGold(15);
     }
 
     public void Attack01()
