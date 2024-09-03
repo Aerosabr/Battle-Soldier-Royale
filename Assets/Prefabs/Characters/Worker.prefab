@@ -2059,7 +2059,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adfbef2290739a249bb6bb6ed313b0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 100
+  maxHealth: 100
+  attack: 0
   cost: 30
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   anim: {fileID: 6611984842611317268}
   miningLayer:
     serializedVersion: 2

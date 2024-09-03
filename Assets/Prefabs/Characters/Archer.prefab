@@ -2668,10 +2668,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd6e2a8af9707b48bc0be2f5b08c2cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 110
+  maxHealth: 110
+  attack: 50
   cost: 50
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   arrow: {fileID: 5328915131658977629, guid: 8604c315ab0887b4ea775560e0725cb0, type: 3}
   anim: {fileID: 4849528572422107538}
   bowPos: {fileID: 2656938501234589658}
+  state: 0
 --- !u!65 &1729691958646028924
 BoxCollider:
   m_ObjectHideFlags: 0

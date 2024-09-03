@@ -47,10 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4cb7c77e2ad6054ea493f4bbfebe9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 0
-  attack: 0
+  currentHealth: 200
+  maxHealth: 200
+  attack: 30
   cost: 40
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   anim: {fileID: 3554887013305234381}
   state: 0
 --- !u!65 &8446009445837983641

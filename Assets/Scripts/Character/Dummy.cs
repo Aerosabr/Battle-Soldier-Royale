@@ -9,8 +9,7 @@ public class Dummy : Character, IDamageable
 
     private void Start()
     {
-        currentHealth = 300;
-        maxHealth = 300;
+
     }
 
     public void Damaged(int damage)

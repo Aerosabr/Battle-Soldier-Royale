@@ -28,8 +28,6 @@ public class Worker : Character, IDamageable
 
     private void Start()
     {
-        currentHealth = 1000;
-        maxHealth = 1000;
         state = State.Idle;
         miningTimer = 0;
     }

@@ -30,9 +30,6 @@ public class Archer : Character, IDamageable
     private void Start()
     {
         state = State.Idle;
-        currentHealth = 1000;
-        maxHealth = 1000;
-        attack = 10;
     }
 
     private void Update()

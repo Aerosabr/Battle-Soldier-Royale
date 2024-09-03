@@ -21,13 +21,14 @@ public class Swordsman : Character, IDamageable
     }
 
     [SerializeField] private SwordsmanVisual anim;
-    [SerializeField] private State state;   
+    [SerializeField] private State state;
+
+    private bool canAttack = true;
+    private float attackSpeed = 1.5f;
 
     private void Start()
     {
         state = State.Idle;
-        currentHealth = 1000;
-        maxHealth = 1000;
     }
 
     private void Update()
@@ -65,8 +66,16 @@ public class Swordsman : Character, IDamageable
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
         {
-            state = State.Attacking;
-            anim.AnimAction(IS_ATTACKING);
+            if (state == State.Walking)
+            {
+                state = State.Attacking;
+                anim.AnimAction(IS_IDLE);
+            }
+            else if (canAttack)
+            {
+                StartCoroutine(ChargeAttack());
+                anim.AnimAction(IS_ATTACKING);
+            }
         }
         else
         {
@@ -75,13 +84,23 @@ public class Swordsman : Character, IDamageable
         }
     }
 
+    private IEnumerator ChargeAttack()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackSpeed);
+        canAttack = true;
+    }
+
     public void Attack01()
     {
         float attackRange = 1f;
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange))
         {
             if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
+            {
                 hit.transform.GetComponent<IDamageable>().Damaged(attack);
+                anim.AnimAction(IS_IDLE);
+            }
         }
         else
             state = State.Walking;
