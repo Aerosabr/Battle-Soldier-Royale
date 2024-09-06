@@ -1027,9 +1027,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 2129632964}
+  loadout: []
   tempLoadout:
   - {fileID: 11400000, guid: 5bcc04aa4b7ca1f41bf8ea4fb0341187, type: 2}
   - {fileID: 11400000, guid: b3361109b5f3033448f92d5c25418124, type: 2}
+  - {fileID: 11400000, guid: 35c56e2890b76114f8476af2b9c6a6cd, type: 2}
+  - {fileID: 11400000, guid: a693d9a1933006640bb8d1338ff8f9d9, type: 2}
+  - {fileID: 11400000, guid: bf649a0eaccb31b4bbf205be7211fa2a, type: 2}
 --- !u!1 &688507834
 GameObject:
   m_ObjectHideFlags: 0

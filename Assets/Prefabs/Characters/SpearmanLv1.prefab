@@ -1952,6 +1952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8689107071632085771}
+  - component: {fileID: 2681171785448276500}
   - component: {fileID: -2476830759847121632}
   m_Layer: 0
   m_Name: SpearmanLv1
@@ -1977,6 +1978,27 @@ Transform:
   - {fileID: 2128704112866863260}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2681171785448276500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935169726024975132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd6bc3681827ad49b1ec27a3a8702f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 150
+  maxHealth: 150
+  attack: 60
+  cost: 65
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  anim: {fileID: 1126212173245788260}
+  state: 0
 --- !u!65 &-2476830759847121632
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4416,6 +4438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3413361531193820049}
   - component: {fileID: 2762963673740616342}
+  - component: {fileID: 1126212173245788260}
   m_Layer: 0
   m_Name: SpearmanVisual
   m_TagString: Untagged
@@ -4483,6 +4506,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1126212173245788260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039521190243616449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9fdf5c46252a30459e0184caa94e32d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 2681171785448276500}
 --- !u!1 &2061588329874873775
 GameObject:
   m_ObjectHideFlags: 0

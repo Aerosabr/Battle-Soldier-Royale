@@ -5042,7 +5042,7 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   attack: 0
-  cost: 20
+  cost: 60
   targetLayer:
     serializedVersion: 2
     m_Bits: 768

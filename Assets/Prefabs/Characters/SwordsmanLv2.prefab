@@ -8169,6 +8169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4680903231608192275}
   - component: {fileID: 2105135940682076831}
+  - component: {fileID: 8099186957124502073}
   m_Layer: 0
   m_Name: SwordsmanVisual
   m_TagString: Untagged
@@ -8236,6 +8237,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8099186957124502073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3273957012819467409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cacba04b4174a2469670bdfbc5ba859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 2380667812398543962}
 --- !u!1 &3282448935518482296
 GameObject:
   m_ObjectHideFlags: 0
@@ -20896,6 +20910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3843355384752894528}
+  - component: {fileID: 2380667812398543962}
   - component: {fileID: 5962955321852043317}
   m_Layer: 0
   m_Name: SwordsmanLv2
@@ -20921,6 +20936,27 @@ Transform:
   - {fileID: 4696385160676931926}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2380667812398543962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927707534524721682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 335f476ce2fa85f48ba341946fee9c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 120
+  maxHealth: 120
+  attack: 40
+  cost: 40
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  anim: {fileID: 8099186957124502073}
+  state: 0
 --- !u!65 &5962955321852043317
 BoxCollider:
   m_ObjectHideFlags: 0

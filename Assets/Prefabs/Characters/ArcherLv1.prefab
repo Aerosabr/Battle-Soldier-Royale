@@ -755,10 +755,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd6e2a8af9707b48bc0be2f5b08c2cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 250
-  maxHealth: 250
-  attack: 115
-  cost: 40
+  currentHealth: 70
+  maxHealth: 70
+  attack: 50
+  cost: 50
   targetLayer:
     serializedVersion: 2
     m_Bits: 0

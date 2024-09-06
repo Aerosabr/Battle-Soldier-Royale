@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 3843355384752894528, guid: 4503f0a8ea458e347857cecbe66b92a6, type: 3}
   background: {fileID: 21300000, guid: 9a6657bb4bf377043b4ab674d0add84f, type: 3}
-  upgradeCost: 0
+  upgradeCost: 100
