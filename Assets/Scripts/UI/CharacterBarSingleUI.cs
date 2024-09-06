@@ -17,7 +17,12 @@ public class CharacterBarSingleUI : MonoBehaviour
         cost = character.character.GetComponent<Character>().GetCost();
         charCost.text = cost.ToString();
         charSprite.sprite = character.background;
-        PlayerManager.Instance.AttachButton(button, character.character.gameObject);
+
+        button.onClick.AddListener(() =>
+        {
+            PlayerManager.Instance.spawner.SpawnCharacter(character.character.gameObject);
+        });
+
         PlayerManager.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
     }
 
@@ -27,5 +32,11 @@ public class CharacterBarSingleUI : MonoBehaviour
             shadow.SetActive(false);
         else
             shadow.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroyed");
+        PlayerManager.Instance.OnGoldChanged -= PlayerManager_OnGoldChanged;
     }
 }

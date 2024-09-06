@@ -20,7 +20,7 @@ public class Worker : Character, IDamageable
     }
  
     [SerializeField] private WorkerVisual anim;
-    [SerializeField] private LayerMask miningLayer;
+    [SerializeField] private int mineYield = 10;
 
     private State state;
     private float miningTimer;
@@ -63,7 +63,7 @@ public class Worker : Character, IDamageable
     {
         float detectDistance = .2f;
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * detectDistance, Color.green);
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, miningLayer))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, targetLayer))
         {
             if (hit.collider.gameObject.tag == "Mine")
                 StartMining();
@@ -97,16 +97,7 @@ public class Worker : Character, IDamageable
     {
         Debug.Log("Deposited");
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
-        PlayerManager.Instance.AddGold(15);
-    }
-
-    public void Attack01()
-    {
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, 1))
-        {
-            if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
-                hit.transform.GetComponent<IDamageable>().Damaged(10);
-        }
+        PlayerManager.Instance.AddGold(mineYield);
     }
 
     public void Damaged(int damage)

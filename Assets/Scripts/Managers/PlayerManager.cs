@@ -3,14 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+[System.Serializable]
+public struct LoadoutCharacter
+{
+    public CharacterPathSO characterPathSO;
+    public int Level;
+
+    public LoadoutCharacter(CharacterPathSO characterPathSO, int Level)
+    {
+        this.characterPathSO = characterPathSO;
+        this.Level = Level;
+    }
+
+    public void IncreaseLevel()
+    {
+        Debug.Log(Level);
+        Level += 1;
+        Debug.Log(Level);
+    }
+}
 
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
     public event EventHandler OnGoldChanged;
 
-    [SerializeField] private Spawner spawner;
-    [SerializeField] private List<CharacterPathSO> loadout;
+    public Spawner spawner;
+
+    [SerializeField] private List<LoadoutCharacter> loadout = new List<LoadoutCharacter>();
+
+    [SerializeField] private List<CharacterPathSO> tempLoadout;
 
     private int Gold;
 
@@ -20,11 +42,12 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
-        Gold = 0;
+        Gold = 100;
+        foreach (CharacterPathSO CPSO in tempLoadout)
+        {
+            LoadoutCharacter temp = new LoadoutCharacter(CPSO, 1);
+            loadout.Add(temp);
+        }
     }
 
     private void Update()
@@ -35,14 +58,6 @@ public class PlayerManager : MonoBehaviour
             AddGold(1);
             passiveGoldTimer = 0;
         }
-    }
-
-    public void AttachButton(Button button, GameObject character)
-    {
-        button.onClick.AddListener(() =>
-        {
-            spawner.SpawnCharacter(character);
-        });
     }
 
     public int GetGold() => Gold;
@@ -63,5 +78,14 @@ public class PlayerManager : MonoBehaviour
         return true;
     }
 
-    public List<CharacterPathSO> GetLoadout() => loadout;
+    public List<LoadoutCharacter> GetLoadout() => loadout;
+    public void IncreaseLoadoutLevel(CharacterPathSO CPSO)
+    {
+        for (int i = 0; i < loadout.Count; i++)
+        {
+            if (loadout[i].characterPathSO == CPSO)
+                loadout[i] = new LoadoutCharacter(loadout[i].characterPathSO, loadout[i].Level + 1);
+        }
+    }
+
 }

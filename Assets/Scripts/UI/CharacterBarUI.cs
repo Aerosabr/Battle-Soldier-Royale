@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class CharacterBarUI : MonoBehaviour
 {
+    public static CharacterBarUI Instance;
     [SerializeField] private Transform container;
     [SerializeField] private Transform charTemplate;
 
     private void Awake()
     {
+        Instance = this;
         charTemplate.gameObject.SetActive(false);
     }
 
@@ -18,7 +20,7 @@ public class CharacterBarUI : MonoBehaviour
         UpdateVisual();
     }
 
-    private void UpdateVisual()
+    public void UpdateVisual()
     {
         foreach (Transform child in container)
         {
@@ -27,12 +29,11 @@ public class CharacterBarUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (CharacterPathSO charPathSO in PlayerManager.Instance.GetLoadout())
+        foreach (LoadoutCharacter loadoutChar in PlayerManager.Instance.GetLoadout())
         {
-            Transform recipeTransform = Instantiate(charTemplate, container);
-            recipeTransform.gameObject.SetActive(true);
-            Debug.Log(charPathSO.characterSO[charPathSO.Level]);
-            recipeTransform.GetComponent<CharacterBarSingleUI>().UpdateCard(charPathSO.characterSO[charPathSO.Level]);
+            Transform charTransform = Instantiate(charTemplate, container);
+            charTransform.gameObject.SetActive(true);
+            charTransform.GetComponent<CharacterBarSingleUI>().UpdateCard(loadoutChar.characterPathSO.characterSO[loadoutChar.Level - 1]);
         }
     }
 }

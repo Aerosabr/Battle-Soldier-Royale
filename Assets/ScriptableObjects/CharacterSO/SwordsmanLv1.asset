@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e845017ed0ebce44cb53aea29a6c2800, type: 3}
+  m_Name: SwordsmanLv1
+  m_EditorClassIdentifier: 
+  character: {fileID: 3843355384752894528, guid: a1dc76071fa8c944789953463d2d88cd, type: 3}
+  background: {fileID: 21300000, guid: 7de4c00adf8b2ec42849bbef5654e853, type: 3}
+  upgradeCost: 0

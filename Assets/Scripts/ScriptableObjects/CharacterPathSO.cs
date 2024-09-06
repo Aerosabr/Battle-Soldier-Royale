@@ -6,5 +6,5 @@ using UnityEngine;
 public class CharacterPathSO : ScriptableObject
 {
     public List<CharacterSO> characterSO;
-    public int Level;
+    public GameObject upgradesTab;
 }

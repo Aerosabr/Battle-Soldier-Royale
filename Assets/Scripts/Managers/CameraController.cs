@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] GameInput gameInput;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float movementTime;
 
@@ -24,15 +25,8 @@ public class CameraController : MonoBehaviour
 
     private void HandleMovementInput()
     {
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            newPosition += (transform.right * -movementSpeed);
-        }
-
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.DownArrow))
-        {
-            newPosition += (transform.right * movementSpeed);
-        }
+        Vector2 moveDir = gameInput.GetCameraMovement();
+        newPosition += new Vector3(moveDir.x, 0f, 0f);
 
         // Clamp the X position between -20 and 20
         newPosition.x = Mathf.Clamp(newPosition.x, -20f, 20f);

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   characterSO:
-  - {fileID: 11400000, guid: 9048314da6c0e4f45b805cdada2963c4, type: 2}
-  Level: 0
+  - {fileID: 11400000, guid: 9e993660072ecd54fa700a443b461314, type: 2}
+  - {fileID: 11400000, guid: cdde01bcd484dde4495dc69df2aefdde, type: 2}
+  - {fileID: 11400000, guid: 2ce5e561309a5f64c905df0e7947bdc0, type: 2}
+  upgradesTab: {fileID: 2117297268878520208, guid: b57cd9425bab5fb4081a0e3ab44e756a, type: 3}

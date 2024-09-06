@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSO:
   - {fileID: 11400000, guid: cd22a7c9b150ab9449e9635be5a7b939, type: 2}
+  - {fileID: 11400000, guid: 4be08f11460f3a349a94089c5b8d5ac5, type: 2}
+  - {fileID: 11400000, guid: 9028288cc4240a04f94e56af6e6edcc8, type: 2}
+  upgradesTab: {fileID: 6817424142658628186, guid: 43657fa86011c06479f26b45e00751f7, type: 3}
   Level: 0
