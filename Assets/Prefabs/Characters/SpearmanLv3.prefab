@@ -21484,6 +21484,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8689107071632085771}
     m_Modifications:
+    - target: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 935169726024975132}
     - target: {fileID: 4906900927304782939, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: m_Name
       value: ProgressBarUI

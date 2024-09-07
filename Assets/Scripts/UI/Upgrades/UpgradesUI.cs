@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UpgradesUI : MonoBehaviour
 {
     [SerializeField] private Button upgradesButton;
+    [SerializeField] private Button closeButton;
     [SerializeField] private GameObject upgradesTab;
     [SerializeField] private Transform container;
     [SerializeField] GridLayoutGroup gridLayout;
@@ -17,9 +18,17 @@ public class UpgradesUI : MonoBehaviour
             OpenUpgradesTab();
         });
 
+        closeButton.onClick.AddListener(() =>
+        {
+            CloseUpgradesTab();
+        });
+
         InitializeGridsize();
 
         LoadLoadout();
+
+        closeButton.gameObject.SetActive(false);
+        upgradesTab.SetActive(false);
     }
 
     private void InitializeGridsize()
@@ -40,10 +49,14 @@ public class UpgradesUI : MonoBehaviour
     private void OpenUpgradesTab()
     {
         upgradesTab.SetActive(true);
+        closeButton.gameObject.SetActive(true);
+        upgradesButton.gameObject.SetActive(false);
     }
 
     private void CloseUpgradesTab()
     {
         upgradesTab.SetActive(false);
+        closeButton.gameObject.SetActive(false);
+        upgradesButton.gameObject.SetActive(true);  
     }
 }

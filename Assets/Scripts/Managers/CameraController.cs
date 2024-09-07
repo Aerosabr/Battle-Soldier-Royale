@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
         newPosition += new Vector3(moveDir.x, 0f, 0f);
 
         // Clamp the X position between -20 and 20
-        newPosition.x = Mathf.Clamp(newPosition.x, -20f, 20f);
+        newPosition.x = Mathf.Clamp(newPosition.x, -30f, 30f);
 
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
     }
