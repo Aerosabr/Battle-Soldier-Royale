@@ -26,6 +26,7 @@ public class CameraController : MonoBehaviour
     private void HandleMovementInput()
     {
         Vector2 moveDir = gameInput.GetCameraMovement();
+        moveDir *= movementSpeed;
         newPosition += new Vector3(moveDir.x, 0f, 0f);
 
         // Clamp the X position between -20 and 20

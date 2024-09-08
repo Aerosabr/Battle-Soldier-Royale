@@ -2724,7 +2724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 1520580173}
-  movementSpeed: 0.25
+  movementSpeed: 0.05
   movementTime: 3
 --- !u!4 &2022302706
 Transform:
