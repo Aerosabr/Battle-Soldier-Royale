@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellPathSO : MonoBehaviour
+[CreateAssetMenu()]
+public class SpellPathSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public List<SpellSO> spellSO;
+	public GameObject upgradesTab;
 }

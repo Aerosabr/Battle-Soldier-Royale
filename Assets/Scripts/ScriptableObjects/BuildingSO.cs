@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingSO : MonoBehaviour
+[CreateAssetMenu()]
+public class BuildingSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public Transform spell;
+	public Sprite background;
+	public int upgradeCost;
 }

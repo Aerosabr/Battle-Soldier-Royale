@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellSO : MonoBehaviour
+[CreateAssetMenu()]
+public class SpellSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public Transform spell;
+	public Sprite background;
+	public int upgradeCost;
 }
