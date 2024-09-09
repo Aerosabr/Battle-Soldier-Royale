@@ -1689,6 +1689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3724516317356346052}
   - component: {fileID: 7362620799325836979}
+  - component: {fileID: 5286886468735753323}
   m_Layer: 0
   m_Name: WizardVisual
   m_TagString: Untagged
@@ -1704,7 +1705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004985853764634227}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1756,6 +1757,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5286886468735753323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004985853764634227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b26cd9902a19a946ac20921543bd75a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 22331558832077240}
 --- !u!1 &1042632979059915122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4441,8 +4455,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8642027716678164422}
+  - component: {fileID: 22331558832077240}
+  - component: {fileID: 3408945106415334056}
   m_Layer: 0
-  m_Name: Wizard
+  m_Name: WizardLv2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4465,6 +4481,49 @@ Transform:
   - {fileID: 4587149101668834057}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &22331558832077240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2266915314425856969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271e7d95ba1010a408a3eaa73b83219d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 90
+  maxHealth: 90
+  attack: 30
+  cost: 90
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spellBolt: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
+  anim: {fileID: 5286886468735753323}
+  state: 0
+--- !u!65 &3408945106415334056
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2266915314425856969}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 1.25, z: 0.5}
+  m_Center: {x: -0, y: 0.75, z: 0}
 --- !u!1 &2326492647748452720
 GameObject:
   m_ObjectHideFlags: 0
@@ -12960,7 +13019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &935664535446687441
 Transform:
   m_ObjectHideFlags: 0
@@ -14527,7 +14586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4784587073104113768
 Transform:
   m_ObjectHideFlags: 0
@@ -16553,7 +16612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8797359864953068979
 Transform:
   m_ObjectHideFlags: 0
@@ -21223,7 +21282,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2052539954310828068
 Transform:
   m_ObjectHideFlags: 0
@@ -21426,6 +21485,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8642027716678164422}
     m_Modifications:
+    - target: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 2266915314425856969}
     - target: {fileID: 4906900927304782939, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: m_Name
       value: ProgressBarUI

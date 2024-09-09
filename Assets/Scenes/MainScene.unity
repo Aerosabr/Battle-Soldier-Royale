@@ -900,6 +900,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 35c56e2890b76114f8476af2b9c6a6cd, type: 2}
   - {fileID: 11400000, guid: a693d9a1933006640bb8d1338ff8f9d9, type: 2}
   - {fileID: 11400000, guid: bf649a0eaccb31b4bbf205be7211fa2a, type: 2}
+  - {fileID: 11400000, guid: afff360181a96d84fb784de9bab3a9d3, type: 2}
+  startingGold: 999
 --- !u!1 &688507834
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,7 +2024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1628875855
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2103,7 +2105,7 @@ Transform:
   m_GameObject: {fileID: 1628875854}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.31, y: 0.5, z: 0}
+  m_LocalPosition: {x: 5.363, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

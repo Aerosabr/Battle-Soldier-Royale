@@ -93,7 +93,7 @@ public class Swordsman : Character, IDamageable
     public void Attack01()
     {
         float attackRange = 1f;
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
         {
             if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
             {
