@@ -17,9 +17,7 @@ public struct LoadoutCharacter
 
     public void IncreaseLevel()
     {
-        Debug.Log(Level);
         Level += 1;
-        Debug.Log(Level);
     }
 }
 
@@ -34,6 +32,7 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private List<CharacterPathSO> tempLoadout;
 
+    [SerializeField] private int startingGold;
     private int Gold;
 
     private float passiveGoldTimer;
@@ -42,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Gold = 100;
+        AddGold(startingGold);
         foreach (CharacterPathSO CPSO in tempLoadout)
         {
             LoadoutCharacter temp = new LoadoutCharacter(CPSO, 1);
