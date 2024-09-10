@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class BuildingSO : ScriptableObject
 {
-	public Transform spell;
+	public Transform building;
 	public Sprite background;
 	public int upgradeCost;
 }
