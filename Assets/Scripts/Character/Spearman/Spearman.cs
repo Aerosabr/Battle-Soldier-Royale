@@ -61,7 +61,7 @@ public class Spearman : Character, IDamageable
     private void DetectEnemies()
     {
         float attackRange = 1.5f;
-        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward, Color.green);
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * attackRange, Color.green);
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
         {
@@ -95,7 +95,7 @@ public class Spearman : Character, IDamageable
         float attackRange = 1.5f;
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
         {
-            if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
+            if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
                 hit.transform.GetComponent<IDamageable>().Damaged(attack);
                 anim.AnimAction(IS_IDLE);
