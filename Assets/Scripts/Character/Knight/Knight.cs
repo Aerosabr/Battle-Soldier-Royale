@@ -96,7 +96,7 @@ public class Knight : Character, IDamageable
         float attackRange = 1f;
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
         {
-            if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
+            if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
                 hit.transform.GetComponent<IDamageable>().Damaged(attack);
                 anim.AnimAction(IS_IDLE);

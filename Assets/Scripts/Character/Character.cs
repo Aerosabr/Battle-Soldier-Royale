@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Character : MonoBehaviour
+public class Character : Entity
 {
-    [SerializeField] protected int currentHealth;
-    [SerializeField] protected int maxHealth;
     [SerializeField] protected int attack;
     [SerializeField] protected int cost;
 
@@ -15,6 +13,5 @@ public class Character : MonoBehaviour
     [SerializeField] protected LayerMask targetLayer;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation) => Debug.Log("Initialize not implemented");
-    public int GetCurrentHealth() => currentHealth;
     public int GetCost() => cost;
 }

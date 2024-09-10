@@ -25,7 +25,7 @@ public class Arrow : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1, targetLayer))
         {
             Debug.Log("Hit");
-            if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
+            if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
                 hit.transform.GetComponent<IDamageable>().Damaged(10);
                 Destroy(gameObject);

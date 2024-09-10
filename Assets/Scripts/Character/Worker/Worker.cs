@@ -116,5 +116,15 @@ public class Worker : Character, IDamageable
     {
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
+        if (layerMask == 6)
+        {
+            Debug.Log("temp");
+            targetLayer = 1 << 6 | 1 << 8;
+        }
+        else if (layerMask == 7)
+        {
+            Debug.Log("temp2");
+            targetLayer = 1 << 7 | 1 << 8;
+        }
     }
 }
