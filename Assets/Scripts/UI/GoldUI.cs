@@ -9,11 +9,11 @@ public class GoldUI : MonoBehaviour
 
     private void Start()
     {
-        PlayerManager.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
+        PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
     }
 
     private void PlayerManager_OnGoldChanged(object sender, System.EventArgs e)
     {
-        text.text = PlayerManager.Instance.GetGold().ToString();
+        text.text = PlayerBlue.Instance.GetGold().ToString();
     }
 }

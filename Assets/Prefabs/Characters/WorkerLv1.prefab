@@ -5045,7 +5045,7 @@ MonoBehaviour:
   cost: 60
   targetLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
   anim: {fileID: 7023078922825290736}
   mineYield: 10
 --- !u!65 &1113284561125372729

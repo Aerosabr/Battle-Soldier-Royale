@@ -22,13 +22,13 @@ public class StraightPathUSUI : UpgradesSingleUI
 
     private void UpgradeCharacter()
     {
-        if (PlayerManager.Instance.GetGold() >= int.Parse(buttonList[loadoutCharacter.Level].costText.text))
+        if (PlayerBlue.Instance.GetGold() >= int.Parse(buttonList[loadoutCharacter.Level].costText.text))
         {
             buttonList[loadoutCharacter.Level].levelText.color = Color.green;
             buttonList[loadoutCharacter.Level].costText.enabled = false;
             buttonList[loadoutCharacter.Level].button.onClick.RemoveAllListeners();
-            PlayerManager.Instance.SubtractGold(int.Parse(buttonList[loadoutCharacter.Level].costText.text));
-            PlayerManager.Instance.IncreaseLoadoutLevel(loadoutCharacter.characterPathSO);
+            PlayerBlue.Instance.SubtractGold(int.Parse(buttonList[loadoutCharacter.Level].costText.text));
+            PlayerBlue.Instance.IncreaseLoadoutLevel(loadoutCharacter.characterPathSO);
             loadoutCharacter.Level++;
             CharacterBarUI.Instance.UpdateVisual();
             if (loadoutCharacter.Level < buttonList.Count)

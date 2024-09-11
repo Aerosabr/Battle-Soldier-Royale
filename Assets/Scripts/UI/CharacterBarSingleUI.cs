@@ -20,15 +20,15 @@ public class CharacterBarSingleUI : MonoBehaviour
 
         button.onClick.AddListener(() =>
         {
-            PlayerManager.Instance.spawner.SpawnCharacter(character.character.gameObject);
+            PlayerBlue.Instance.SpawnCharacter(character.character.gameObject);
         });
 
-        PlayerManager.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
+        PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
     }
 
     private void PlayerManager_OnGoldChanged(object sender, System.EventArgs e)
     {
-        if (PlayerManager.Instance.GetGold() >= cost)
+        if (PlayerBlue.Instance.GetGold() >= cost)
             shadow.SetActive(false);
         else
             shadow.SetActive(true);
@@ -37,6 +37,6 @@ public class CharacterBarSingleUI : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log("Destroyed");
-        PlayerManager.Instance.OnGoldChanged -= PlayerManager_OnGoldChanged;
+        PlayerBlue.Instance.OnGoldChanged -= PlayerManager_OnGoldChanged;
     }
 }
