@@ -10,6 +10,7 @@ public class Worker : Character, IDamageable
     private const int IS_ATTACKING = 2;
 
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    private Player player;
 
     private enum State
     {
@@ -66,11 +67,15 @@ public class Worker : Character, IDamageable
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, targetLayer))
         {
             if (hit.collider.gameObject.tag == "Mine")
+            {
                 StartMining();
+                transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
+            }
             else if (hit.collider.gameObject.tag == "Base")
+            {
                 Deposit();
-
-            transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
+                transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
+            }
         }
     }
 
@@ -97,7 +102,10 @@ public class Worker : Character, IDamageable
     {
         Debug.Log("Deposited");
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
-        PlayerManager.Instance.AddGold(mineYield);
+        if (player.playerColor == Player.PlayerColor.Blue)
+            PlayerBlue.Instance.AddGold(mineYield);
+        else
+            PlayerRed.Instance.AddGold(mineYield);
     }
 
     public void Damaged(int damage)
@@ -118,12 +126,12 @@ public class Worker : Character, IDamageable
         gameObject.layer = layerMask;
         if (layerMask == 6)
         {
-            Debug.Log("temp");
+            player = PlayerBlue.Instance;
             targetLayer = 1 << 6 | 1 << 8;
         }
         else if (layerMask == 7)
         {
-            Debug.Log("temp2");
+            player = PlayerRed.Instance;
             targetLayer = 1 << 7 | 1 << 8;
         }
     }

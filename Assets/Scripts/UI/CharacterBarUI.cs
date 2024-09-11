@@ -29,7 +29,7 @@ public class CharacterBarUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (LoadoutCharacter loadoutChar in PlayerManager.Instance.GetLoadout())
+        foreach (LoadoutCharacter loadoutChar in PlayerBlue.Instance.GetLoadout())
         {
             Transform charTransform = Instantiate(charTemplate, container);
             charTransform.gameObject.SetActive(true);
