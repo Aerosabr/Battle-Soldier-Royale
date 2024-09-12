@@ -1895,9 +1895,10 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
+  characterType: 2
   arrow: {fileID: 5328915131658977629, guid: 8604c315ab0887b4ea775560e0725cb0, type: 3}
   anim: {fileID: 2249357234486439525}
-  bowPos: {fileID: 0}
+  bowPos: {fileID: 395746988336328210}
   state: 0
 --- !u!65 &1563821358182604674
 BoxCollider:

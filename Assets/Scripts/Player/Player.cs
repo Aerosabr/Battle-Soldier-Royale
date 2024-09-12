@@ -30,17 +30,20 @@ public class Player : MonoBehaviour
         Blue,
         Red
     }
-
     public PlayerColor playerColor;
+
     [SerializeField] protected List<LoadoutCharacter> loadout = new List<LoadoutCharacter>();
     [SerializeField] protected List<CharacterPathSO> tempLoadout;
+
     [SerializeField] protected int startingGold;
     protected int Gold;
-
     protected float passiveGoldTimer;
     protected float passiveGoldTimerMax = 1f;
 
     [SerializeField] private Vector3 spawnRotation;
+
+    [SerializeField] private List<GameObject> Economy;
+    [SerializeField] private List<GameObject> Military;
 
     public int GetGold() => Gold;
 
@@ -78,4 +81,9 @@ public class Player : MonoBehaviour
         character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
         character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation);
     }
+
+    public void AddToEconomy(GameObject character) => Economy.Add(character);
+    public void AddToMilitary(GameObject character) => Military.Add(character);
+    public void RemoveFromEconomy(GameObject character) => Economy.Remove(character);
+    public void RemoveFromMilitary(GameObject character) => Military.Remove(character);
 }
