@@ -3030,9 +3030,10 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
+  characterType: 2
   arrow: {fileID: 5328915131658977629, guid: 8604c315ab0887b4ea775560e0725cb0, type: 3}
   anim: {fileID: 8355787291461495752}
-  bowPos: {fileID: 0}
+  bowPos: {fileID: 5094077225036339537}
   state: 0
 --- !u!65 &6260741894726984869
 BoxCollider:

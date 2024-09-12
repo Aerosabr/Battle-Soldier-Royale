@@ -7,10 +7,9 @@ public class Worker : Character, IDamageable
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
-    private const int IS_ATTACKING = 2;
+    private const int IS_DEAD = 2;
 
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    private Player player;
 
     private enum State
     {
@@ -26,9 +25,12 @@ public class Worker : Character, IDamageable
     private State state;
     private float miningTimer;
     private float miningTimerMax = 5f;
+    private float deathTimer;
+    private float deathTimerMax = 3;
 
-    private void Start()
+    private void Awake()
     {
+        characterType = CharacterType.Worker;
         state = State.Idle;
         miningTimer = 0;
     }
@@ -39,7 +41,7 @@ public class Worker : Character, IDamageable
         {
             case State.Idle:
                 state = State.Walking;
-                anim.AnimAction("isWalking", true);
+                anim.AnimAction(IS_WALKING);
                 break;
             case State.Walking:
                 Movement();
@@ -50,6 +52,11 @@ public class Worker : Character, IDamageable
                 if (miningTimer >= miningTimerMax)
                     FinishMining();
                 break;
+            case State.Dead:
+                deathTimer += Time.deltaTime;
+                if (deathTimer >= deathTimerMax)
+                    Destroy(gameObject);
+                    break;
         }
     }
 
@@ -85,7 +92,7 @@ public class Worker : Character, IDamageable
         state = State.Mining;
         GetComponent<BoxCollider>().enabled = false;
         anim.gameObject.SetActive(false);
-        anim.AnimAction("isWalking", false);
+        anim.AnimAction(IS_WALKING);
     }
 
     private void FinishMining()
@@ -95,7 +102,7 @@ public class Worker : Character, IDamageable
         miningTimer = 0f;
         GetComponent<BoxCollider>().enabled = true;
         anim.gameObject.SetActive(true);
-        anim.AnimAction("isWalking", true);
+        anim.AnimAction(IS_WALKING);
     }
 
     private void Deposit()
@@ -117,7 +124,12 @@ public class Worker : Character, IDamageable
         });
 
         if (currentHealth <= 0)
-            Destroy(gameObject);
+        {
+            anim.AnimAction(IS_DEAD);
+            state = State.Dead;
+            GetComponent<BoxCollider>().enabled = false;
+            player.RemoveFromEconomy(gameObject);
+        }
     }
 
     public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation)
@@ -134,5 +146,6 @@ public class Worker : Character, IDamageable
             player = PlayerRed.Instance;
             targetLayer = 1 << 7 | 1 << 8;
         }
+        player.AddToEconomy(gameObject);
     }
 }

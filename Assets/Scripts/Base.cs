@@ -7,11 +7,6 @@ public class Base : Entity, IDamageable
 {
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
 
-    private void Start()
-    {
-
-    }
-
     public void Damaged(int damage)
     {
         currentHealth -= damage;
