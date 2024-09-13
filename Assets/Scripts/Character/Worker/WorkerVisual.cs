@@ -12,8 +12,8 @@ public class WorkerVisual : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(string action, bool toggle)
+    public void AnimAction(int state)
     {
-        anim.SetBool(action, toggle);
+        anim.SetInteger("State", state);
     }
 }

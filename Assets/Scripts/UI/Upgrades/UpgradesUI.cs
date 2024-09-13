@@ -39,7 +39,7 @@ public class UpgradesUI : MonoBehaviour
 
     private void LoadLoadout()
     {
-        foreach (LoadoutCharacter loadout in PlayerManager.Instance.GetLoadout())
+        foreach (LoadoutCharacter loadout in PlayerBlue.Instance.GetLoadout())
         {
             Transform charTransform = Instantiate(loadout.characterPathSO.upgradesTab, container).transform;
             charTransform.GetComponent<UpgradesSingleUI>().SetCPSO(loadout);

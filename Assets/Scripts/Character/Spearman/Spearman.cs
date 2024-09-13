@@ -8,6 +8,7 @@ public class Spearman : Character, IDamageable
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
     private const int IS_ATTACKING = 2;
+    private const int IS_DEAD = 3;
 
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
 
@@ -24,9 +25,12 @@ public class Spearman : Character, IDamageable
 
     private bool canAttack = true;
     private float attackSpeed = 1.5f;
+    private float deathTimer;
+    private float deathTimerMax = 3;
 
-    private void Start()
+    private void Awake()
     {
+        characterType = CharacterType.Melee;
         state = State.Idle;
     }
 
@@ -46,7 +50,9 @@ public class Spearman : Character, IDamageable
                 DetectEnemies();
                 break;
             case State.Dead:
-
+                deathTimer += Time.deltaTime;
+                if (deathTimer >= deathTimerMax)
+                    Destroy(gameObject);
                 break;
         }
     }
@@ -60,8 +66,8 @@ public class Spearman : Character, IDamageable
 
     private void DetectEnemies()
     {
-        float attackRange = 1f;
-        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward, Color.green);
+        float attackRange = 1.5f;
+        Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * attackRange, Color.green);
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
         {
@@ -92,10 +98,10 @@ public class Spearman : Character, IDamageable
 
     public void Attack01()
     {
-        float attackRange = 1f;
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange))
+        float attackRange = 1.5f;
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
         {
-            if (hit.transform.GetComponent<Character>().GetCurrentHealth() > 0)
+            if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
                 hit.transform.GetComponent<IDamageable>().Damaged(attack);
                 anim.AnimAction(IS_IDLE);
@@ -114,7 +120,12 @@ public class Spearman : Character, IDamageable
         });
 
         if (currentHealth <= 0)
-            Destroy(gameObject);
+        {
+            anim.AnimAction(IS_DEAD);
+            state = State.Dead;
+            GetComponent<BoxCollider>().enabled = false;
+            player.RemoveFromMilitary(gameObject);
+        }
     }
 
     public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation)
@@ -122,8 +133,15 @@ public class Spearman : Character, IDamageable
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
         if (gameObject.layer == 6)
+        {
+            player = PlayerBlue.Instance;
             targetLayer = 1 << 7;
+        }
         else
+        {
+            player = PlayerRed.Instance;
             targetLayer = 1 << 6;
+        }
+        player.AddToMilitary(gameObject);
     }
 }
