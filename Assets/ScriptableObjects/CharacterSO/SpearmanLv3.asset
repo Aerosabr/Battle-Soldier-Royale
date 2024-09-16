@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e845017ed0ebce44cb53aea29a6c2800, type: 3}
   m_Name: SpearmanLv3
   m_EditorClassIdentifier: 
-  character: {fileID: 8689107071632085771, guid: ea73284c2fc3b28468df6062a2ba3d50, type: 3}
   background: {fileID: 21300000, guid: 7592198428c2ca24499f5f47d9ddbaaf, type: 3}
-  upgradeCost: 300
+  cardCost: 0
+  spawnableObject: {fileID: 8689107071632085771, guid: ea73284c2fc3b28468df6062a2ba3d50, type: 3}

@@ -12,15 +12,15 @@ public class CharacterBarSingleUI : MonoBehaviour
     [SerializeField] private GameObject shadow;
     private int cost;
 
-    public void UpdateCard(CharacterSO character)
+    public void UpdateCard(CardSO cardSO)
     {
-        cost = character.character.GetComponent<Character>().GetCost();
+        cost = cardSO.cardCost[cardSO.level - 1];
         charCost.text = cost.ToString();
-        charSprite.sprite = character.background;
+        charSprite.sprite = cardSO.backgrounds[cardSO.level - 1];
 
         button.onClick.AddListener(() =>
         {
-            PlayerBlue.Instance.SpawnCharacter(character.character.gameObject);
+            PlayerBlue.Instance.SpawnCharacter(cardSO.spawnableObject.gameObject);
         });
 
         PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;

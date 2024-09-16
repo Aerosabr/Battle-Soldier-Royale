@@ -10,9 +10,9 @@ public class PlayerBlue : Player
     {
         Instance = this;
         AddGold(startingGold);
-        foreach (CharacterPathSO CPSO in tempLoadout)
+        foreach (CardSO CSO in tempLoadout)
         {
-            LoadoutCharacter temp = new LoadoutCharacter(CPSO, 1);
+            CardSO temp = new CardSO(CSO);
             loadout.Add(temp);
         }
     }

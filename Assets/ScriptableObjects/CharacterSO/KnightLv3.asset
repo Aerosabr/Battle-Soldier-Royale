@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e845017ed0ebce44cb53aea29a6c2800, type: 3}
   m_Name: KnightLv3
   m_EditorClassIdentifier: 
-  character: {fileID: 4549758980162715631, guid: a148400206563604199b6d47c4ae0cad, type: 3}
   background: {fileID: 21300000, guid: 0c5de83bdc385f3409d864c812388767, type: 3}
-  upgradeCost: 300
+  cardCost: 0
+  spawnableObject: {fileID: 4549758980162715631, guid: a148400206563604199b6d47c4ae0cad, type: 3}

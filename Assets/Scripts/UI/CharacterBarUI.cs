@@ -29,11 +29,11 @@ public class CharacterBarUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (LoadoutCharacter loadoutChar in PlayerBlue.Instance.GetLoadout())
+        foreach (CardSO loadoutCard in PlayerBlue.Instance.GetLoadout())
         {
             Transform charTransform = Instantiate(charTemplate, container);
             charTransform.gameObject.SetActive(true);
-            charTransform.GetComponent<CharacterBarSingleUI>().UpdateCard(loadoutChar.characterPathSO.characterSO[loadoutChar.Level - 1]);
+            charTransform.GetComponent<CharacterBarSingleUI>().UpdateCard(loadoutCard);
         }
     }
 }

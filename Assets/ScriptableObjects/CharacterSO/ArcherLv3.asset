@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e845017ed0ebce44cb53aea29a6c2800, type: 3}
   m_Name: ArcherLv3
   m_EditorClassIdentifier: 
-  character: {fileID: 2187634391037377195, guid: 916af55312018864f8c3c733403c5425, type: 3}
   background: {fileID: 21300000, guid: 5ac29342718893847b1000048e3f16bb, type: 3}
-  upgradeCost: 0
+  cardCost: 0
+  spawnableObject: {fileID: 2187634391037377195, guid: 916af55312018864f8c3c733403c5425, type: 3}
