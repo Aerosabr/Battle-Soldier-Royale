@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e845017ed0ebce44cb53aea29a6c2800, type: 3}
   m_Name: WorkerLv3
   m_EditorClassIdentifier: 
-  character: {fileID: 7106265780312828477, guid: 256242952f18acd41aff353081df4d95, type: 3}
   background: {fileID: 21300000, guid: 2f3fdefe15e4acb448d47d769b7577d2, type: 3}
-  upgradeCost: 0
+  cardCost: 0
+  spawnableObject: {fileID: 7106265780312828477, guid: 256242952f18acd41aff353081df4d95, type: 3}

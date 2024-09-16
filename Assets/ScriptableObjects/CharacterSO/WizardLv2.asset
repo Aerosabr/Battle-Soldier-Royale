@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e845017ed0ebce44cb53aea29a6c2800, type: 3}
   m_Name: WizardLv2
   m_EditorClassIdentifier: 
-  character: {fileID: 8642027716678164422, guid: be7df4d84f9aca34093a4d598e513d55, type: 3}
   background: {fileID: 21300000, guid: 60dd34695a6966f4eaec4b0db7c24c2f, type: 3}
-  upgradeCost: 100
+  cardCost: 0
+  spawnableObject: {fileID: 8642027716678164422, guid: be7df4d84f9aca34093a4d598e513d55, type: 3}

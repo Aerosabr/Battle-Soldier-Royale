@@ -14,7 +14,7 @@ public class StraightPathUSUI : UpgradesSingleUI
 
     private void ActivateButton()
     {
-        buttonList[loadoutCharacter.Level].button.onClick.AddListener(() =>
+        buttonList[loadoutCard.level].button.onClick.AddListener(() =>
         {
             UpgradeCharacter();
         });
@@ -22,16 +22,15 @@ public class StraightPathUSUI : UpgradesSingleUI
 
     private void UpgradeCharacter()
     {
-        if (PlayerBlue.Instance.GetGold() >= int.Parse(buttonList[loadoutCharacter.Level].costText.text))
+        if (PlayerBlue.Instance.GetGold() >= loadoutCard.upgradeCost[loadoutCard.level - 1])
         {
-            buttonList[loadoutCharacter.Level].levelText.color = Color.green;
-            buttonList[loadoutCharacter.Level].costText.enabled = false;
-            buttonList[loadoutCharacter.Level].button.onClick.RemoveAllListeners();
-            PlayerBlue.Instance.SubtractGold(int.Parse(buttonList[loadoutCharacter.Level].costText.text));
-            PlayerBlue.Instance.IncreaseLoadoutLevel(loadoutCharacter.characterPathSO);
-            loadoutCharacter.Level++;
+            buttonList[loadoutCard.level].levelText.color = Color.green;
+            buttonList[loadoutCard.level].costText.enabled = false;
+            buttonList[loadoutCard.level].button.onClick.RemoveAllListeners();
+            PlayerBlue.Instance.SubtractGold(int.Parse(buttonList[loadoutCard.level].costText.text));
+            PlayerBlue.Instance.IncreaseCardLevel(loadoutCard);
             CharacterBarUI.Instance.UpdateVisual();
-            if (loadoutCharacter.Level < buttonList.Count)
+            if (loadoutCard.level < buttonList.Count)
                 ActivateButton();
         }
     }

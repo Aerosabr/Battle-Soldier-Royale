@@ -3,24 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct LoadoutCharacter
-{
-    public CharacterPathSO characterPathSO;
-    public int Level;
-
-    public LoadoutCharacter(CharacterPathSO characterPathSO, int Level)
-    {
-        this.characterPathSO = characterPathSO;
-        this.Level = Level;
-    }
-
-    public void IncreaseLevel()
-    {
-        Level += 1;
-    }
-}
-
 public class Player : MonoBehaviour
 {
     public event EventHandler OnGoldChanged;
@@ -32,8 +14,8 @@ public class Player : MonoBehaviour
     }
     public PlayerColor playerColor;
 
-    [SerializeField] protected List<LoadoutCharacter> loadout = new List<LoadoutCharacter>();
-    [SerializeField] protected List<CharacterPathSO> tempLoadout;
+    [SerializeField] protected List<CardSO> loadout = new List<CardSO>();
+    [SerializeField] protected List<CardSO> tempLoadout;
 
     [SerializeField] protected int startingGold;
     protected int Gold;
@@ -64,13 +46,13 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    public List<LoadoutCharacter> GetLoadout() => loadout;
-    public void IncreaseLoadoutLevel(CharacterPathSO CPSO)
+    public List<CardSO> GetLoadout() => loadout;
+    public void IncreaseCardLevel(CardSO CSO )
     {
         for (int i = 0; i < loadout.Count; i++)
         {
-            if (loadout[i].characterPathSO == CPSO)
-                loadout[i] = new LoadoutCharacter(loadout[i].characterPathSO, loadout[i].Level + 1);
+            if (loadout[i] == CSO)
+                loadout[i].level++;
         }
     }
 

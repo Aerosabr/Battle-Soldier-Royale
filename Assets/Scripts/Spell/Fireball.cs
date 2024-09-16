@@ -3,56 +3,109 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class Fireball : Spell
 {
 	private const int MAX_SIZE = 8;
 	private const float MAX_DURATION = 4;
 
 	private BoxCollider hitBox;
 	private int targetLayer = 6;
-	private int damage;
-	private float duration = 0; 
+
+	[SerializeField]
+	private Transform transparentObject;
+
+	[SerializeField]
+	private Transform visualObject;
 
 	[SerializeField]
 	private List<Character> characters = new List<Character>();
 
-	private void Update()
+	private void Start()
 	{
-		HandleHitBox();
-		if (duration < MAX_DURATION)
+		hitBox = GetComponent<BoxCollider>();
+		StartCoroutine(HandleHitBox());
+		StartCoroutine(HandleAttack());
+	}
+
+	private void OnDrawGizmos()
+	{
+		if (hitBox != null)
 		{
-			HandleAttack();
-			duration += 1.0f * Time.deltaTime;
+			Gizmos.color = Color.red;
+			// Draw the hitbox as a red wire cube
+			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
-		
 	}
-
-	private void HandleHitBox()
+	public void InitializeFireball(int layer, float damage)
 	{
-		
+		targetLayer = layer;
+		this.damage = damage;
+		Destroy(this, duration);
 	}
 
-	private void HandleAttack()
+	private IEnumerator HandleHitBox()
+	{
+		float duration = 0.3f;
+		float elapsedTime = 0f;
+		float initialSize = hitBox.size.x;
+
+		while (elapsedTime < duration)
+		{
+			hitBox.size = new Vector3(Mathf.Lerp(initialSize, MAX_SIZE, elapsedTime / duration), hitBox.size.y, hitBox.size.z);
+			elapsedTime += Time.deltaTime;
+			yield return null;
+		}
+		hitBox.size = new Vector3(MAX_SIZE, hitBox.size.y, hitBox.size.z);
+	}
+
+	private IEnumerator HandleAttack()
 	{
 		float counter = 0;
-		while(counter < duration)
+		while(counter < 1)
 		{
 			foreach (Character character in characters)
 			{
 				if (character.GetCurrentHealth() > 0)
 				{
-					character.transform.GetComponent<IDamageable>().Damaged(damage);
+					character.transform.GetComponent<IDamageable>().Damaged((int)damage);
+					yield return null;
 				}
 			}
+			yield return null;
+
 		}
+		yield return null;
 	}
 
-	public void InitializeFireball(int layer, int damage)
+
+	public void Project()
 	{
-		targetLayer = layer;
-		this.damage = damage;
+		transparentObject.gameObject.SetActive(true);
+		visualObject.gameObject.SetActive(false);
+		StartCoroutine(MoveToMousePosition());
 	}
 
+	public void Spawn(int layer, float damage)
+	{
+		transparentObject.gameObject.SetActive(false);
+		visualObject.gameObject.SetActive(true);
+		InitializeFireball(layer, damage);
+	}
+
+	private IEnumerator MoveToMousePosition()
+	{
+		while(transparentObject.gameObject.activeSelf)
+		{
+			Vector3 mouse_position = Input.mousePosition;
+
+			float x = mouse_position.x;
+			transform.position = new Vector3( mouse_position.x, transform.position.y, transform.position.z);
+			yield return null;
+		}
+
+	}
+
+	#region Entities in Range Handler
 	void OnTriggerEnter(Collider collision)
 	{
 		Debug.Log("Collided");
@@ -93,4 +146,6 @@ public class Fireball : MonoBehaviour
 			}
 		}
 	}
+
+	#endregion
 }

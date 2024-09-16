@@ -14,10 +14,10 @@ public class UpgradesSingleUI : MonoBehaviour
         public TextMeshProUGUI costText;
     }
 
-    [SerializeField] protected LoadoutCharacter loadoutCharacter;
+    [SerializeField] protected CardSO loadoutCard;
 
-    public void SetCPSO(LoadoutCharacter loadoutCharacter)
+    public void SetCPSO(CardSO loadoutCard)
     {
-        this.loadoutCharacter = loadoutCharacter;
+        this.loadoutCard = loadoutCard;
     }
 }

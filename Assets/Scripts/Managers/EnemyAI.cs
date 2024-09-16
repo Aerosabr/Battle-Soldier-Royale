@@ -5,14 +5,14 @@ using UnityEngine.InputSystem;
 
 public class EnemyAI : MonoBehaviour
 {
-    private State state;
+/*    private State state;
     [SerializeField] private List<AIGameStateSO> gameStates;
 
     private float gameStateTimer;
     private float gameStateTimerMax = 1f;
     private AlertMetrics alertMetrics;
     private ActionType actionType;
-    private LoadoutCharacter actionLoadout;
+    private LoadoutCard actionLoadout;
 
     private void Awake()
     {
@@ -93,15 +93,15 @@ public class EnemyAI : MonoBehaviour
         switch (actionType)
         {
             case ActionType.Spawn:
-                if (Gold >= actionLoadout.characterPathSO.unitCost)
-                    PlayerRed.Instance.SpawnCharacter(actionLoadout.characterPathSO.characterSO[actionLoadout.Level].character.gameObject);
+                if (Gold >= actionLoadout.cardPathSO.cards[actionLoadout.Level].cardCost)
+                    PlayerRed.Instance.SpawnCharacter(actionLoadout.cardPathSO.cards[actionLoadout.Level].spawnableObject.gameObject);
                 
                 break;
             case ActionType.Upgrade:
-                if (Gold >= actionLoadout.characterPathSO.upgradeCost[actionLoadout.Level - 1])
+                if (Gold >= actionLoadout.cardPathSO.upgradeCost[actionLoadout.Level - 1])
                 {
-                    PlayerRed.Instance.SubtractGold(actionLoadout.characterPathSO.upgradeCost[actionLoadout.Level - 1]);
-                    PlayerRed.Instance.IncreaseLoadoutLevel(actionLoadout.characterPathSO);
+                    PlayerRed.Instance.SubtractGold(actionLoadout.cardPathSO.upgradeCost[actionLoadout.Level - 1]);
+                    PlayerRed.Instance.IncreaseLoadoutLevel(actionLoadout.cardPathSO);
                 }
                 break;
             case ActionType.Build:
@@ -179,6 +179,7 @@ public class EnemyAI : MonoBehaviour
     {
 
     }
+*/
 }
 
 public enum AlertLevel
