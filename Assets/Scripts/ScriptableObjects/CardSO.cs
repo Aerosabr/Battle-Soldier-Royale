@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,9 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class CardSO : ScriptableObject
 {
-	public enum CardType
+    public event EventHandler OnLevelChanged;
+
+    public enum CardType
 	{
 		Character,
 		Spell,
@@ -30,4 +33,13 @@ public class CardSO : ScriptableObject
 		spawnableObject = CSO.spawnableObject;
 		level = CSO.level;
 	}
+
+    public void IncreaseCardLevel()
+    {
+        if (level == upgradeCost.Count)
+            return;
+
+        level++;
+        OnLevelChanged?.Invoke(this, EventArgs.Empty);
+    }
 }

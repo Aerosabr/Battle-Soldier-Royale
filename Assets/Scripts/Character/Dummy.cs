@@ -19,7 +19,7 @@ public class Dummy : Character, IDamageable
         {
             healthPercentage = (float)currentHealth / maxHealth
         });
-
+        Debug.Log("Dummy took " + damage + " damage!");
         if (currentHealth <= 0)
             StartCoroutine(Died());
     }

@@ -27,7 +27,7 @@ public class Arrow : MonoBehaviour
             Debug.Log("Hit");
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
-                hit.transform.GetComponent<IDamageable>().Damaged(10);
+                hit.transform.GetComponent<IDamageable>().Damaged(damage);
                 Destroy(gameObject);
             }
         }

@@ -22,13 +22,7 @@ public class Wizard : Character, IDamageable
 
     [SerializeField] private GameObject spellBolt;
     [SerializeField] private WizardVisual anim;
-    [SerializeField] private State state;
-
-    private bool canAttack = true;
-    private float attackSpeed = 2f;
-    private float attackRange = 3f;
-    private float deathTimer;
-    private float deathTimerMax = 3;   
+    [SerializeField] private State state; 
 
     private void Awake()
     {
@@ -129,8 +123,10 @@ public class Wizard : Character, IDamageable
         }
     }
 
-    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation)
+    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
+        this.card = card;
+        this.card.OnLevelChanged += Card_OnLevelChanged;
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
         if (gameObject.layer == 6)
@@ -144,5 +140,10 @@ public class Wizard : Character, IDamageable
             targetLayer = 1 << 6;
         }
         player.AddToMilitary(gameObject);
+    }
+
+    private void Card_OnLevelChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }

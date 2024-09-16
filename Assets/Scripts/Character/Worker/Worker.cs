@@ -25,8 +25,6 @@ public class Worker : Character, IDamageable
     private State state;
     private float miningTimer;
     private float miningTimerMax = 5f;
-    private float deathTimer;
-    private float deathTimerMax = 3;
 
     private void Awake()
     {
@@ -132,8 +130,10 @@ public class Worker : Character, IDamageable
         }
     }
 
-    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation)
+    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
+        this.card = card;
+        this.card.OnLevelChanged += Card_OnLevelChanged;
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
         if (layerMask == 6)
@@ -147,5 +147,10 @@ public class Worker : Character, IDamageable
             targetLayer = 1 << 7 | 1 << 8;
         }
         player.AddToEconomy(gameObject, true);
+    }
+
+    private void Card_OnLevelChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }
