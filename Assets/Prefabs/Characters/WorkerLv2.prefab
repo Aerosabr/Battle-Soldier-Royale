@@ -5046,8 +5046,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  characterType: 0
   anim: {fileID: 7023078922825290736}
-  mineYield: 10
+  mineYield: 20
 --- !u!65 &1113284561125372729
 BoxCollider:
   m_ObjectHideFlags: 0

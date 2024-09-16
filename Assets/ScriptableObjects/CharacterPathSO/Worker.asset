@@ -17,4 +17,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4be08f11460f3a349a94089c5b8d5ac5, type: 2}
   - {fileID: 11400000, guid: 9028288cc4240a04f94e56af6e6edcc8, type: 2}
   upgradesTab: {fileID: 6817424142658628186, guid: 43657fa86011c06479f26b45e00751f7, type: 3}
-  Level: 0
+  unitCost: 200
+  upgradeCost: 900100002003000000000000
