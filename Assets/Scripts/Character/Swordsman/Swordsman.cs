@@ -24,7 +24,8 @@ public class Swordsman : Character, IDamageable
     [SerializeField] private State state;
 
     private bool canAttack = true;
-    private float attackSpeed = 1.5f;
+    private float attackSpeed = 1f;
+    private float attackRange = 1f;
     private float deathTimer;
     private float deathTimerMax = 3;
 
@@ -66,7 +67,6 @@ public class Swordsman : Character, IDamageable
 
     private void DetectEnemies()
     {
-        float attackRange = 1f;
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward, Color.green);
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
@@ -98,7 +98,6 @@ public class Swordsman : Character, IDamageable
 
     public void Attack01()
     {
-        float attackRange = 1f;
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
         {
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)

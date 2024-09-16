@@ -42,8 +42,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Vector3 spawnRotation;
 
-    [SerializeField] private List<GameObject> Economy;
-    [SerializeField] private List<GameObject> Military;
+    private int numberOfWorkers = 0;
+    private List<GameObject> Economy = new List<GameObject>();
+    private List<GameObject> Military = new List<GameObject>();
 
     public int GetGold() => Gold;
 
@@ -82,8 +83,24 @@ public class Player : MonoBehaviour
         character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation);
     }
 
-    public void AddToEconomy(GameObject character) => Economy.Add(character);
+    public void AddToEconomy(GameObject character, bool isWorker)
+    {
+        if (isWorker)
+            numberOfWorkers++;
+
+        Economy.Add(character);
+    }
+    public void RemoveFromEconomy(GameObject character, bool isWorker)
+    {
+        if (isWorker)
+            numberOfWorkers--;
+
+        Economy.Remove(character);
+    }
+    public List<GameObject> GetSpawnedEconomy() => Economy;
+    public int GetNumberOfWorkers() => numberOfWorkers;
+
     public void AddToMilitary(GameObject character) => Military.Add(character);
-    public void RemoveFromEconomy(GameObject character) => Economy.Remove(character);
     public void RemoveFromMilitary(GameObject character) => Military.Remove(character);
+    public List<GameObject> GetSpawnedMilitary() => Military;   
 }
