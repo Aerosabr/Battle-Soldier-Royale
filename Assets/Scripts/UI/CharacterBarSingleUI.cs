@@ -20,7 +20,7 @@ public class CharacterBarSingleUI : MonoBehaviour
 
         button.onClick.AddListener(() =>
         {
-            PlayerBlue.Instance.SpawnCharacter(cardSO.spawnableObject.gameObject);
+            PlayerBlue.Instance.SpawnCharacter(cardSO);
         });
 
         PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;

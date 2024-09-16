@@ -23,12 +23,6 @@ public class Spearman : Character, IDamageable
     [SerializeField] private SpearmanVisual anim;
     [SerializeField] private State state;
 
-    private bool canAttack = true;
-    private float attackSpeed = 1.5f;
-    private float attackRange = 1.5f;
-    private float deathTimer;
-    private float deathTimerMax = 3;
-
     private void Awake()
     {
         characterType = CharacterType.Melee;
@@ -127,8 +121,10 @@ public class Spearman : Character, IDamageable
         }
     }
 
-    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation)
+    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
+        this.card = card;
+        this.card.OnLevelChanged += Card_OnLevelChanged;
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
         if (gameObject.layer == 6)
@@ -142,5 +138,10 @@ public class Spearman : Character, IDamageable
             targetLayer = 1 << 6;
         }
         player.AddToMilitary(gameObject);
+    }
+
+    private void Card_OnLevelChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }

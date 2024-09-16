@@ -11,18 +11,31 @@ public enum CharacterType
     Ranged
 }
 
+[Serializable]
+public struct CharacterStats
+{
+    public int Health;
+    public int Attack;
+}
+
 public class Character : Entity
 {
     [SerializeField] protected int attack;
-    [SerializeField] protected int cost;
+    [SerializeField] protected float attackSpeed;
+    [SerializeField] protected float attackRange;
 
+    protected bool canAttack = true;
+    protected float deathTimer;
+    protected float deathTimerMax = 3f;
     protected float moveSpeed = 1f;
+
+    [SerializeField] protected List<CharacterStats> evolutionStats;
     [SerializeField] protected LayerMask targetLayer;
     public CharacterType characterType;
     protected Player player;
+    protected CardSO card;
 
-    public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation) => Debug.Log("Initialize not implemented");
-    public int GetCost() => cost;
+    public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
     protected virtual void CharacterSpawned() => Debug.Log("Spawned not implemented");
     protected virtual void CharacterDied() => Debug.Log("Died not implemented");
 }

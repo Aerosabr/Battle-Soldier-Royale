@@ -25,12 +25,6 @@ public class Archer : Character, IDamageable
     [SerializeField] private GameObject bowPos;
     [SerializeField] private State state;
 
-    private bool canAttack = true;
-    private float attackSpeed = 2f;
-    private float attackRange = 4f;
-    private float deathTimer;
-    private float deathTimerMax = 3;
-
     private void Awake()
     {
         characterType = CharacterType.Ranged;
@@ -122,8 +116,12 @@ public class Archer : Character, IDamageable
         }
     }
 
-    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation)
+    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
+        this.card = card;
+        this.card.OnLevelChanged += Card_OnLevelChanged;
+        anim.ActivateEvolutionVisual(card.level);
+        SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
         if (gameObject.layer == 6)
@@ -137,6 +135,28 @@ public class Archer : Character, IDamageable
             targetLayer = 1 << 6;
         }
         player.AddToMilitary(gameObject);
+    }
+
+    private void SetStats()
+    {
+        if (maxHealth < evolutionStats[card.level - 1].Health)
+        {
+            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
+            maxHealth = evolutionStats[card.level - 1].Health;
+            
+            attack = evolutionStats[card.level - 1].Attack;
+        }
+    }
+
+    private void Card_OnLevelChanged(object sender, EventArgs e)
+    {
+        anim.ActivateEvolutionVisual(card.level);
+        SetStats();
+    }
+
+    public void SetBowPos(GameObject bow)
+    {
+        bowPos = bow;
     }
 }
 

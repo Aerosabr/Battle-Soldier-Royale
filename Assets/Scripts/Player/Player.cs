@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected int startingGold;
     protected int Gold;
     protected float passiveGoldTimer;
-    protected float passiveGoldTimerMax = 1f;
+    protected float passiveGoldTimerMax = .1f;
 
     [SerializeField] private Vector3 spawnRotation;
 
@@ -56,13 +56,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SpawnCharacter(GameObject characterToSpawn)
+    public void SpawnCharacter(CardSO CSO)
     {
-        SubtractGold(characterToSpawn.GetComponent<Character>().GetCost());
-        Transform character = Instantiate(characterToSpawn, transform).transform;
+        SubtractGold(CSO.cardCost[CSO.level - 1]);
+        Transform character = Instantiate(CSO.spawnableObject, transform).transform;
         float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
         character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
-        character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation);
+        character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
     }
 
     public void AddToEconomy(GameObject character, bool isWorker)
