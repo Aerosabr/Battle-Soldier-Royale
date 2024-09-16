@@ -26,8 +26,9 @@ public class Wizard : Character, IDamageable
 
     private bool canAttack = true;
     private float attackSpeed = 2f;
+    private float attackRange = 3f;
     private float deathTimer;
-    private float deathTimerMax = 3;
+    private float deathTimerMax = 3;   
 
     private void Awake()
     {
@@ -67,7 +68,6 @@ public class Wizard : Character, IDamageable
 
     private void DetectEnemies()
     {
-        float attackRange = 4f;
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * attackRange, Color.green);
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
@@ -99,7 +99,6 @@ public class Wizard : Character, IDamageable
 
     public void Attack01()
     {
-        float attackRange = 4f;
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
         {
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)

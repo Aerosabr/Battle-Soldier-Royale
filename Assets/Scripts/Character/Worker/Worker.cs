@@ -128,7 +128,7 @@ public class Worker : Character, IDamageable
             anim.AnimAction(IS_DEAD);
             state = State.Dead;
             GetComponent<BoxCollider>().enabled = false;
-            player.RemoveFromEconomy(gameObject);
+            player.RemoveFromEconomy(gameObject, true);
         }
     }
 
@@ -146,6 +146,6 @@ public class Worker : Character, IDamageable
             player = PlayerRed.Instance;
             targetLayer = 1 << 7 | 1 << 8;
         }
-        player.AddToEconomy(gameObject);
+        player.AddToEconomy(gameObject, true);
     }
 }

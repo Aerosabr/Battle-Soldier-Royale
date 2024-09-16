@@ -27,6 +27,7 @@ public class Archer : Character, IDamageable
 
     private bool canAttack = true;
     private float attackSpeed = 2f;
+    private float attackRange = 4f;
     private float deathTimer;
     private float deathTimerMax = 3;
 
@@ -68,7 +69,6 @@ public class Archer : Character, IDamageable
 
     private void DetectEnemies()
     {
-        float attackRange = 3f;
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * attackRange, Color.green);
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
