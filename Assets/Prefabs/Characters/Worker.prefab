@@ -4303,6 +4303,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worker: {fileID: 4546734686575232076}
+  evolutionVisuals:
+  - bodyParts:
+    - {fileID: 3476391811782227124}
+    - {fileID: 3218339807954435194}
+  - bodyParts:
+    - {fileID: 1481817550895987612}
+    - {fileID: 3218339807954435194}
+  - bodyParts:
+    - {fileID: 8198795866703047053}
+    - {fileID: 5371233150623881915}
 --- !u!1 &1874242131246175334
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,15 +5049,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adfbef2290739a249bb6bb6ed313b0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 100
-  maxHealth: 100
+  currentHealth: 0
+  maxHealth: 0
   attack: 0
-  cost: 60
+  attackSpeed: 0
+  attackRange: 0
+  evolutionStats:
+  - Health: 400
+    Attack: 80
+  - Health: 600
+    Attack: 160
+  - Health: 900
+    Attack: 320
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  characterType: 0
   anim: {fileID: 7023078922825290736}
-  mineYield: 10
 --- !u!65 &1113284561125372729
 BoxCollider:
   m_ObjectHideFlags: 0

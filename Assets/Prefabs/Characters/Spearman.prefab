@@ -1990,16 +1990,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd6bc3681827ad49b1ec27a3a8702f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 150
-  maxHealth: 150
-  attack: 60
-  cost: 65
+  currentHealth: 0
+  maxHealth: 0
+  attack: 0
   attackSpeed: 1.5
   attackRange: 1.5
+  evolutionStats:
+  - Health: 1200
+    Attack: 175
+  - Health: 1800
+    Attack: 270
+  - Health: 2700
+    Attack: 425
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  characterType: 0
+  characterType: 1
   anim: {fileID: 1126212173245788260}
   state: 0
 --- !u!65 &-2476830759847121632
@@ -4522,6 +4528,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 2681171785448276500}
+  evolutionVisuals:
+  - bodyParts:
+    - {fileID: 5379002033901612113}
+    - {fileID: 468842772010572394}
+    - {fileID: 7479682117591407631}
+    - {fileID: 8625381481933406186}
+    - {fileID: 3503693230733083646}
+    - {fileID: 5030595394579892467}
+  - bodyParts:
+    - {fileID: 6850853519631558586}
+    - {fileID: 3974084399391307249}
+    - {fileID: 7479682117591407631}
+    - {fileID: 8625381481933406186}
+    - {fileID: 3503693230733083646}
+    - {fileID: 5030595394579892467}
+  - bodyParts:
+    - {fileID: 7329737342451394343}
+    - {fileID: 1278238655134292172}
+    - {fileID: 8132732447569509587}
 --- !u!1 &2061588329874873775
 GameObject:
   m_ObjectHideFlags: 0
