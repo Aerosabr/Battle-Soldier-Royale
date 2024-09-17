@@ -125,6 +125,8 @@ public class Swordsman : Character, IDamageable
     {
         this.card = card;
         this.card.OnLevelChanged += Card_OnLevelChanged;
+        anim.ActivateEvolutionVisual(card.level);
+        SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
         if (gameObject.layer == 6)
@@ -140,9 +142,21 @@ public class Swordsman : Character, IDamageable
         player.AddToMilitary(gameObject);
     }
 
+    private void SetStats()
+    {
+        if (maxHealth < evolutionStats[card.level - 1].Health)
+        {
+            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
+            maxHealth = evolutionStats[card.level - 1].Health;
+
+            attack = evolutionStats[card.level - 1].Attack;
+        }
+    }
+
     private void Card_OnLevelChanged(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        anim.ActivateEvolutionVisual(card.level);
+        SetStats();
     }
 }
 

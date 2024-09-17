@@ -8250,6 +8250,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 3468286194814704036}
+  evolutionVisuals:
+  - bodyParts:
+    - {fileID: 4446269585229525060}
+    - {fileID: 2560024252208979756}
+    - {fileID: 6227066265255216922}
+    - {fileID: 7322405082011753578}
+    - {fileID: 6472829900407793252}
+    - {fileID: 893535423187569536}
+  - bodyParts:
+    - {fileID: 6562701445751266024}
+    - {fileID: 8594656089138975661}
+    - {fileID: 6227066265255216922}
+    - {fileID: 7322405082011753578}
+    - {fileID: 6472829900407793252}
+    - {fileID: 893535423187569536}
+  - bodyParts:
+    - {fileID: 213249799494720221}
+    - {fileID: 8594656089138975661}
+    - {fileID: 5896873538275925845}
 --- !u!1 &3282448935518482296
 GameObject:
   m_ObjectHideFlags: 0
@@ -20948,16 +20967,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335f476ce2fa85f48ba341946fee9c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 120
-  maxHealth: 120
-  attack: 40
-  cost: 40
+  currentHealth: 0
+  maxHealth: 0
+  attack: 0
   attackSpeed: 1
   attackRange: 1
+  evolutionStats:
+  - Health: 1000
+    Attack: 100
+  - Health: 1500
+    Attack: 150
+  - Health: 2300
+    Attack: 225
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  characterType: 0
+  characterType: 1
   anim: {fileID: 7274961404938831116}
   state: 0
 --- !u!65 &5962955321852043317

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1063407360156546806
 Transform:
   m_ObjectHideFlags: 0
@@ -4596,7 +4596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2839881040413248123
 Transform:
   m_ObjectHideFlags: 0
@@ -5011,7 +5011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6198897123630949090
 Transform:
   m_ObjectHideFlags: 0
@@ -10048,6 +10048,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 8613732814716348785}
+  evolutionVisuals:
+  - bodyParts:
+    - {fileID: 5320606399969816}
+    - {fileID: 1933531947730361795}
+    - {fileID: 5678437956436928058}
+    - {fileID: 1892538188039240922}
+  - bodyParts:
+    - {fileID: 6779172678011589371}
+    - {fileID: 2192773432043404833}
+    - {fileID: 2546450677223880577}
+    - {fileID: 1892538188039240922}
+  - bodyParts:
+    - {fileID: 55654031879101322}
+    - {fileID: 810027608493796882}
+    - {fileID: 5965867286659307442}
+    - {fileID: 1686857577868006918}
 --- !u!1 &4174257637760744946
 GameObject:
   m_ObjectHideFlags: 0
@@ -13065,7 +13081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3051802042249532959
 Transform:
   m_ObjectHideFlags: 0
@@ -16453,16 +16469,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4cb7c77e2ad6054ea493f4bbfebe9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 200
-  maxHealth: 200
-  attack: 30
-  cost: 80
+  currentHealth: 0
+  maxHealth: 0
+  attack: 0
   attackSpeed: 1.5
   attackRange: 1
+  evolutionStats:
+  - Health: 2500
+    Attack: 80
+  - Health: 4000
+    Attack: 120
+  - Health: 6500
+    Attack: 180
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  characterType: 0
+  characterType: 1
   anim: {fileID: 6156469004722996060}
   state: 0
 --- !u!65 &2532555925057319742

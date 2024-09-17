@@ -20,7 +20,6 @@ public class Worker : Character, IDamageable
     }
  
     [SerializeField] private WorkerVisual anim;
-    [SerializeField] private int mineYield = 10;
 
     private State state;
     private float miningTimer;
@@ -108,9 +107,9 @@ public class Worker : Character, IDamageable
         Debug.Log("Deposited");
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
         if (player.playerColor == Player.PlayerColor.Blue)
-            PlayerBlue.Instance.AddGold(mineYield);
+            PlayerBlue.Instance.AddGold(attack);
         else
-            PlayerRed.Instance.AddGold(mineYield);
+            PlayerRed.Instance.AddGold(attack);
     }
 
     public void Damaged(int damage)
@@ -134,6 +133,8 @@ public class Worker : Character, IDamageable
     {
         this.card = card;
         this.card.OnLevelChanged += Card_OnLevelChanged;
+        anim.ActivateEvolutionVisual(card.level);
+        SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
         if (layerMask == 6)
@@ -149,8 +150,20 @@ public class Worker : Character, IDamageable
         player.AddToEconomy(gameObject, true);
     }
 
+    private void SetStats()
+    {
+        if (maxHealth < evolutionStats[card.level - 1].Health)
+        {
+            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
+            maxHealth = evolutionStats[card.level - 1].Health;
+
+            attack = evolutionStats[card.level - 1].Attack;
+        }
+    }
+
     private void Card_OnLevelChanged(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        anim.ActivateEvolutionVisual(card.level);
+        SetStats();
     }
 }
