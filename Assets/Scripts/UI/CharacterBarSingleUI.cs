@@ -10,6 +10,7 @@ public class CharacterBarSingleUI : MonoBehaviour
     [SerializeField] private Image charSprite;
     [SerializeField] private Button button;
     [SerializeField] private GameObject shadow;
+    [SerializeField] private GameInput gameInput;
     private int cost;
 
     public void UpdateCard(CardSO cardSO)
@@ -20,7 +21,7 @@ public class CharacterBarSingleUI : MonoBehaviour
 
         button.onClick.AddListener(() =>
         {
-            PlayerBlue.Instance.SpawnCharacter(cardSO);
+            PlayerControlManager.Instance.CardSelected(cardSO);
         });
 
         PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;

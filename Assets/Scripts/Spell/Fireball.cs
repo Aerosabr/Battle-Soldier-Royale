@@ -2,23 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Fireball : Spell
 {
 	private const int MAX_SIZE = 8;
 	private const float MAX_DURATION = 4;
-
-	private BoxCollider hitBox;
-	private int targetLayer = 6;
-
-	[SerializeField]
-	private Transform transparentObject;
-
-	[SerializeField]
-	private Transform visualObject;
-
-	[SerializeField]
-	private List<Character> characters = new List<Character>();
 
 	private void Start()
 	{
@@ -78,31 +67,41 @@ public class Fireball : Spell
 	}
 
 
-	public void Project()
+	public override IEnumerator Project(int layer, float damage)
 	{
+		InitializeFireball(layer, damage);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
-		StartCoroutine(MoveToMousePosition());
-	}
-
-	public void Spawn(int layer, float damage)
-	{
-		transparentObject.gameObject.SetActive(false);
-		visualObject.gameObject.SetActive(true);
-		InitializeFireball(layer, damage);
-	}
-
-	private IEnumerator MoveToMousePosition()
-	{
-		while(transparentObject.gameObject.activeSelf)
+		while (transparentObject.gameObject.activeSelf)
 		{
 			Vector3 mouse_position = Input.mousePosition;
 
 			float x = mouse_position.x;
-			transform.position = new Vector3( mouse_position.x, transform.position.y, transform.position.z);
+			transform.position = new Vector3(mouse_position.x, transform.position.y, transform.position.z);
 			yield return null;
 		}
 
+		if (visualObject.gameObject.activeSelf)
+			yield return true;
+		else
+			yield return false;
+		
+	}
+
+	public override bool Placed(bool isPlaced)
+	{
+		if (isPlaced)
+		{
+			transparentObject.gameObject.SetActive(false);
+			visualObject.gameObject.SetActive(true);
+			return true;
+		}
+		else
+		{
+			transparentObject.gameObject.SetActive(false);
+			visualObject.gameObject.SetActive(false);
+			return false;
+		}
 	}
 
 	#region Entities in Range Handler

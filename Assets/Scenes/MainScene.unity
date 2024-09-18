@@ -617,6 +617,7 @@ MonoBehaviour:
   charSprite: {fileID: 1480066222}
   button: {fileID: 489374555}
   shadow: {fileID: 1654817211}
+  gameInput: {fileID: 0}
 --- !u!1 &489374553
 GameObject:
   m_ObjectHideFlags: 0

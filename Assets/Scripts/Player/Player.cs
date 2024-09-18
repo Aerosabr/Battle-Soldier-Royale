@@ -28,7 +28,10 @@ public class Player : MonoBehaviour
     private List<GameObject> Economy = new List<GameObject>();
     private List<GameObject> Military = new List<GameObject>();
 
-    public int GetGold() => Gold;
+	private bool response = false;
+
+
+	public int GetGold() => Gold;
 
     public void AddGold(int gold)
     {
@@ -58,11 +61,58 @@ public class Player : MonoBehaviour
 
     public void SpawnCharacter(CardSO CSO)
     {
-        SubtractGold(CSO.cardCost[CSO.level - 1]);
         Transform character = Instantiate(CSO.spawnableObject, transform).transform;
         float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
         character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
         character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+    }
+
+    public IEnumerator SpawnSpell(CardSO CSO)
+    {
+        while(!response)
+        {
+            bool spellPlace = true;
+            if(spellPlace)
+				SubtractGold(CSO.cardCost[CSO.level - 1]);
+            response = true;
+		}
+        yield return null;
+	}
+
+    public bool CheckCardPosition(float currentXPosition)
+    {
+        float minXRange = transform.position.x;
+        float maxXRange = CheckFarthestUnit();
+
+        if(currentXPosition > minXRange && currentXPosition < maxXRange)
+            return true;
+        return false;
+    }
+
+    private float CheckFarthestUnit()
+    {
+        float maxXRange = transform.position.x - (transform.position.x/3);
+        if(playerColor == PlayerColor.Blue)
+        {
+            foreach(GameObject character in Military)
+            {
+                if(character.transform.position.x >  maxXRange)
+                {
+                    maxXRange = character.transform.position.x;
+                }
+            }
+        }
+        else
+        {
+			foreach (GameObject character in Military)
+			{
+				if (character.transform.position.x < maxXRange)
+				{
+					maxXRange = character.transform.position.x;
+				}
+			}
+		}
+        return maxXRange;
     }
 
     public void AddToEconomy(GameObject character, bool isWorker)
