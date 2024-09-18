@@ -20,10 +20,8 @@ public class Archer : Character, IDamageable
         Dead
     }
 
-    [SerializeField] private GameObject arrow;
     [SerializeField] private ArcherVisual anim;
-    [SerializeField] private GameObject bowPos;
-    [SerializeField] private State state;
+    private State state;
 
     private void Awake()
     {
@@ -94,9 +92,16 @@ public class Archer : Character, IDamageable
 
     public void Attack01()
     {
-        Transform arrowFired = Instantiate(arrow, bowPos.transform.position, transform.rotation).transform;
-        arrowFired.GetComponent<Arrow>().InitializeArrow(targetLayer, attack);
-        anim.AnimAction(IS_IDLE);
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
+        {
+            if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
+            {
+                hit.transform.GetComponent<IDamageable>().Damaged(attack);
+                anim.AnimAction(IS_IDLE);
+            }
+        }
+        else
+            state = State.Walking;
     }
 
     public void Damaged(int damage)
@@ -152,11 +157,6 @@ public class Archer : Character, IDamageable
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
-    }
-
-    public void SetBowPos(GameObject bow)
-    {
-        bowPos = bow;
     }
 }
 

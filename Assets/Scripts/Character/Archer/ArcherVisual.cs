@@ -37,7 +37,5 @@ public class ArcherVisual : MonoBehaviour
         {
             bodyPart.SetActive(true);
         }
-
-        character.SetBowPos(evolutionVisuals[level - 1].bodyParts[1]);
     }
 }
