@@ -59,10 +59,19 @@ public class Player : MonoBehaviour
     public void SpawnCharacter(CardSO CSO)
     {
         SubtractGold(CSO.cardCost[CSO.level - 1]);
-        Transform character = Instantiate(CSO.spawnableObject, transform).transform;
-        float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
-        character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
-        character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+
+        if (CSO.cardType == CardSO.CardType.Character)
+        {
+            Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+            float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
+            character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
+            character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+        }
+        else if (CSO.cardType == CardSO.CardType.Building)
+        {
+            Transform building = Instantiate(CSO.spawnableObject, Vector3.zero, Quaternion.identity).transform;
+            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO);
+        }
     }
 
     public void AddToEconomy(GameObject character, bool isWorker)

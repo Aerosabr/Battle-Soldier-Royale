@@ -20,6 +20,7 @@ public class Building : Entity
     [SerializeField] protected int attack;
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected float attackRange;
+    [SerializeField] protected float buildTimer;
 
     [SerializeField] protected List<BuildingStats> evolutionStats;
     [SerializeField] protected LayerMask targetLayer;

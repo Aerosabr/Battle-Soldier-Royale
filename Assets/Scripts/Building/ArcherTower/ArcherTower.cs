@@ -14,6 +14,7 @@ public class ArcherTower : Building, IDamageable
 
     private enum State
     {
+        None,
         Idle,
         Building,
         Attacking,
@@ -25,18 +26,20 @@ public class ArcherTower : Building, IDamageable
 
     private void Awake()
     {
-        state = State.Building;
+        state = State.None;
     }
 
     private void Update()
     {
         switch(state)
         {
+            case State.None:
+                break;
             case State.Idle:
 
                 break;
             case State.Building:
-
+                Building();
                 break;
             case State.Attacking:
 
@@ -44,6 +47,40 @@ public class ArcherTower : Building, IDamageable
             case State.Destroyed:
 
                 break;
+        }
+    }
+
+    private void Building()
+    {
+        currentHealth += (int)((maxHealth / buildTimer) * Time.deltaTime);
+        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
+        {
+            healthPercentage = (float)currentHealth / maxHealth
+        });
+
+        if (currentHealth >= maxHealth)
+        {
+            state = State.Idle;
+            currentHealth = maxHealth;
+        }
+
+        archerTowerVisual.BuildingInProgress((float)currentHealth / maxHealth, card.level);
+    }
+
+    public void Damaged(int damage)
+    {
+        currentHealth -= damage;
+        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
+        {
+            healthPercentage = (float)currentHealth / maxHealth
+        });
+
+        if (currentHealth <= 0)
+        {
+            //archerTowerVisual.AnimAction(IS_DESTROYED);
+            state = State.Destroyed;
+            GetComponent<BoxCollider>().enabled = false;
+            player.RemoveFromMilitary(gameObject);
         }
     }
 
@@ -61,20 +98,28 @@ public class ArcherTower : Building, IDamageable
             state = State.Idle;
     }
 
-    public void Damaged(int damage)
+    public override void InitializeBuilding(LayerMask layerMask, CardSO card)
     {
-        currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
+        this.card = card;
+        this.card.OnLevelChanged += Card_OnLevelChanged;
+        maxHealth = evolutionStats[card.level - 1].Health;
+        attack = evolutionStats[card.level - 1].Attack;
+        state = State.Building;
+    }
 
-        if (currentHealth <= 0)
+    private void Card_OnLevelChanged(object sender, EventArgs e)
+    {
+        SetStats();
+    }
+
+    private void SetStats()
+    {
+        if (maxHealth < evolutionStats[card.level - 1].Health)
         {
-            //archerTowerVisual.AnimAction(IS_DESTROYED);
-            state = State.Destroyed;
-            GetComponent<BoxCollider>().enabled = false;
-            player.RemoveFromMilitary(gameObject);
+            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
+            maxHealth = evolutionStats[card.level - 1].Health;
+
+            attack = evolutionStats[card.level - 1].Attack;
         }
     }
 }
