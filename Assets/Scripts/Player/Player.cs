@@ -87,12 +87,12 @@ public class Player : MonoBehaviour
 
     private float CheckFarthestUnit()
     {
-        float maxXRange = transform.position.x - (transform.position.x/3);
-        if(playerColor == PlayerColor.Blue)
+        float maxXRange = transform.position.x - (transform.position.x / 3);
+        if (playerColor == PlayerColor.Blue)
         {
-            foreach(GameObject character in Military)
+            foreach (GameObject character in Military)
             {
-                if(character.transform.position.x >  maxXRange)
+                if (character.transform.position.x > maxXRange)
                 {
                     maxXRange = character.transform.position.x;
                 }
@@ -100,15 +100,17 @@ public class Player : MonoBehaviour
         }
         else
         {
-			foreach (GameObject character in Military)
-			{
-				if (character.transform.position.x < maxXRange)
-				{
-					maxXRange = character.transform.position.x;
-				}
-			}
-		}
+            foreach (GameObject character in Military)
+            {
+                if (character.transform.position.x < maxXRange)
+                {
+                    maxXRange = character.transform.position.x;
+                }
+            }
+        }
         return maxXRange;
+    }
+
     public void BuildBuilding(CardSO CSO, GameObject buildingSlot)
     {
         SubtractGold(CSO.cardCost[CSO.level - 1]);
