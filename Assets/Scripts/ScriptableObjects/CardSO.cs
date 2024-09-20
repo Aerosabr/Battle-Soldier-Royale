@@ -23,7 +23,7 @@ public class CardSO : ScriptableObject
 	public Transform spawnableObject;
 	public int level;
 
-	public CardSO(CardSO CSO) 
+	public void newCardSO(CardSO CSO) 
 	{
 		cardType = CSO.cardType;
 		backgrounds = CSO.backgrounds;

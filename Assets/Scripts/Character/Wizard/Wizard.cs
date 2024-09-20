@@ -87,7 +87,7 @@ public class Wizard : Character, IDamageable
     private IEnumerator ChargeAttack()
     {
         canAttack = false;
-        yield return new WaitForSeconds(attackSpeed);
+        yield return new WaitForSeconds(1f / attackSpeed);
         canAttack = true;
     }
 

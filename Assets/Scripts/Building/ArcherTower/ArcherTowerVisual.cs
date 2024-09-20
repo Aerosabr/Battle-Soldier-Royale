@@ -8,7 +8,7 @@ public class ArcherTowerVisual : MonoBehaviour
     [SerializeField] private ArcherTower archerTower;
     [SerializeField] private List<EvolutionVisual> archerEVs;
     [SerializeField] private List<EvolutionVisual> towerEVs;
-    private int buildingProgress = 0;
+    private bool buildingCompleted;
 
     private void Awake()
     {
@@ -26,25 +26,8 @@ public class ArcherTowerVisual : MonoBehaviour
 
     }
 
-    public void BuildingInProgress(float healthPercentage, int buildingLevel)
-    {
-        int progress = 0;
-        for (int i = towerEVs[buildingLevel].bodyParts.Count; i > 0; i--)
-        {
-            if (healthPercentage >= 1f / i)
-                progress++;
-        }
-
-        if (progress != buildingProgress)
-        {
-            buildingProgress = progress;
-            ChangeBuildingVisual(buildingLevel, progress);
-        }
-    }
-    
     public void ChangeBuildingVisual(int buildingLevel, int buildingPhase)
     {
-        Debug.Log(buildingLevel + " " + buildingPhase);
         foreach (EvolutionVisual visual in archerEVs)
         {
             foreach (GameObject buildingPart in visual.bodyParts)
@@ -57,7 +40,7 @@ public class ArcherTowerVisual : MonoBehaviour
         }
 
         towerEVs[buildingLevel - 1].bodyParts[buildingPhase - 1].SetActive(true);
-        if (buildingPhase == towerEVs[buildingLevel].bodyParts.Count)
+        if (buildingCompleted)
         {
             foreach (GameObject buildingPart in archerEVs[buildingLevel - 1].bodyParts)
             {
@@ -65,5 +48,7 @@ public class ArcherTowerVisual : MonoBehaviour
             }
         }
     }
-    
+
+    public EvolutionVisual GetEvolutionVisual(int buildingLevel) => towerEVs[buildingLevel - 1];
+    public void BuildingCompleted(bool toggle) => buildingCompleted = toggle;
 }

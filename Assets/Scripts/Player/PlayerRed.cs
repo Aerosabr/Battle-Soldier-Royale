@@ -10,12 +10,13 @@ public class PlayerRed : Player
 	{
 		Instance = this;
 		AddGold(startingGold);
-		foreach (CardSO CSO in tempLoadout)
-		{
-			CardSO temp = new CardSO(CSO);
-			loadout.Add(temp);
-		}
-	}
+        foreach (CardSO CSO in tempLoadout)
+        {
+            CardSO newCard = Instantiate(CSO);
+            newCard.newCardSO(CSO);
+            loadout.Add(newCard);
+        }
+    }
 
 	private void Update()
     {

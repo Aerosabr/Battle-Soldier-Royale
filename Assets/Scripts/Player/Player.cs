@@ -60,17 +60,24 @@ public class Player : MonoBehaviour
     {
         SubtractGold(CSO.cardCost[CSO.level - 1]);
 
-        if (CSO.cardType == CardSO.CardType.Character)
+        Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+        float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
+        character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
+        character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+    }
+
+    public void BuildBuilding(CardSO CSO, GameObject buildingSlot)
+    {
+        SubtractGold(CSO.cardCost[CSO.level - 1]);
+        if (playerColor == PlayerColor.Blue && !MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            Transform character = Instantiate(CSO.spawnableObject, transform).transform;
-            float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
-            character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
-            character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[0].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>());
         }
-        else if (CSO.cardType == CardSO.CardType.Building)
+        else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            Transform building = Instantiate(CSO.spawnableObject, Vector3.zero, Quaternion.identity).transform;
-            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO);
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[0].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>());
         }
     }
 

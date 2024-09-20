@@ -5053,7 +5053,7 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 0
   attack: 0
-  attackSpeed: 0
+  attackSpeed: 5
   attackRange: 0
   evolutionStats:
   - Health: 400

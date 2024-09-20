@@ -27,8 +27,9 @@ public class Building : Entity
     public BuildingType buildingType;
     protected Player player;
     protected CardSO card;
+    protected BuildingSlot buildingSlot;
 
-    public virtual void InitializeBuilding(LayerMask layerMask, CardSO card) => Debug.Log("Initialize not implemented");
+    public virtual void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot) => Debug.Log("Initialize not implemented");
     protected virtual void BuildingBuilt() => Debug.Log("Built not implemented");
     protected virtual void BuildingDestroyed() => Debug.Log("Destroyed not implemented");
 }
