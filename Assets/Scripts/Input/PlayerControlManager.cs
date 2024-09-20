@@ -21,6 +21,19 @@ public class PlayerControlManager : MonoBehaviour
 		Instance = this;
 	}
 
+	public int CheckMode()
+	{
+		if (mode == Mode.Idle)
+			return 0;
+		else if(mode == Mode.Command)
+			return 1;
+		else if(mode == Mode.Cast)
+			return 2;
+		else if(mode == Mode.Build)
+			return 3;
+		return 4;
+	}
+
 	public void CardSelected(CardSO cardSO)
 	{
 		if (cardSO.cardType == CardSO.CardType.Character)
@@ -38,15 +51,5 @@ public class PlayerControlManager : MonoBehaviour
 			//PlayerBlue.Instance.SpawnBuilding(cardSO);
 			mode = Mode.Build;
 		}
-	}
-
-	public IEnumerator CardConfirmation()
-	{
-		while(Mouse.current.leftButton.isPressed) //More Held Down Inputs
-		{
-			yield return null;
-		}
-		Vector2 mousePosition = Mouse.current.position.ReadValue();
-		Debug.Log(mousePosition);
 	}
 }

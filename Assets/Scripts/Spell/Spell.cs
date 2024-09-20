@@ -17,5 +17,9 @@ public class Spell : MonoBehaviour
 
 	public virtual IEnumerator Project(int layer){	yield return false;   }
 
-	public virtual bool Placed(bool isPlaced){	return false;	}
+	public bool checkCancel()
+	{
+		
+		return false;
+	}
 }

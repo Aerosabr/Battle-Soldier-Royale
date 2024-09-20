@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mine
   - Base
+  - CardButton
   layers:
   - Default
   - TransparentFX

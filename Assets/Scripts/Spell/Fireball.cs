@@ -2,19 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Fireball : Spell
 {
+	public GraphicRaycaster raycaster; // Reference to the UI Raycaster (should be set in the inspector)
+
 	private const int MAX_SIZE = 9;
 	private const float MAX_DURATION = 4;
-
-	private void Start()
-	{
-		hitBox = GetComponent<BoxCollider>();
-		StartCoroutine(HandleHitBox());
-		StartCoroutine(HandleAttack());
-	}
 
 	private void OnDrawGizmos()
 	{
@@ -28,6 +25,9 @@ public class Fireball : Spell
 	public void InitializeFireball(int layer)
 	{
 		targetLayer = layer;
+		hitBox = GetComponent<BoxCollider>();
+		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
+		hitBox.enabled = false;
 	}
 
 	private IEnumerator HandleHitBox()
@@ -67,39 +67,54 @@ public class Fireball : Spell
 
 	public override IEnumerator Project(int layer)
 	{
+		float cameraDistance = 1;
 		InitializeFireball(layer);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
-		while (transparentObject.gameObject.activeSelf)
+		while (Mouse.current.leftButton.isPressed)
 		{
-			Vector3 mouse_position = Input.mousePosition;
-
-			float x = mouse_position.x;
-			transform.position = new Vector3(mouse_position.x, transform.position.y, transform.position.z);
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit))
+			{
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, cameraDistance);
+			}
 			yield return null;
 		}
 
-		if (visualObject.gameObject.activeSelf)
-			yield return true;
-		else
-			yield return false;
-		
-	}
-
-	public override bool Placed(bool isPlaced)
-	{
-		if (isPlaced)
-		{
-			transparentObject.gameObject.SetActive(false);
-			visualObject.gameObject.SetActive(true);
-			return true;
-		}
-		else
+		if (IsMouseOverUI())
 		{
 			transparentObject.gameObject.SetActive(false);
 			visualObject.gameObject.SetActive(false);
+			Destroy(gameObject);
+		}
+		else
+		{
+			transparentObject.gameObject.SetActive(false);
+			visualObject.gameObject.SetActive(true);
+			hitBox.enabled = true;
+			StartCoroutine(HandleHitBox());
+			StartCoroutine(HandleAttack());
+			Destroy(gameObject, MAX_DURATION);
+		}
+
+	}
+
+	private bool IsMouseOverUI()
+	{
+		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
+		if (corners == null)
+		{
 			return false;
 		}
+		Vector3 mousePosition = Input.mousePosition;
+		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	#region Entities in Range Handler
