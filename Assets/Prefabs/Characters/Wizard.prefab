@@ -4469,6 +4469,7 @@ GameObject:
   - component: {fileID: 22331558832077240}
   - component: {fileID: 3408945106415334056}
   - component: {fileID: -7355054660305033053}
+  - component: {fileID: 5975301724443634893}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -4572,6 +4573,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!135 &5975301724443634893
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2266915314425856969}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1014
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.01
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2326492647748452720
 GameObject:
   m_ObjectHideFlags: 0

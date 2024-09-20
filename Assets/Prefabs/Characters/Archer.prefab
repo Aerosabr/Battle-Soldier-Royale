@@ -5013,6 +5013,7 @@ GameObject:
   - component: {fileID: 8525006084406745442}
   - component: {fileID: 8577889945637332760}
   - component: {fileID: -4978870371350234402}
+  - component: {fileID: 1096658619089652731}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -5114,6 +5115,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!135 &1096658619089652731
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2205606452309650044}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1014
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.01
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2257842624145801394
 GameObject:
   m_ObjectHideFlags: 0
@@ -11338,7 +11360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9050739043944219776
 Transform:
   m_ObjectHideFlags: 0
