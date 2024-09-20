@@ -86,7 +86,7 @@ public class Archer : Character, IDamageable
     private IEnumerator ChargeAttack()
     {
         canAttack = false;
-        yield return new WaitForSeconds(attackSpeed);
+        yield return new WaitForSeconds(1f / attackSpeed);
         canAttack = true;
     }
 
@@ -142,6 +142,12 @@ public class Archer : Character, IDamageable
         player.AddToMilitary(gameObject);
     }
 
+    private void Card_OnLevelChanged(object sender, EventArgs e)
+    {
+        anim.ActivateEvolutionVisual(card.level);
+        SetStats();
+    }
+
     private void SetStats()
     {
         if (maxHealth < evolutionStats[card.level - 1].Health)
@@ -151,12 +157,6 @@ public class Archer : Character, IDamageable
             
             attack = evolutionStats[card.level - 1].Attack;
         }
-    }
-
-    private void Card_OnLevelChanged(object sender, EventArgs e)
-    {
-        anim.ActivateEvolutionVisual(card.level);
-        SetStats();
     }
 }
 

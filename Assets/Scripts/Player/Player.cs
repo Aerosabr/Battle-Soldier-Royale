@@ -61,6 +61,8 @@ public class Player : MonoBehaviour
 
     public void SpawnCharacter(CardSO CSO)
     {
+        SubtractGold(CSO.cardCost[CSO.level - 1]);
+
         Transform character = Instantiate(CSO.spawnableObject, transform).transform;
         float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
         character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
@@ -107,6 +109,19 @@ public class Player : MonoBehaviour
 			}
 		}
         return maxXRange;
+    public void BuildBuilding(CardSO CSO, GameObject buildingSlot)
+    {
+        SubtractGold(CSO.cardCost[CSO.level - 1]);
+        if (playerColor == PlayerColor.Blue && !MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>().ContainsBuilding())
+        {
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[0].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>());
+        }
+        else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
+        {
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[0].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>());
+        }
     }
 
     public void AddToEconomy(GameObject character, bool isWorker)

@@ -19,10 +19,10 @@ public class CharacterBarSingleUI : MonoBehaviour
         charCost.text = cost.ToString();
         charSprite.sprite = cardSO.backgrounds[cardSO.level - 1];
 
-        button.onClick.AddListener(() =>
+        switch(cardSO.cardType)
         {
             PlayerControlManager.Instance.CardSelected(cardSO);
-        });
+        }
 
         PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
     }
