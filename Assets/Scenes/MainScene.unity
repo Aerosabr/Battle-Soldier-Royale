@@ -286,6 +286,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 92cd84c4082ee444184fc2bbe5c69e40, type: 2}
   - {fileID: 11400000, guid: ba7d0e515fc522e4aa2b3af507c395f9, type: 2}
   - {fileID: 11400000, guid: 4ffc0d5801b0b724ca8eb71bdae20438, type: 2}
+  - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
   startingGold: 5000
   spawnRotation: {x: 0, y: 90, z: 0}
 --- !u!1 &172604234
@@ -2048,6 +2049,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1520580174}
   - component: {fileID: 1520580173}
+  - component: {fileID: 1520580175}
   m_Layer: 0
   m_Name: GameInput
   m_TagString: Untagged
@@ -2082,6 +2084,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1520580175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520580172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4c00e4b5b106947843544c856830b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1628875854
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Fireball : Spell
 {
-	private const int MAX_SIZE = 8;
+	private const int MAX_SIZE = 9;
 	private const float MAX_DURATION = 4;
 
 	private void Start()
@@ -25,11 +25,9 @@ public class Fireball : Spell
 			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
 	}
-	public void InitializeFireball(int layer, float damage)
+	public void InitializeFireball(int layer)
 	{
 		targetLayer = layer;
-		this.damage = damage;
-		Destroy(this, duration);
 	}
 
 	private IEnumerator HandleHitBox()
@@ -67,9 +65,9 @@ public class Fireball : Spell
 	}
 
 
-	public override IEnumerator Project(int layer, float damage)
+	public override IEnumerator Project(int layer)
 	{
-		InitializeFireball(layer, damage);
+		InitializeFireball(layer);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
 		while (transparentObject.gameObject.activeSelf)

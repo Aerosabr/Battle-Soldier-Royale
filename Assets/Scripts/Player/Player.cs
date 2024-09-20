@@ -67,16 +67,10 @@ public class Player : MonoBehaviour
         character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
     }
 
-    public IEnumerator SpawnSpell(CardSO CSO)
+    public void SpawnSpell(CardSO CSO)
     {
-        while(!response)
-        {
-            bool spellPlace = true;
-            if(spellPlace)
-				SubtractGold(CSO.cardCost[CSO.level - 1]);
-            response = true;
-		}
-        yield return null;
+        Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
+        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer));
 	}
 
     public bool CheckCardPosition(float currentXPosition)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControlManager : MonoBehaviour
 {
@@ -39,8 +40,13 @@ public class PlayerControlManager : MonoBehaviour
 		}
 	}
 
-	public void CardConfirmation()
+	public IEnumerator CardConfirmation()
 	{
-		bool confirmation = PlayerBlue.Instance.CheckCardPosition(20);
+		while(Mouse.current.leftButton.isPressed) //More Held Down Inputs
+		{
+			yield return null;
+		}
+		Vector2 mousePosition = Mouse.current.position.ReadValue();
+		Debug.Log(mousePosition);
 	}
 }
