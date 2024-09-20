@@ -12,8 +12,9 @@ public class PlayerBlue : Player
         AddGold(startingGold);
         foreach (CardSO CSO in tempLoadout)
         {
-            CardSO temp = new CardSO(CSO);
-            loadout.Add(temp);
+            CardSO newCard = Instantiate(CSO);
+            newCard.newCardSO(CSO);
+            loadout.Add(newCard);
         }
     }
 

@@ -60,6 +60,17 @@
                 },
                 {
                     "name": "",
+                    "id": "afa6e5c0-2d0e-43bd-8bbd-9127c1bbca7f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3f5e71cd-e88f-4efb-8a57-7b6d61eba297",
                     "path": "<Keyboard>/1",
                     "interactions": "",

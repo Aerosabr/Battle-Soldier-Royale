@@ -23,7 +23,6 @@ public class Worker : Character, IDamageable
 
     private State state;
     private float miningTimer;
-    private float miningTimerMax = 5f;
 
     private void Awake()
     {
@@ -46,7 +45,7 @@ public class Worker : Character, IDamageable
                 break;
             case State.Mining:
                 miningTimer += Time.deltaTime;
-                if (miningTimer >= miningTimerMax)
+                if (miningTimer >= attackSpeed)
                     FinishMining();
                 break;
             case State.Dead:

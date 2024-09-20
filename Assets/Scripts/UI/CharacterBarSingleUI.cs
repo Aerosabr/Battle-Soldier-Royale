@@ -18,10 +18,23 @@ public class CharacterBarSingleUI : MonoBehaviour
         charCost.text = cost.ToString();
         charSprite.sprite = cardSO.backgrounds[cardSO.level - 1];
 
-        button.onClick.AddListener(() =>
+        switch(cardSO.cardType)
         {
-            PlayerBlue.Instance.SpawnCharacter(cardSO);
-        });
+            case (CardSO.CardType.Building):
+                button.onClick.AddListener(() =>
+                {
+                    PlayerBlue.Instance.BuildBuilding(cardSO, null);               
+                });
+                break;
+            case (CardSO.CardType.Character):
+                button.onClick.AddListener(() =>
+                {
+                    PlayerBlue.Instance.SpawnCharacter(cardSO);
+                });
+                break;
+            case (CardSO.CardType.Spell):
+                break;
+        }
 
         PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
     }

@@ -8,6 +8,7 @@ public class ArcherTowerVisual : MonoBehaviour
     [SerializeField] private ArcherTower archerTower;
     [SerializeField] private List<EvolutionVisual> archerEVs;
     [SerializeField] private List<EvolutionVisual> towerEVs;
+    private bool buildingCompleted;
 
     private void Awake()
     {
@@ -24,19 +25,30 @@ public class ArcherTowerVisual : MonoBehaviour
         archerTower.Attack01();
 
     }
-    /*
-    public void ActivateEvolutionVisual(int level)
+
+    public void ChangeBuildingVisual(int buildingLevel, int buildingPhase)
     {
-        foreach (EvolutionVisual visual in evolutionVisuals)
+        foreach (EvolutionVisual visual in archerEVs)
+        {
+            foreach (GameObject buildingPart in visual.bodyParts)
+                buildingPart.SetActive(false);
+        }
+        foreach (EvolutionVisual visual in towerEVs)
         {
             foreach (GameObject buildingPart in visual.bodyParts)
                 buildingPart.SetActive(false);
         }
 
-        foreach (GameObject buildingPart in evolutionVisuals[level - 1].bodyParts)
+        towerEVs[buildingLevel - 1].bodyParts[buildingPhase - 1].SetActive(true);
+        if (buildingCompleted)
         {
-            buildingPart.SetActive(true);
+            foreach (GameObject buildingPart in archerEVs[buildingLevel - 1].bodyParts)
+            {
+                buildingPart.SetActive(true);
+            }
         }
     }
-    */
+
+    public EvolutionVisual GetEvolutionVisual(int buildingLevel) => towerEVs[buildingLevel - 1];
+    public void BuildingCompleted(bool toggle) => buildingCompleted = toggle;
 }

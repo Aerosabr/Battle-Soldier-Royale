@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         MapSize = 60f;
-        MaxWorkerAmount = 15;
+        MaxWorkerAmount = 10;
     }
 
     public float GetMapSize() => MapSize;
