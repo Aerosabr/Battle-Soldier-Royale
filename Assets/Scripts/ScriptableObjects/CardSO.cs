@@ -19,6 +19,7 @@ public class CardSO : ScriptableObject
 	public List<Sprite> backgrounds;
 	public List<int> cardCost;
 	public List<int> upgradeCost;
+	public List<int> damageOutput;
 	public GameObject upgradesTab;
 	public Transform spawnableObject;
 	public int level;

@@ -11,6 +11,7 @@ public class ArcherTower : Building, IDamageable
     private const int IS_DESTROYED = 3;
 
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -67,8 +68,11 @@ public class ArcherTower : Building, IDamageable
         {
             healthPercentage = hpPercent
         });
-
-        int progress = 0;
+		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+		{
+			damage = 0
+		});
+		int progress = 0;
         for (int i = 1; i <= archerTowerVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
             if (hpPercent >= (i / (float)archerTowerVisual.GetEvolutionVisual(card.level).bodyParts.Count))

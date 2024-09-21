@@ -2,45 +2,42 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Fireball : Spell
 {
-	private const int MAX_SIZE = 8;
-	private const float MAX_DURATION = 4;
+	public GraphicRaycaster raycaster;
 
-	private BoxCollider hitBox;
-	private int targetLayer = 6;
-
-	[SerializeField]
-	private Transform transparentObject;
-
-	[SerializeField]
-	private Transform visualObject;
-
-	[SerializeField]
-	private List<Character> characters = new List<Character>();
-
-	private void Start()
-	{
-		hitBox = GetComponent<BoxCollider>();
-		StartCoroutine(HandleHitBox());
-		StartCoroutine(HandleAttack());
-	}
+	private const int MAX_SIZE = 7;
+	private const float MAX_DURATION = 2;
 
 	private void OnDrawGizmos()
 	{
 		if (hitBox != null)
 		{
 			Gizmos.color = Color.red;
-			// Draw the hitbox as a red wire cube
 			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
 	}
-	public void InitializeFireball(int layer, float damage)
+	public void InitializeFireball(int layer, int damage, int cost)
 	{
-		targetLayer = layer;
+		if (layer == 6)
+		{
+			player = PlayerBlue.Instance;
+			targetLayer = 1 << 7;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+			targetLayer = 1 << 6;
+		}
 		this.damage = damage;
-		Destroy(this, duration);
+		this.cost = cost;
+		hitBox = GetComponent<BoxCollider>();
+		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
+		hitBox.enabled = false;
 	}
 
 	private IEnumerator HandleHitBox()
@@ -60,49 +57,77 @@ public class Fireball : Spell
 
 	private IEnumerator HandleAttack()
 	{
-		float counter = 0;
-		while(counter < 1)
+		float delay = 0.75f;
+		float elapsedTime = 0f;
+		while (elapsedTime < delay)
 		{
-			foreach (Character character in characters)
-			{
-				if (character.GetCurrentHealth() > 0)
-				{
-					character.transform.GetComponent<IDamageable>().Damaged((int)damage);
-					yield return null;
-				}
-			}
+			elapsedTime += Time.deltaTime;
 			yield return null;
-
+		}
+		foreach (Character character in characters)
+		{
+			if (character.GetCurrentHealth() > 0)
+			{
+				character.transform.GetComponent<IDamageable>().Damaged(damage);
+				yield return null;
+			}
 		}
 		yield return null;
 	}
 
 
-	public void Project()
+	public override IEnumerator Project(int layer, int damage, int cost)
 	{
+		float cameraDistance = 0.75f;
+		InitializeFireball(layer, damage, cost);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
-		StartCoroutine(MoveToMousePosition());
-	}
-
-	public void Spawn(int layer, float damage)
-	{
-		transparentObject.gameObject.SetActive(false);
-		visualObject.gameObject.SetActive(true);
-		InitializeFireball(layer, damage);
-	}
-
-	private IEnumerator MoveToMousePosition()
-	{
-		while(transparentObject.gameObject.activeSelf)
+		while (Mouse.current.leftButton.isPressed)
 		{
-			Vector3 mouse_position = Input.mousePosition;
-
-			float x = mouse_position.x;
-			transform.position = new Vector3( mouse_position.x, transform.position.y, transform.position.z);
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit))
+			{
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, cameraDistance);
+			}
 			yield return null;
 		}
 
+		if (IsMouseOverUI())
+		{
+			transparentObject.gameObject.SetActive(false);
+			visualObject.gameObject.SetActive(false);
+			Destroy(gameObject);
+		}
+		else
+		{
+			player.SubtractGold(cost);
+			transparentObject.gameObject.SetActive(false);
+			visualObject.gameObject.SetActive(true);
+			hitBox.enabled = true;
+			StartCoroutine(HandleHitBox());
+			StartCoroutine(HandleAttack());
+			Destroy(gameObject, MAX_DURATION);
+		}
+		PlayerControlManager.Instance.CardHandled();
+
+	}
+
+	private bool IsMouseOverUI()
+	{
+		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
+		if (corners == null)
+		{
+			return false;
+		}
+		Vector3 mousePosition = Input.mousePosition;
+		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	#region Entities in Range Handler

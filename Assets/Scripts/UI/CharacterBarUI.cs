@@ -8,6 +8,7 @@ public class CharacterBarUI : MonoBehaviour
     public static CharacterBarUI Instance;
     [SerializeField] private Transform container;
     [SerializeField] private Transform charTemplate;
+    [SerializeField] private Transform currentTemplateSelected;
 
     private void Awake()
     {
@@ -36,4 +37,23 @@ public class CharacterBarUI : MonoBehaviour
             charTransform.GetComponent<CharacterBarSingleUI>().UpdateCard(loadoutCard);
         }
     }
+
+    public void SetCurrentButtonSelected(Transform button)
+    {
+        currentTemplateSelected = button;
+    }
+
+    public Vector3[] GetCancelArea()
+    {
+        RectTransform rectTransform = currentTemplateSelected.GetComponent<RectTransform>();
+
+        if (rectTransform != null)
+        {
+            Vector3[] corners = new Vector3[4];
+            rectTransform.GetWorldCorners(corners);
+			return corners;
+
+		}
+        return null;
+	}
 }
