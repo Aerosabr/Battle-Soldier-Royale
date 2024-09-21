@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1063407360156546806
 Transform:
   m_ObjectHideFlags: 0
@@ -5011,7 +5011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6198897123630949090
 Transform:
   m_ObjectHideFlags: 0
@@ -9725,7 +9725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5113610325467662797
 Transform:
   m_ObjectHideFlags: 0
@@ -16435,7 +16435,7 @@ GameObject:
   - component: {fileID: 2532555925057319742}
   - component: {fileID: 8150578317892935425}
   - component: {fileID: 3027154619284786492}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16471,9 +16471,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4cb7c77e2ad6054ea493f4bbfebe9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 0
-  attack: 0
+  currentHealth: 99999
+  maxHealth: 99999
+  attack: 300
   attackSpeed: 1.5
   attackRange: 1
   evolutionStats:
@@ -16485,7 +16485,7 @@ MonoBehaviour:
     Attack: 180
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   characterType: 1
   anim: {fileID: 6156469004722996060}
   state: 0
@@ -21567,6 +21567,10 @@ PrefabInstance:
       propertyPath: hasProgressGameObject
       value: 
       objectReference: {fileID: 6786774710935251577}
+    - target: {fileID: 4590383109131978397, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 6786774710935251577}
     - target: {fileID: 4906900927304782939, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: m_Name
       value: ProgressBarUI
@@ -21651,11 +21655,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4590383109131978397, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4906900927304782939, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1755778009243566704}
   m_SourcePrefab: {fileID: 100100000, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+--- !u!1 &1570394515544899674 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4906900927304782939, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+  m_PrefabInstance: {fileID: 5896330221188011009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1755778009243566704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570394515544899674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c97b43a4aafa3948bd6ab0ac4356486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
+  hasProgressGameObject: {fileID: 6786774710935251577}
 --- !u!224 &4035764311241435183 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7625178399059835950, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}

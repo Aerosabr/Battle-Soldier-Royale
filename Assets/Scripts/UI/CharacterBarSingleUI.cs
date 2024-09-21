@@ -20,7 +20,6 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
         charCost.text = cost.ToString();
         charSprite.sprite = cardSO.backgrounds[cardSO.level - 1];
         this.cardSO = cardSO;
-		PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
 
         if(cardSO.cardType == CardSO.CardType.Character)
         {
@@ -29,6 +28,13 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
 				PlayerControlManager.Instance.CardSelected(cardSO);
 			});
 		}
+        else
+        {
+            button.gameObject.SetActive(false);
+        }
+
+        PlayerBlue.Instance.OnGoldChanged += PlayerManager_OnGoldChanged;
+
 
 	}
 

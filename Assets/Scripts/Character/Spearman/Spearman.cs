@@ -11,6 +11,7 @@ public class Spearman : Character, IDamageable
     private const int IS_DEAD = 3;
 
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -111,8 +112,11 @@ public class Spearman : Character, IDamageable
         {
             healthPercentage = (float)currentHealth / maxHealth
         });
-
-        if (currentHealth <= 0)
+		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+		{
+			damage = damage
+		});
+		if (currentHealth <= 0)
         {
             anim.AnimAction(IS_DEAD);
             state = State.Dead;

@@ -15,8 +15,14 @@ MonoBehaviour:
   cardType: 1
   backgrounds:
   - {fileID: 21300000, guid: e32b8056f5f2eb741bec42f791c7f1b5, type: 3}
+  - {fileID: 21300000, guid: e32b8056f5f2eb741bec42f791c7f1b5, type: 3}
+  - {fileID: 21300000, guid: e32b8056f5f2eb741bec42f791c7f1b5, type: 3}
   cardCost: 960000009600000096000000
   upgradeCost: fa000000c201000000000000
+  damageOutput:
+  - 10
+  - 20
+  - 30
   upgradesTab: {fileID: 6817424142658628186, guid: d05580a48aa7f314bb246c952ddda6d3, type: 3}
   spawnableObject: {fileID: 1162088539647368327, guid: 28599492a9aa0994f93ca417b31d39bb, type: 3}
   level: 1

@@ -231,7 +231,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 92cd84c4082ee444184fc2bbe5c69e40, type: 2}
   - {fileID: 11400000, guid: ba7d0e515fc522e4aa2b3af507c395f9, type: 2}
   - {fileID: 11400000, guid: 4ffc0d5801b0b724ca8eb71bdae20438, type: 2}
-  - {fileID: 11400000, guid: eadb09cee33a43247b68b5d4182dd5bd, type: 2}
   - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
   startingGold: 6000
   spawnRotation: {x: 0, y: 90, z: 0}
@@ -691,7 +690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &489374554
 RectTransform:
   m_ObjectHideFlags: 0
@@ -805,6 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711f96f1207303e48bb5e19c02500e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPressed: 0
 --- !u!1001 &490167863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -894,6 +894,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 2129632963}
+    - target: {fileID: 4590383109131978397, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: hasProgressGameObject
       value: 
       objectReference: {fileID: 2129632963}
@@ -1770,18 +1774,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5320606399969816, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1933531947730361795, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4020370539169085930, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4549758980162715631, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1822,37 +1814,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5650433025923201708, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6786774710935251577, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_Name
       value: Knight
-      objectReference: {fileID: 0}
-    - target: {fileID: 6786774710935251577, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6786774710935251577, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613732814716348785, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: attack
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613732814716348785, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: maxHealth
-      value: 99999
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613732814716348785, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: currentHealth
-      value: 99999
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613732814716348785, guid: 422948367d981534a815372e6c9f8c35, type: 3}
-      propertyPath: targetLayer.m_Bits
-      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3327,6 +3291,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 1867699061}
+    - target: {fileID: 4590383109131978397, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: hasProgressGameObject
       value: 
       objectReference: {fileID: 1867699061}

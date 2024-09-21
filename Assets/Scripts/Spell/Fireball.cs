@@ -22,9 +22,11 @@ public class Fireball : Spell
 			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
 	}
-	public void InitializeFireball(int layer)
+	public void InitializeFireball(int layer, int damage, int cost)
 	{
 		targetLayer = layer;
+		this.damage = damage;
+		this.cost = cost;
 		hitBox = GetComponent<BoxCollider>();
 		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
 		hitBox.enabled = false;
@@ -65,10 +67,10 @@ public class Fireball : Spell
 	}
 
 
-	public override IEnumerator Project(int layer)
+	public override IEnumerator Project(int layer, int damage, int cost)
 	{
-		float cameraDistance = 1;
-		InitializeFireball(layer);
+		float cameraDistance = 0.75f;
+		InitializeFireball(layer, damage, cost);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
 		while (Mouse.current.leftButton.isPressed)
@@ -91,6 +93,7 @@ public class Fireball : Spell
 		}
 		else
 		{
+			PlayerBlue.Instance.SubtractGold(cost);
 			transparentObject.gameObject.SetActive(false);
 			visualObject.gameObject.SetActive(true);
 			hitBox.enabled = true;

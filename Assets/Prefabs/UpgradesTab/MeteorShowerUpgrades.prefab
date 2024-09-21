@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abc997fec3e96a41a67f62e9ccd3298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadoutCard: {fileID: 0}
+  loadoutCard: {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
   buttonList:
   - button: {fileID: 1109311857858826487}
     levelText: {fileID: 6732826175252494602}

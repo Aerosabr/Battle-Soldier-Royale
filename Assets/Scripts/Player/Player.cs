@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
     public void SpawnSpell(CardSO CSO)
     {
         Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
-        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer));
+        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, CSO.damageOutput[CSO.level - 1], CSO.cardCost[CSO.level - 1]));
 	}
 
     public bool CheckCardPosition(float currentXPosition)

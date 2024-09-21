@@ -53,10 +53,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Meteor
   damage: 10
+  cost: 0
   duration: 5
-  isPlaced: 0
   targetLayer: 6
   hitBox: {fileID: 865205287473903996}
+  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
   transparentObject: {fileID: 1872684086615307803}
   visualObject: {fileID: 4152139916092068735}
   characters: []
@@ -220,6 +221,10 @@ PrefabInstance:
     - target: {fileID: 7957833072274404953, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8176230078092200170, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 960
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

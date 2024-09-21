@@ -13,4 +13,10 @@ public interface IDamageable
     {
         public float healthPercentage;
     }
+    
+    public event EventHandler<OnDamageTakenEventArgs> OnDamageTaken;
+    public class OnDamageTakenEventArgs : EventArgs
+    {
+        public int damage;
+    }
 }
