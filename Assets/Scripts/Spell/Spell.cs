@@ -16,6 +16,6 @@ public class Spell : MonoBehaviour
 	[SerializeField] protected Transform visualObject;
 	[SerializeField] protected List<Character> characters = new List<Character>();
 
-	public virtual IEnumerator Project(int layer, int damage, int cost){	yield return false;   }
+	public virtual IEnumerator Project(LayerMask layerMask, int damage, int cost){	yield return false;   }
 
 }
