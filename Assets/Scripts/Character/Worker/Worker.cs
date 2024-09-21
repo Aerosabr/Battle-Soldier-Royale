@@ -24,12 +24,14 @@ public class Worker : Character, IDamageable
 
     private State state;
     private float miningTimer;
-
+    private float time;
     private void Awake()
     {
         characterType = CharacterType.Worker;
         state = State.Idle;
         miningTimer = 0;
+        Debug.Log(Time.time);
+        time = Time.time;
     }
 
     private void Update()
@@ -105,6 +107,8 @@ public class Worker : Character, IDamageable
     private void Deposit()
     {
         Debug.Log("Deposited");
+        Debug.Log(Time.time);
+
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
         if (player.playerColor == Player.PlayerColor.Blue)
             PlayerBlue.Instance.AddGold(attack);

@@ -10739,11 +10739,11 @@ MonoBehaviour:
   attackRange: 4
   buildTimer: 5
   evolutionStats:
-  - Health: 4000
+  - Health: 3000
     Attack: 200
-  - Health: 6000
+  - Health: 4500
     Attack: 300
-  - Health: 10000
+  - Health: 7500
     Attack: 450
   targetLayer:
     serializedVersion: 2
