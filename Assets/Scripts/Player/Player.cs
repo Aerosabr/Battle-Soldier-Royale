@@ -101,4 +101,32 @@ public class Player : MonoBehaviour
     public void AddToMilitary(GameObject character) => Military.Add(character);
     public void RemoveFromMilitary(GameObject character) => Military.Remove(character);
     public List<GameObject> GetSpawnedMilitary() => Military;   
+    public float GetFurthestControlledArea()
+    {
+        float area = 0;
+        if (playerColor == PlayerColor.Blue)
+        {
+            float unitArea = 0;
+            foreach (GameObject unit in Military)
+            {
+                float distance = Mathf.Abs(unit.transform.position.x - transform.position.x);
+                if (distance > unitArea)
+                    unitArea = distance;
+            }
+            area = Mathf.Max(unitArea, Mathf.Abs(MapManager.Instance.buildingSlots[0].transform.position.x));
+        }
+        else
+        {
+            float unitArea = 0;
+            foreach (GameObject unit in Military)
+            {
+                float distance = transform.position.x - unit.transform.position.x;
+                if (distance > unitArea)
+                    unitArea = distance;
+            }
+            area = Mathf.Max(unitArea, MapManager.Instance.buildingSlots[2].transform.position.x);
+        }
+
+        return area;
+    }
 }

@@ -5,29 +5,35 @@ using UnityEngine.InputSystem;
 
 public class EnemyAI : MonoBehaviour
 {
-/*    private State state;
+    private State state;
     [SerializeField] private List<AIGameStateSO> gameStates;
 
     private float gameStateTimer;
     private float gameStateTimerMax = 1f;
     private AlertMetrics alertMetrics;
     private ActionType actionType;
-    private LoadoutCard actionLoadout;
+    //private LoadoutCard actionLoadout;
 
     private void Awake()
     {
         state = State.Idle;
     }
 
+    private void Start()
+    {
+        PlayerRed.Instance.SpawnCharacter(PlayerRed.Instance.GetLoadout()[0]);
+    }
+
     private void Update()
     {
+        /*
         gameStateTimer += Time.deltaTime;
         if (gameStateTimer >= gameStateTimerMax)
         {
             DetermineGameState();
             gameStateTimer = 0f;
         }
-        
+        */
     }
 
     private void DetermineGameState()
@@ -86,7 +92,7 @@ public class EnemyAI : MonoBehaviour
                 break;
         }
     }
-
+    /*
     private void ExecuteAction()
     {
         int Gold = PlayerRed.Instance.GetGold();
@@ -112,7 +118,7 @@ public class EnemyAI : MonoBehaviour
                 break;   
         }
     }
-
+    */
     private void CalculateAOC(out AlertLevel areaOfControl)
     {
         float mapSizeMultiplier = GameManager.Instance.GetMapSize() / 20;
@@ -128,14 +134,25 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateEMS(out AlertLevel effectiveMilitaryStrength)
     {
-        float EMS = 0;
+        int playerEMS = GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
+        int aiEMS = GetEMSFromList(PlayerRed.Instance.GetSpawnedMilitary());
 
+        float EMS = aiEMS / (float)playerEMS;
         if (EMS > 2)
             effectiveMilitaryStrength = AlertLevel.Favored;
         else if (EMS < .5f)
             effectiveMilitaryStrength = AlertLevel.Unfavored;
         else
             effectiveMilitaryStrength = AlertLevel.Even;
+    }
+
+    private int GetEMSFromList(List<GameObject> MilitaryUnits)
+    {
+        int EMS = 0;
+        foreach (GameObject unit in MilitaryUnits)
+            EMS += unit.GetComponent<Character>().GetUnitStrength();
+
+        return EMS;
     }
 
     private void CalculateGPM(out AlertLevel goldPerMinute)
@@ -179,7 +196,6 @@ public class EnemyAI : MonoBehaviour
     {
 
     }
-*/
 }
 
 public enum AlertLevel
