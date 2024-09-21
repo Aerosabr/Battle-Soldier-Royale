@@ -2,13 +2,22 @@
     "name": "PlayerControls",
     "maps": [
         {
-            "name": "PlayerCommandMode",
+            "name": "Player",
             "id": "1411125d-5c1b-4290-9de3-4f476e8a1e3b",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
                     "id": "38deec92-a30f-4500-9a43-5b2f10cc05b4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MouseMove",
+                    "type": "Value",
+                    "id": "ab95d6d8-ad3b-444c-8165-153beddcf804",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -104,229 +113,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4073fd7f-1d05-4180-a0d8-6caa77b89bf0",
+                    "id": "406494a8-c376-4934-ad37-69b4e028baad",
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "PlayerBuildMode",
-            "id": "3e0a59a0-e190-416e-939b-bfd3506a2e41",
-            "actions": [
-                {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "b5e13c19-4198-4454-9b01-3c071dee810d",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "CharacterBar",
-                    "type": "Button",
-                    "id": "01de386b-80f4-4380-be06-6d2ab60712e4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "b0bcff27-2455-49ef-b974-fd170f8ec079",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "AD",
-                    "id": "1795b29c-90d3-4bf2-ba24-d3f2880542f2",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Left",
-                    "id": "4449a71d-18c8-4510-9544-888d132ecc14",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Right",
-                    "id": "6bbcdc24-52bd-46cd-9b7f-1fa4309cf4dd",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "d90e38c5-1654-407b-9497-7a456df839d3",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "093b27cf-1f6e-4fef-a194-6183e01cba72",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0d204553-3380-404a-bb68-b629b5b25e02",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7126d2a1-4c0e-4c0e-a009-20f657fff660",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "PlayerCastMode",
-            "id": "3dc888f8-4a3b-4ce7-a454-9287ab8c2a39",
-            "actions": [
-                {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "90514777-59bf-4d13-9971-b353b47e8d4a",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "CharacterBar",
-                    "type": "Button",
-                    "id": "589d1362-953c-4e34-b52a-1b47c408ae41",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "AD",
-                    "id": "cc0619f2-5044-43b9-8ab1-5f8d619e4b24",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Left",
-                    "id": "47ff0d2d-939d-432f-9db0-628dd0421ffd",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Right",
-                    "id": "95bee1ef-8b88-42f0-a744-cf94e3c556ce",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "ca75224f-a3a5-418f-8210-39e4c6607231",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "33129220-3f72-4e13-8619-393812a470bc",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b6a1cf2c-6345-44e0-b5bf-8af7e6995233",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d933edcf-4578-4168-907a-a95d15700311",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CharacterBar",
+                    "action": "MouseMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

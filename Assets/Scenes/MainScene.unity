@@ -231,7 +231,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 92cd84c4082ee444184fc2bbe5c69e40, type: 2}
   - {fileID: 11400000, guid: ba7d0e515fc522e4aa2b3af507c395f9, type: 2}
   - {fileID: 11400000, guid: 4ffc0d5801b0b724ca8eb71bdae20438, type: 2}
-  - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
+  - {fileID: 11400000, guid: 4cdaece5218672c4ab1a065e10723d1e, type: 2}
   startingGold: 6000
   spawnRotation: {x: 0, y: 90, z: 0}
 --- !u!1 &172604234

@@ -6,12 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class Fireball : Spell
+public class ArrowBarrage : Spell
 {
 	public GraphicRaycaster raycaster;
 
-	private const int MAX_SIZE = 7;
-	private const float MAX_DURATION = 2;
+	private const int MAX_SIZE = 9;
+	private const float MAX_DURATION = 3;
 
 	private void OnDrawGizmos()
 	{
@@ -21,7 +21,7 @@ public class Fireball : Spell
 			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
 	}
-	public void InitializeFireball(int layer, int damage, int cost)
+	public void InitializeArrowBarrage(int layer, int damage, int cost)
 	{
 		targetLayer = layer;
 		this.damage = damage;
@@ -48,20 +48,19 @@ public class Fireball : Spell
 
 	private IEnumerator HandleAttack()
 	{
-		float delay = 0.75f;
 		float elapsedTime = 0f;
-		while (elapsedTime < delay)
+		float damageInterval = 0.5f;
+		while (elapsedTime < MAX_DURATION)
 		{
-			elapsedTime += Time.deltaTime;
-			yield return null;
-		}
-		foreach (Character character in characters)
-		{
-			if (character.GetCurrentHealth() > 0)
+			foreach (Character character in characters)
 			{
-				character.transform.GetComponent<IDamageable>().Damaged(damage);
-				yield return null;
+				if (character.GetCurrentHealth() > 0)
+				{
+					character.transform.GetComponent<IDamageable>().Damaged(damage);
+				}
 			}
+			yield return new WaitForSeconds(damageInterval);
+			elapsedTime += damageInterval;
 		}
 		yield return null;
 	}
@@ -70,7 +69,7 @@ public class Fireball : Spell
 	public override IEnumerator Project(int layer, int damage, int cost)
 	{
 		float cameraDistance = 0.75f;
-		InitializeFireball(layer, damage, cost);
+		InitializeArrowBarrage(layer, damage, cost);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
 		while (Mouse.current.leftButton.isPressed)

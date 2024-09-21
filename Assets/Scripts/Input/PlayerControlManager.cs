@@ -52,4 +52,9 @@ public class PlayerControlManager : MonoBehaviour
 			mode = Mode.Build;
 		}
 	}
+	
+	public void CardHandled()
+	{
+		mode = Mode.Command;
+	}
 }
