@@ -9,6 +9,7 @@ public class Spell : MonoBehaviour
 	[SerializeField] protected int damage;
 	[SerializeField] protected int cost;
 	[SerializeField] protected int targetLayer;
+	[SerializeField] protected Player player;
 
 	[SerializeField] protected BoxCollider hitBox;
 	[SerializeField] protected Transform transparentObject;

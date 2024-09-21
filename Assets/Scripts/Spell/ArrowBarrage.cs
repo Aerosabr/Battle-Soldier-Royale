@@ -23,7 +23,16 @@ public class ArrowBarrage : Spell
 	}
 	public void InitializeArrowBarrage(int layer, int damage, int cost)
 	{
-		targetLayer = layer;
+		if (layer == 6)
+		{
+			player = PlayerBlue.Instance;
+			targetLayer = 1 << 7;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+			targetLayer = 1 << 6;
+		}
 		this.damage = damage;
 		this.cost = cost;
 		hitBox = GetComponent<BoxCollider>();
@@ -92,7 +101,7 @@ public class ArrowBarrage : Spell
 		}
 		else
 		{
-			PlayerBlue.Instance.SubtractGold(cost);
+			player.SubtractGold(cost);
 			transparentObject.gameObject.SetActive(false);
 			visualObject.gameObject.SetActive(true);
 			hitBox.enabled = true;
