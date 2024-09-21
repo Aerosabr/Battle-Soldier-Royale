@@ -54,8 +54,8 @@ MonoBehaviour:
   spellName: ArrowBarrage
   damage: 0
   cost: 0
-  duration: 0
   targetLayer: 6
+  player: {fileID: 0}
   hitBox: {fileID: 865205287473903996}
   transparentObject: {fileID: 1872684086615307803}
   visualObject: {fileID: 4152139916092068735}
@@ -299,7 +299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8176230078092200170, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 961
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8176230078092200170, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: InitialModule.startRotation.minScalar

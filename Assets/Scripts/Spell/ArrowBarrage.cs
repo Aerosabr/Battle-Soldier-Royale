@@ -21,17 +21,17 @@ public class ArrowBarrage : Spell
 			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
 	}
-	public void InitializeArrowBarrage(int layer, int damage, int cost)
+	public void InitializeArrowBarrage(LayerMask layerMask, int damage, int cost)
 	{
-		if (layer == 6)
+		if (layerMask == 6)
 		{
 			player = PlayerBlue.Instance;
-			targetLayer = 1 << 7;
+			targetLayer = 7;
 		}
 		else
 		{
 			player = PlayerRed.Instance;
-			targetLayer = 1 << 6;
+			targetLayer = 6;
 		}
 		this.damage = damage;
 		this.cost = cost;
@@ -42,21 +42,16 @@ public class ArrowBarrage : Spell
 
 	private IEnumerator HandleHitBox()
 	{
-		float duration = 0.3f;
-		float elapsedTime = 0f;
-		float initialSize = hitBox.size.x;
-
-		while (elapsedTime < duration)
-		{
-			hitBox.size = new Vector3(Mathf.Lerp(initialSize, MAX_SIZE, elapsedTime / duration), hitBox.size.y, hitBox.size.z);
-			elapsedTime += Time.deltaTime;
-			yield return null;
-		}
 		hitBox.size = new Vector3(MAX_SIZE, hitBox.size.y, hitBox.size.z);
+		yield return null;
 	}
 
 	private IEnumerator HandleAttack()
 	{
+		while(characters.Count == 0)
+		{
+			yield return null;
+		}
 		float elapsedTime = 0f;
 		float damageInterval = 0.5f;
 		while (elapsedTime < MAX_DURATION)
@@ -75,10 +70,10 @@ public class ArrowBarrage : Spell
 	}
 
 
-	public override IEnumerator Project(int layer, int damage, int cost)
+	public override IEnumerator Project(LayerMask layerMask, int damage, int cost)
 	{
 		float cameraDistance = 0.75f;
-		InitializeArrowBarrage(layer, damage, cost);
+		InitializeArrowBarrage(layerMask, damage, cost);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
 		while (Mouse.current.leftButton.isPressed)
@@ -132,7 +127,6 @@ public class ArrowBarrage : Spell
 	#region Entities in Range Handler
 	void OnTriggerEnter(Collider collision)
 	{
-		Debug.Log("Collided");
 		if(collision.gameObject.layer == targetLayer)
 		{
 			Character collidedCharacter = collision.gameObject.GetComponent<Character>();
