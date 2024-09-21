@@ -6,6 +6,7 @@ using UnityEngine;
 public class Farm : Building, IDamageable
 {
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -63,7 +64,10 @@ public class Farm : Building, IDamageable
         {
             healthPercentage = hpPercent
         });
-
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = 0
+        });
         int progress = 0;
         for (int i = 1; i <= farmVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {

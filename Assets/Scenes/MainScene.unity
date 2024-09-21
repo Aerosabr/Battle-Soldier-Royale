@@ -226,6 +226,8 @@ MonoBehaviour:
   loadout: []
   tempLoadout:
   - {fileID: 11400000, guid: e252e5104f7177f4a965012fa73cc55a, type: 2}
+  - {fileID: 11400000, guid: 4cdaece5218672c4ab1a065e10723d1e, type: 2}
+  - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
   - {fileID: 11400000, guid: 6c89f728845f1af43a407f984f0ccb69, type: 2}
   - {fileID: 11400000, guid: 7da34b2fa7e0bdd4fbcffb536012a9b2, type: 2}
   - {fileID: 11400000, guid: 92cd84c4082ee444184fc2bbe5c69e40, type: 2}
@@ -586,6 +588,7 @@ MonoBehaviour:
   charSprite: {fileID: 1480066222}
   button: {fileID: 489374555}
   shadow: {fileID: 1654817211}
+  gameInput: {fileID: 0}
 --- !u!1 &489374553
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +798,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 2129632963}
+    - target: {fileID: 4590383109131978397, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: hasProgressGameObject
       value: 
       objectReference: {fileID: 2129632963}
@@ -1451,6 +1458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 742875497}
   charTemplate: {fileID: 488537544}
+  currentTemplateSelected: {fileID: 0}
 --- !u!1 &887855062
 GameObject:
   m_ObjectHideFlags: 0
@@ -2190,6 +2198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1520580174}
   - component: {fileID: 1520580173}
+  - component: {fileID: 1520580175}
   m_Layer: 0
   m_Name: GameInput
   m_TagString: Untagged
@@ -2224,6 +2233,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1520580175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520580172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4c00e4b5b106947843544c856830b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1628875854
 GameObject:
   m_ObjectHideFlags: 0
@@ -3150,6 +3171,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 1867699061}
+    - target: {fileID: 4590383109131978397, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: hasProgressGameObject
       value: 
       objectReference: {fileID: 1867699061}

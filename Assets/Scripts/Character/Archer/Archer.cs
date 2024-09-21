@@ -11,6 +11,7 @@ public class Archer : Character, IDamageable
     private const int IS_DEAD = 3;
 
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -110,6 +111,11 @@ public class Archer : Character, IDamageable
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
         {
             healthPercentage = (float)currentHealth / maxHealth
+        });
+
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = damage
         });
 
         if (currentHealth <= 0)

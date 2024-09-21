@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "MouseMove",
+                    "type": "Value",
+                    "id": "ab95d6d8-ad3b-444c-8165-153beddcf804",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "CharacterBar",
                     "type": "Button",
                     "id": "d85ffc84-a722-46ec-908f-35bd4068c9f8",
@@ -37,7 +46,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Left",
+                    "name": "left",
                     "id": "551c0eeb-dbf0-4881-b468-d04da9a3cbc5",
                     "path": "<Keyboard>/a",
                     "interactions": "",
@@ -48,7 +57,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Right",
+                    "name": "right",
                     "id": "689c6bf1-21cc-4b34-9305-1da677cecd40",
                     "path": "<Keyboard>/d",
                     "interactions": "",
@@ -57,17 +66,6 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "afa6e5c0-2d0e-43bd-8bbd-9127c1bbca7f",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -110,6 +108,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CharacterBar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "406494a8-c376-4934-ad37-69b4e028baad",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

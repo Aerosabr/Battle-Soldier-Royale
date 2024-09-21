@@ -6,6 +6,7 @@ using UnityEngine;
 public class Dummy : Character, IDamageable
 {
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private void Start()
     {
@@ -19,7 +20,11 @@ public class Dummy : Character, IDamageable
         {
             healthPercentage = (float)currentHealth / maxHealth
         });
-        Debug.Log("Dummy took " + damage + " damage!");
+		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+		{
+			damage = damage
+		});
+		Debug.Log("Dummy took " + damage + " damage!");
         if (currentHealth <= 0)
             StartCoroutine(Died());
     }

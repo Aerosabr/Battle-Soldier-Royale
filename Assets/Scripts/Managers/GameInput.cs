@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class GameInput : MonoBehaviour
@@ -20,15 +21,66 @@ public class GameInput : MonoBehaviour
         switch(obj.control.displayName)
         {
             default:
+                Debug.Log(obj.control.displayName);
                 break;
         }
+        
     }
 
     public Vector2 GetCameraMovement()
     {
-        Vector2 inputDir = playerControls.Player.Move.ReadValue<Vector2>();
+        int mode = PlayerControlManager.Instance.CheckMode();
 
-        inputDir = inputDir.normalized;
-        return inputDir;
+        if (mode == 0 || mode == 1)
+        {
+
+			if (Mouse.current.leftButton.isPressed)
+			{
+				Vector2 inputDir = -playerControls.Player.MouseMove.ReadValue<Vector2>();
+				inputDir = inputDir.normalized;
+				return inputDir;
+			}
+			else if (Keyboard.current.aKey.isPressed || Keyboard.current.dKey.isPressed)
+			{
+				Vector2 inputDir = playerControls.Player.Move.ReadValue<Vector2>();
+				inputDir = inputDir.normalized;
+				return inputDir;
+			}
+
+		}
+        else if (mode == 2)
+        {
+			if (Keyboard.current.aKey.isPressed || Keyboard.current.dKey.isPressed)
+			{
+				Vector2 inputDir = playerControls.Player.Move.ReadValue<Vector2>();
+				inputDir = inputDir.normalized;
+				return inputDir;
+			}
+			else if (Mouse.current.leftButton.isPressed)
+			{
+				Vector2 mousePosition = Input.mousePosition;
+				float screenWidth = Screen.width;
+				float edgeThreshold = screenWidth * 0.1f;
+
+				if (mousePosition.x < edgeThreshold)
+				{
+					Vector2 inputDir = new Vector2(-1, 0);
+					return inputDir.normalized;
+				}
+				else if (mousePosition.x > screenWidth - edgeThreshold)
+				{
+					Vector2 inputDir = new Vector2(1, 0);
+					return inputDir.normalized;
+				}
+			}
+
+		}
+        else if (mode == 3)
+        {
+
+        }
+
+		return Vector2.zero;
     }
+
 }
