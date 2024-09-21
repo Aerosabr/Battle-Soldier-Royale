@@ -21,17 +21,17 @@ public class Fireball : Spell
 			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
 	}
-	public void InitializeFireball(int layer, int damage, int cost)
+	public void InitializeFireball(LayerMask layerMask, int damage, int cost)
 	{
-		if (layer == 6)
+		if (layerMask == 6)
 		{
 			player = PlayerBlue.Instance;
-			targetLayer = 1 << 7;
+			targetLayer = 7;
 		}
 		else
 		{
 			player = PlayerRed.Instance;
-			targetLayer = 1 << 6;
+			targetLayer = 6;
 		}
 		this.damage = damage;
 		this.cost = cost;
@@ -57,7 +57,7 @@ public class Fireball : Spell
 
 	private IEnumerator HandleAttack()
 	{
-		float delay = 0.75f;
+		float delay = 0.85f;
 		float elapsedTime = 0f;
 		while (elapsedTime < delay)
 		{
@@ -76,10 +76,10 @@ public class Fireball : Spell
 	}
 
 
-	public override IEnumerator Project(int layer, int damage, int cost)
+	public override IEnumerator Project(LayerMask layerMask, int damage, int cost)
 	{
 		float cameraDistance = 0.75f;
-		InitializeFireball(layer, damage, cost);
+		InitializeFireball(layerMask, damage, cost);
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
 		while (Mouse.current.leftButton.isPressed)
@@ -133,7 +133,6 @@ public class Fireball : Spell
 	#region Entities in Range Handler
 	void OnTriggerEnter(Collider collision)
 	{
-		Debug.Log("Collided");
 		if(collision.gameObject.layer == targetLayer)
 		{
 			Character collidedCharacter = collision.gameObject.GetComponent<Character>();

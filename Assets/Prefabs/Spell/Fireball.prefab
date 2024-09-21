@@ -54,10 +54,9 @@ MonoBehaviour:
   spellName: Fireball
   damage: 10
   cost: 0
-  duration: 2
   targetLayer: 7
+  player: {fileID: 0}
   hitBox: {fileID: 865205287473903996}
-  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
   transparentObject: {fileID: 1872684086615307803}
   visualObject: {fileID: 4152139916092068735}
   characters: []
@@ -496,7 +495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8176230078092200170, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 961
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8176230078092200170, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].cycleCount
