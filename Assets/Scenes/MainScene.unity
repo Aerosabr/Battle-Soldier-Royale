@@ -232,6 +232,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba7d0e515fc522e4aa2b3af507c395f9, type: 2}
   - {fileID: 11400000, guid: 4ffc0d5801b0b724ca8eb71bdae20438, type: 2}
   - {fileID: 11400000, guid: eadb09cee33a43247b68b5d4182dd5bd, type: 2}
+  - {fileID: 11400000, guid: edbec65c5e0d6ac4881588fffdd01771, type: 2}
   startingGold: 6000
   spawnRotation: {x: 0, y: 90, z: 0}
 --- !u!1 &172604234
@@ -1677,6 +1678,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3897865151829325332, guid: 422948367d981534a815372e6c9f8c35, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2141307219491396045, guid: c285175f41c76474fa83d762da68deab, type: 3}
+    - target: {fileID: 3897865151829325332, guid: 422948367d981534a815372e6c9f8c35, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f323cced30244554986ee5e9f5dd8b67, type: 2}
     - target: {fileID: 4020370539169085930, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1735,7 +1744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6786774710935251577, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8613732814716348785, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: attack
@@ -2567,6 +2576,10 @@ PrefabInstance:
     - target: {fileID: 5802136829050478736, guid: 8fa06f0bbeec8634ba90ed740261af9f, type: 3}
       propertyPath: m_Name
       value: BuildingSlotMiddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802136829050478736, guid: 8fa06f0bbeec8634ba90ed740261af9f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5930433505548875953, guid: 8fa06f0bbeec8634ba90ed740261af9f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3769,6 +3782,10 @@ PrefabInstance:
     - target: {fileID: 5802136829050478736, guid: 8fa06f0bbeec8634ba90ed740261af9f, type: 3}
       propertyPath: m_Name
       value: BuildingSlotBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802136829050478736, guid: 8fa06f0bbeec8634ba90ed740261af9f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5930433505548875953, guid: 8fa06f0bbeec8634ba90ed740261af9f, type: 3}
       propertyPath: m_LocalPosition.x
