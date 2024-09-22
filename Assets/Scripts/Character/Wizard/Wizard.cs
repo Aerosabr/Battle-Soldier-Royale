@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wizard : Character, IDamageable
+public class Wizard : Character, IDamageable, ISlowable, IPoisonable
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
@@ -126,11 +126,54 @@ public class Wizard : Character, IDamageable
             player.RemoveFromMilitary(gameObject);
         }
     }
+	public void Slowed(int speed)
+	{
+		if (!isSlowed)
+		{
+			isSlowed = true;
+			moveSpeed = moveSpeed - ((float)speed / 50);
+			attackSpeed = attackSpeed - ((float)speed / 50);
+		}
+	}
+	public void UnSlowed(int speed)
+	{
+		if (isSlowed)
+		{
+			isSlowed = false;
+			moveSpeed = baseMoveSpeed;
+			attackSpeed = baseAttackSpeed;
+		}
+	}
 
-    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
+	public void Poisoned(int damage, int poisonDuration)
+	{
+		if (!isPoisoned)
+		{
+			StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
+		}
+		else
+		{
+			poisonTimer = 0f;
+		}
+	}
+	private IEnumerator HandlePoisonDamage(int damage, float duration)
+	{
+		isPoisoned = true;
+		float poisonDamageInterval = 1f;
+		while (poisonTimer < duration)
+		{
+			Damaged(damage);
+			yield return new WaitForSeconds(poisonDamageInterval);
+			poisonTimer += poisonDamageInterval;
+		}
+		isPoisoned = false;
+	}
+	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
         this.card = card;
         this.card.OnLevelChanged += Card_OnLevelChanged;
+        this.baseAttackSpeed = attackSpeed;
+        this.baseMoveSpeed = moveSpeed;
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);

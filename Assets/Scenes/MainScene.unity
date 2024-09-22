@@ -227,6 +227,8 @@ MonoBehaviour:
   tempLoadout:
   - {fileID: 11400000, guid: e252e5104f7177f4a965012fa73cc55a, type: 2}
   - {fileID: 11400000, guid: 4cdaece5218672c4ab1a065e10723d1e, type: 2}
+  - {fileID: 11400000, guid: b5c0dc51721efca4ebd271c5b0d08729, type: 2}
+  - {fileID: 11400000, guid: 4cf04a39f4dcd074092634dc1d94cc0b, type: 2}
   - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
   - {fileID: 11400000, guid: 6c89f728845f1af43a407f984f0ccb69, type: 2}
   - {fileID: 11400000, guid: 7da34b2fa7e0bdd4fbcffb536012a9b2, type: 2}
@@ -939,6 +941,59 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7625178399059835950, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
   m_PrefabInstance: {fileID: 505048799}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &540672448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540672449}
+  - component: {fileID: 540672450}
+  m_Layer: 0
+  m_Name: PlaceWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &540672449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540672448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.44, z: -4.99}
+  m_LocalScale: {x: 75, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2081613765}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &540672450
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540672448}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 960
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &555777799
 GameObject:
   m_ObjectHideFlags: 0
@@ -2408,6 +2463,7 @@ MonoBehaviour:
   attack: 0
   attackSpeed: 0
   attackRange: 0
+  moveSpeed: 1
   evolutionStats: []
   targetLayer:
     serializedVersion: 2
@@ -3082,6 +3138,7 @@ Transform:
   - {fileID: 1098794194}
   - {fileID: 490167864}
   - {fileID: 1902487902}
+  - {fileID: 540672449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2081613766
