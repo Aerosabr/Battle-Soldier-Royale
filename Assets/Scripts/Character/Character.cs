@@ -30,13 +30,19 @@ public class Character : Entity
     [SerializeField] protected int attack;
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected float attackRange;
+	[SerializeField] protected float moveSpeed = 1f;
 
-    protected bool canAttack = true;
+	protected bool canAttack = true;
     protected float deathTimer;
     protected float deathTimerMax = 3f;
-    protected float moveSpeed = 1f;
+    protected float baseMoveSpeed = 1f;
+    protected float baseAttackSpeed = 1.5f;
+    protected bool isSlowed = false;
+    protected bool isPoisoned = false;
+	protected float poisonTimer = 0f;
 
-    [SerializeField] protected List<CharacterStats> evolutionStats;
+
+	[SerializeField] protected List<CharacterStats> evolutionStats;
     [SerializeField] protected LayerMask targetLayer;
     public CharacterType characterType;
     public AttackType attackType;
