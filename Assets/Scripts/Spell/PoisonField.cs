@@ -58,10 +58,6 @@ public class PoisonField : Spell
 
 	private IEnumerator HandleAttack()
 	{
-		while (characters.Count == 0)
-		{
-			yield return null;
-		}
 		float elapsedTime = 0f;
 		while (elapsedTime < MAX_DURATION)
 		{
@@ -72,7 +68,7 @@ public class PoisonField : Spell
 				{
 					if (character.GetCurrentHealth() > 0)
 					{
-						character.transform.GetComponent<IPoisonable>().Poisoned(damage, POISON_DURATION);
+						character.transform.GetComponent<IEffectable>().Poisoned(damage, POISON_DURATION);
 					}
 				}
 			}

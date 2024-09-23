@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Knight : Character, IDamageable, ISlowable, IPoisonable
+public class Knight : Character, IDamageable, IEffectable
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
@@ -125,11 +125,13 @@ public class Knight : Character, IDamageable, ISlowable, IPoisonable
             player.RemoveFromMilitary(gameObject);
         }
     }
+
+	#region IEffectable Handler
 	public void Slowed(int speed)
 	{
 		if (!isSlowed)
 		{
-            isSlowed = true;
+			isSlowed = true;
 			moveSpeed = moveSpeed - ((float)speed / 50);
 			attackSpeed = attackSpeed - ((float)speed / 50);
 		}
@@ -138,7 +140,7 @@ public class Knight : Character, IDamageable, ISlowable, IPoisonable
 	{
 		if (isSlowed)
 		{
-            isSlowed = false;
+			isSlowed = false;
 			moveSpeed = baseMoveSpeed;
 			attackSpeed = baseAttackSpeed;
 		}
@@ -150,10 +152,10 @@ public class Knight : Character, IDamageable, ISlowable, IPoisonable
 		{
 			StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
 		}
-        else
-        {
-            poisonTimer = 0f;
-        }
+		else
+		{
+			poisonTimer = 0f;
+		}
 	}
 	private IEnumerator HandlePoisonDamage(int damage, float duration)
 	{
@@ -167,6 +169,8 @@ public class Knight : Character, IDamageable, ISlowable, IPoisonable
 		}
 		isPoisoned = false;
 	}
+	#endregion
+
 	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
         this.card = card;
