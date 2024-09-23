@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour
 
     private float gameStateTimer;
     private float gameStateTimerMax = 1f;
-    private AlertMetrics alertMetrics;
+    [SerializeField] private AlertMetrics alertMetrics;
     private ActionType actionType;
     //private LoadoutCard actionLoadout;
 
@@ -26,14 +26,14 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        /*
+        
         gameStateTimer += Time.deltaTime;
         if (gameStateTimer >= gameStateTimerMax)
         {
             DetermineGameState();
             gameStateTimer = 0f;
         }
-        */
+        
     }
 
     private void DetermineGameState()
@@ -121,8 +121,8 @@ public class EnemyAI : MonoBehaviour
     */
     private void CalculateAOC(out AlertLevel areaOfControl)
     {
-        float mapSizeMultiplier = GameManager.Instance.GetMapSize() / 20;
-        float AOC = 0;
+        float mapSizeMultiplier = GameManager.Instance.GetMapSize() / 30;
+        float AOC = PlayerRed.Instance.GetFurthestControlledArea() / PlayerBlue.Instance.GetFurthestControlledArea();
 
         if (AOC > mapSizeMultiplier)
             areaOfControl = AlertLevel.Favored;
@@ -134,10 +134,8 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateEMS(out AlertLevel effectiveMilitaryStrength)
     {
-        int playerEMS = GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
-        int aiEMS = GetEMSFromList(PlayerRed.Instance.GetSpawnedMilitary());
-
-        float EMS = aiEMS / (float)playerEMS;
+        float EMS = GetEMSFromList(PlayerRed.Instance.GetSpawnedMilitary()) / (float)GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
+        
         if (EMS > 2)
             effectiveMilitaryStrength = AlertLevel.Favored;
         else if (EMS < .5f)
@@ -157,7 +155,7 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateGPM(out AlertLevel goldPerMinute)
     {
-        float GPM = 0;
+        float GPM = GetGPMFromList(PlayerRed.Instance.GetSpawnedEconomy()) / (float)GetGPMFromList(PlayerBlue.Instance.GetSpawnedEconomy());
 
         if (GPM > 1.5f)
             goldPerMinute = AlertLevel.Favored;
@@ -165,6 +163,20 @@ public class EnemyAI : MonoBehaviour
             goldPerMinute = AlertLevel.Unfavored;
         else
             goldPerMinute = AlertLevel.Even;
+    }
+
+    private int GetGPMFromList(List<GameObject> EconomyUnits)
+    {
+        int GPM = 600;
+        foreach (GameObject unit in EconomyUnits)
+        {
+            if (unit.GetComponent<Character>() != null)
+                GPM += unit.GetComponent<Character>().GetAttack() * 3;
+            else if (unit.GetComponent<Building>() != null)
+                GPM += unit.GetComponent<Building>().GetAttack() * 60;
+        }
+
+        return GPM;
     }
 
     private void DevelopEconomy()
@@ -216,6 +228,7 @@ public enum State
     UpgradingMilitary,
 }
 
+[System.Serializable]
 public struct AlertMetrics
 {
     public AlertLevel areaOfControl;

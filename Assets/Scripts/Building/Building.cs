@@ -32,4 +32,5 @@ public class Building : Entity
     public virtual void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot) => Debug.Log("Initialize not implemented");
     protected virtual void BuildingBuilt() => Debug.Log("Built not implemented");
     protected virtual void BuildingDestroyed() => Debug.Log("Destroyed not implemented");
+    public int GetAttack() => attack;
 }

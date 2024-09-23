@@ -225,14 +225,10 @@ MonoBehaviour:
   playerColor: 0
   loadout: []
   tempLoadout:
-  - {fileID: 11400000, guid: e252e5104f7177f4a965012fa73cc55a, type: 2}
   - {fileID: 11400000, guid: 4cdaece5218672c4ab1a065e10723d1e, type: 2}
   - {fileID: 11400000, guid: b5c0dc51721efca4ebd271c5b0d08729, type: 2}
   - {fileID: 11400000, guid: 4cf04a39f4dcd074092634dc1d94cc0b, type: 2}
   - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
-  - {fileID: 11400000, guid: 6c89f728845f1af43a407f984f0ccb69, type: 2}
-  - {fileID: 11400000, guid: 7da34b2fa7e0bdd4fbcffb536012a9b2, type: 2}
-  - {fileID: 11400000, guid: 92cd84c4082ee444184fc2bbe5c69e40, type: 2}
   - {fileID: 11400000, guid: ba7d0e515fc522e4aa2b3af507c395f9, type: 2}
   - {fileID: 11400000, guid: 4ffc0d5801b0b724ca8eb71bdae20438, type: 2}
   - {fileID: 11400000, guid: eadb09cee33a43247b68b5d4182dd5bd, type: 2}
@@ -1848,7 +1844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6786774710935251577, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8613732814716348785, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: attack
@@ -3031,6 +3027,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 79ba7c7e13273a440b6817ddde966951, type: 2}
   - {fileID: 11400000, guid: 6b826682e3e38d14894f8ebcadf0102e, type: 2}
   - {fileID: 11400000, guid: c9fc84dcec28d2146b0630d79178aa16, type: 2}
+  alertMetrics:
+    areaOfControl: 0
+    effectiveMilitaryStrength: 0
+    goldPerMinute: 0
 --- !u!4 &1981689152
 Transform:
   m_ObjectHideFlags: 0
