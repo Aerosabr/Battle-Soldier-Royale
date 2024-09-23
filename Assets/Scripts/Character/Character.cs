@@ -44,4 +44,5 @@ public class Character : Entity
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
     protected virtual void CharacterSpawned() => Debug.Log("Spawned not implemented");
     protected virtual void CharacterDied() => Debug.Log("Died not implemented");
+
 }

@@ -72,7 +72,7 @@ public class PoisonField : Spell
 				{
 					if (character.GetCurrentHealth() > 0)
 					{
-						character.transform.GetComponent<IPoisonable>().Poisoned(damage, POISON_DURATION);
+						character.transform.GetComponent<IEffectable>().Poisoned(damage, POISON_DURATION);
 					}
 				}
 			}

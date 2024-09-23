@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Worker : Character, IDamageable, ISlowable, IPoisonable
+public class Worker : Character, IDamageable, IEffectable
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
@@ -135,6 +135,8 @@ public class Worker : Character, IDamageable, ISlowable, IPoisonable
             player.RemoveFromEconomy(gameObject, true);
         }
     }
+
+	#region IEffectable Handler
 	public void Slowed(int speed)
 	{
 		if (!isSlowed)
@@ -177,6 +179,8 @@ public class Worker : Character, IDamageable, ISlowable, IPoisonable
 		}
 		isPoisoned = false;
 	}
+	#endregion
+
 	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
         this.card = card;
