@@ -57,10 +57,6 @@ public class SnowStorm : Spell
 
 	private IEnumerator HandleAttack()
 	{
-		while (characters.Count == 0)
-		{
-			yield return null;
-		}
 		float elapsedTime = 0f;
 		while (elapsedTime < MAX_DURATION)
 		{
