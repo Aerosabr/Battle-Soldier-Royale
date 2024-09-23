@@ -71,7 +71,7 @@ public class SnowStorm : Spell
 				{
 					if (character.GetCurrentHealth() > 0)
 					{
-						character.transform.GetComponent<ISlowable>().Slowed(damage);
+						character.transform.GetComponent<IEffectable>().Slowed(damage);
 					}
 				}
 			}
@@ -82,7 +82,7 @@ public class SnowStorm : Spell
 		{
 			if (character.GetCurrentHealth() > 0)
 			{
-				character.transform.GetComponent<ISlowable>().UnSlowed(damage);
+				character.transform.GetComponent<IEffectable>().UnSlowed(damage);
 				yield return null;
 			}
 		}
@@ -155,7 +155,7 @@ public class SnowStorm : Spell
 				if (!characters.Contains(collidedCharacter))
 				{
 					characters.Add(collidedCharacter);
-					collidedCharacter.GetComponent<ISlowable>().Slowed(damage);
+					collidedCharacter.GetComponent<IEffectable>().Slowed(damage);
 				}
 			}
 		}
@@ -170,7 +170,7 @@ public class SnowStorm : Spell
 				if (characters.Contains(collidedCharacter))
 				{
 					characters.Remove(collidedCharacter);
-					collidedCharacter.GetComponent<ISlowable>().UnSlowed(damage);
+					collidedCharacter.GetComponent<IEffectable>().UnSlowed(damage);
 				}
 			}
 		}

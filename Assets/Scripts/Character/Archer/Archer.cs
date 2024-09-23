@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Archer : Character, IDamageable, ISlowable, IPoisonable
+public class Archer : Character, IDamageable, IEffectable
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
@@ -126,6 +126,8 @@ public class Archer : Character, IDamageable, ISlowable, IPoisonable
             player.RemoveFromMilitary(gameObject);
         }
     }
+
+	#region IEffectable Handler
 	public void Slowed(int speed)
 	{
 		if (!isSlowed)
@@ -168,6 +170,8 @@ public class Archer : Character, IDamageable, ISlowable, IPoisonable
 		}
 		isPoisoned = false;
 	}
+	#endregion
+
 	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
         this.card = card;
