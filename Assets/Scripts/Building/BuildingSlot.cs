@@ -23,4 +23,5 @@ public class BuildingSlot : MonoBehaviour
     }
 
     public bool ContainsBuilding() => containsBuilding;
+    public Building GetBuilding() => building;
 }
