@@ -6,12 +6,13 @@ public class EquippedLoadoutManager : MonoBehaviour
 {
     public static EquippedLoadoutManager Instance;
     private List<CardSO> equippedCardSOList;
-    private List<CardSlotVisual> equippedVisualList;
+    [SerializeField] private List<EquippedCardSlotVisual> equippedVisualList;
 
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
+        equippedCardSOList = new List<CardSO>();
     }
 
     public void AddCard(CardSO cardSO)
@@ -36,7 +37,7 @@ public class EquippedLoadoutManager : MonoBehaviour
     {
         for(int i = 0; i < equippedVisualList.Count; i++)
         {
-            if (equippedCardSOList[i] != null)
+            if (i < equippedCardSOList.Count)
             {
                 equippedVisualList[i].InitializeCard(equippedCardSOList[i]);
             }

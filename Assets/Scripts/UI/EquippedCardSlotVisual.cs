@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardSlotVisual : MonoBehaviour
+public class EquippedCardSlotVisual : MonoBehaviour
 {
 	[SerializeField] private Image icon;
-	[SerializeField] private Text text;
 	public CardSO cardSO;
 
 	public void InitializeCard(CardSO cardSO)
@@ -16,12 +14,15 @@ public class CardSlotVisual : MonoBehaviour
 		if (cardSO != null)
 		{
 			icon.sprite = cardSO.backgrounds[0];
-			text.text = cardSO.name;
 		}
 		else
 		{
 			icon.sprite = null;
-			text.text = "";
+			Color newColor;
+			if (ColorUtility.TryParseHtmlString("#937A50", out newColor))
+			{
+				icon.color = newColor;
+			}
 		}
 	}
 }
