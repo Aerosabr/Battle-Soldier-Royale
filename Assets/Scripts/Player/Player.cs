@@ -67,13 +67,15 @@ public class Player : MonoBehaviour
         float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
         character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
         character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+        CSO.timesCasted++;
     }
 
     public void SpawnSpell(CardSO CSO)
     {
         Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
         StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, CSO.damageOutput[CSO.level - 1], CSO.cardCost[CSO.level - 1]));
-	}
+        CSO.timesCasted++;
+    }
 
     public bool CheckCardPosition(float currentXPosition)
     {
@@ -121,9 +123,11 @@ public class Player : MonoBehaviour
         }
         else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[0].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[2].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
             building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>());
         }
+
+        CSO.timesCasted++;
     }
 
     public void AddToEconomy(GameObject character, bool isWorker)
@@ -146,4 +150,32 @@ public class Player : MonoBehaviour
     public void AddToMilitary(GameObject character) => Military.Add(character);
     public void RemoveFromMilitary(GameObject character) => Military.Remove(character);
     public List<GameObject> GetSpawnedMilitary() => Military;   
+    public float GetFurthestControlledArea()
+    {
+        float area = 0;
+        if (playerColor == PlayerColor.Blue)
+        {
+            float unitArea = 0;
+            foreach (GameObject unit in Military)
+            {
+                float distance = Mathf.Abs(unit.transform.position.x - transform.position.x);
+                if (distance > unitArea)
+                    unitArea = distance;
+            }
+            area = Mathf.Max(unitArea, Mathf.Abs(MapManager.Instance.buildingSlots[0].transform.position.x));
+        }
+        else
+        {
+            float unitArea = 0;
+            foreach (GameObject unit in Military)
+            {
+                float distance = transform.position.x - unit.transform.position.x;
+                if (distance > unitArea)
+                    unitArea = distance;
+            }
+            area = Mathf.Max(unitArea, MapManager.Instance.buildingSlots[2].transform.position.x);
+        }
+
+        return area;
+    }
 }

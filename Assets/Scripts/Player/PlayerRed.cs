@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerRed : Player
 {
     public static PlayerRed Instance { get; private set; }
-
+    private float temp = 0;
 	private void Awake()
 	{
 		Instance = this;
@@ -18,7 +18,12 @@ public class PlayerRed : Player
         }
     }
 
-	private void Update()
+    private void Start()
+    {
+
+    }
+
+    private void Update()
     {
         passiveGoldTimer += Time.deltaTime;
         if (passiveGoldTimer >= passiveGoldTimerMax)

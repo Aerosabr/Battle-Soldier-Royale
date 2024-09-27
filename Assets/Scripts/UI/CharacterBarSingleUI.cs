@@ -12,6 +12,7 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Button button;
     [SerializeField] private GameObject shadow;
     [SerializeField] private GameInput gameInput;
+    [SerializeField] private CooldownUI cooldownUI;
     private int cost;
     private CardSO cardSO;
     public void UpdateCard(CardSO cardSO)
@@ -20,13 +21,15 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
         charCost.text = cost.ToString();
         charSprite.sprite = cardSO.backgrounds[cardSO.level - 1];
         this.cardSO = cardSO;
+        cooldownUI.InitializeCooldownUI(cardSO.spawnCooldown[cardSO.level - 1]);
 
         if(cardSO.cardType == CardSO.CardType.Character)
         {
 			button.onClick.AddListener(() =>
 			{
 				PlayerControlManager.Instance.CardSelected(cardSO);
-			});
+                cooldownUI.gameObject.SetActive(true);
+            });
 		}
         else
         {
@@ -57,7 +60,6 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
 
     private void OnDestroy()
     {
-        Debug.Log("Destroyed");
         PlayerBlue.Instance.OnGoldChanged -= PlayerManager_OnGoldChanged;
     }
 }
