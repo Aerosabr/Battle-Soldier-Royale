@@ -6,6 +6,8 @@ public class PlayerBlue : Player
 {
     public static PlayerBlue Instance { get; private set; }
 
+    private float temp = 0;
+
     private void Awake()
     {
         Instance = this;
@@ -16,6 +18,11 @@ public class PlayerBlue : Player
             newCard.newCardSO(CSO);
             loadout.Add(newCard);
         }
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void Update()

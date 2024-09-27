@@ -20,9 +20,11 @@ public class CardSO : ScriptableObject
 	public List<int> cardCost;
 	public List<int> upgradeCost;
 	public List<int> damageOutput;
+    public List<float> spawnCooldown;
 	public GameObject upgradesTab;
 	public Transform spawnableObject;
 	public int level;
+    public int timesCasted;
 
 	public void newCardSO(CardSO CSO) 
 	{
