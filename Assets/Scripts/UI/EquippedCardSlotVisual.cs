@@ -14,6 +14,7 @@ public class EquippedCardSlotVisual : MonoBehaviour
 		if (cardSO != null)
 		{
 			icon.sprite = cardSO.backgrounds[0];
+			icon.color = Color.white;
 		}
 		else
 		{

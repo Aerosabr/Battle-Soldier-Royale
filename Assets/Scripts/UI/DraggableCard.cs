@@ -10,6 +10,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	[SerializeField] private Transform parentBeforeDrag;
 	[SerializeField] private GraphicRaycaster raycaster;
 	[SerializeField] private RectTransform targetUIElement;
+	[SerializeField] private bool EquipSlot;
 
 	private PointerEventData pointerEventData;
 	private RectTransform currentTransform;
@@ -38,23 +39,19 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 		if(IsDroppedOverSpecificUI())
 		{
-			EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO);
+			if (!EquipSlot)
+				EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO);
+			else
+				EquippedLoadoutManager.Instance.RemoveCard(transform.GetComponent<EquippedCardSlotVisual>().cardSO);
 
 		}
 	}
 
 	private bool IsDroppedOverSpecificUI()
 	{
-		// Set the pointer position to the current mouse position
 		pointerEventData.position = Input.mousePosition;
-
-		// Create a list to hold the results of the Raycast
 		List<RaycastResult> results = new List<RaycastResult>();
-
-		// Perform the Raycast
 		raycaster.Raycast(pointerEventData, results);
-
-		// Check if any of the results is the target UI element
 		foreach (RaycastResult result in results)
 		{
 			if (result.gameObject == targetUIElement.gameObject)
@@ -62,7 +59,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 				return true;
 			}
 		}
-
 		return false;
 	}
 
