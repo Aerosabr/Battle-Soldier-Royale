@@ -18,13 +18,6 @@ public enum AttackType
     AOE
 }
 
-[Serializable]
-public struct CharacterStats
-{
-    public int Health;
-    public int Attack;
-}
-
 public class Character : Entity
 {
     [SerializeField] protected int attack;
@@ -41,8 +34,6 @@ public class Character : Entity
     protected bool isPoisoned = false;
 	protected float poisonTimer = 0f;
 
-
-	[SerializeField] protected List<CharacterStats> evolutionStats;
     [SerializeField] protected LayerMask targetLayer;
     public CharacterType characterType;
     public AttackType attackType;

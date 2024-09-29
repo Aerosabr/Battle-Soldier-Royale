@@ -64,10 +64,6 @@ public class Farm : Building, IDamageable
         {
             healthPercentage = hpPercent
         });
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            damage = 0
-        });
         int progress = 0;
         for (int i = 1; i <= farmVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
@@ -94,6 +90,10 @@ public class Farm : Building, IDamageable
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
         {
             healthPercentage = (float)currentHealth / maxHealth
+        });
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = damage
         });
 
         if (currentHealth <= 0)

@@ -28,9 +28,6 @@ public class Player : MonoBehaviour
     private List<GameObject> Economy = new List<GameObject>();
     private List<GameObject> Military = new List<GameObject>();
 
-	private bool response = false;
-
-
 	public int GetGold() => Gold;
 
     public void AddGold(int gold)
@@ -73,7 +70,7 @@ public class Player : MonoBehaviour
     public void SpawnSpell(CardSO CSO)
     {
         Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
-        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, CSO.damageOutput[CSO.level - 1], CSO.cardCost[CSO.level - 1]));
+        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, CSO.evolutionStats[CSO.level - 1].Attack, CSO.cardCost[CSO.level - 1]));
         CSO.timesCasted++;
     }
 
@@ -123,7 +120,7 @@ public class Player : MonoBehaviour
         }
         else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[2].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[2].transform.position, Quaternion.identity).transform;
             building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>());
         }
 

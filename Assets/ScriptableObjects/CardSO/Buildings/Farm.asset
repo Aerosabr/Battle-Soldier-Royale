@@ -20,6 +20,10 @@ MonoBehaviour:
   cardCost: 710200007102000071020000
   upgradeCost: e2040000c409000000000000
   damageOutput: 
+  spawnCooldown:
+  - 5
+  - 7
+  - 9
   upgradesTab: {fileID: 2117297268878520208, guid: f41e6b2bb3bf60b40aadebce5757a076, type: 3}
   spawnableObject: {fileID: 4792391433067410622, guid: 044174ef58188474aa3065671822e04c, type: 3}
   level: 1
