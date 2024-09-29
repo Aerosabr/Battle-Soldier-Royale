@@ -28,8 +28,6 @@ public class Player : MonoBehaviour
     private List<GameObject> Economy = new List<GameObject>();
     private List<GameObject> Military = new List<GameObject>();
 
-	private bool response = false;
-
 
 	public int GetGold() => Gold;
 
