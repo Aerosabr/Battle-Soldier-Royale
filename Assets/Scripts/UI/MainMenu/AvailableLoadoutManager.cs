@@ -13,16 +13,18 @@ public class AvailableLoadoutManager : MonoBehaviour
     void Start()
     {
         Instance = this;
-        GenerateAvailableLoadout();
+		CardVisual.SetActive(true);
+		GenerateAvailableLoadout();
     }
 
     private void GenerateAvailableLoadout()
     {
         foreach (var card in availableCardSOList)
         {
-            GameObject cardObject = Instantiate(CardVisual);
-            cardObject.transform.SetParent(CardContent);
+            GameObject cardObject = Instantiate(CardVisual, CardContent, false);
             cardObject.GetComponent<CardSlotVisual>().InitializeCard(card);
         }
-    }
+        CardVisual.SetActive(false);
+
+	}
 }
