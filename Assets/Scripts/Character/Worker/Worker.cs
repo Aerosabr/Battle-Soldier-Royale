@@ -30,7 +30,6 @@ public class Worker : Character, IDamageable, IEffectable
         characterType = CharacterType.Worker;
         state = State.Idle;
         miningTimer = 0;
-        Debug.Log(Time.time);
         time = Time.time;
     }
 

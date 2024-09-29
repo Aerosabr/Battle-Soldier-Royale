@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
         }
         else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[2].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[2].transform.position, Quaternion.identity).transform;
             building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>());
         }
 

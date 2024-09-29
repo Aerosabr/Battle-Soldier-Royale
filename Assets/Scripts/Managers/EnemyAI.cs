@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,14 +30,9 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         ReadLoadout();
-        /*
-        for (int i = 0; i < 10; i++)
-        {
-            PlayerRed.Instance.SpawnCharacter(worker);
-        }
-        Debug.Log(DevelopOrUpgradeEconomy());
+
+        Debug.Log(UpgradeMilitary());
         ExecuteAction();
-        */
     }
 
     private void Update()
@@ -319,6 +315,7 @@ public class EnemyAI : MonoBehaviour
                 actionType = ActionType.Spawn;
                 actionCard = worker;
             }
+            
         }
 
         return true;
@@ -350,7 +347,7 @@ public class EnemyAI : MonoBehaviour
                     x = -100;
             }
             else
-                x = -50;
+                x = -75;
 
             rand = Random.Range(-100, 100) + x;
 
@@ -365,14 +362,35 @@ public class EnemyAI : MonoBehaviour
 
     private bool UpgradeMilitary()
     {
-        List<CardSO> cards = new List<CardSO>();
+        if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
+        {
+            if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().GetBuilding().buildingType == BuildingType.Defense)
+            {
+                if (alertMetrics.areaOfControl == AlertLevel.Unfavored || 
+                    (alertMetrics.areaOfControl == AlertLevel.Even && alertMetrics.effectiveMilitaryStrength == AlertLevel.Unfavored))
+                {
+                    actionType = ActionType.Upgrade;
+                    actionCard = defense;
+                    return true;
+                }
+            }
+        }
+
+        Dictionary<string, CardSO> cards = new Dictionary<string, CardSO>();
+        Dictionary<string, int> weights = new Dictionary<string, int>();
+        int xMax = 0;
+
         foreach (CardSO card in meleeUnits)
         {
             if (card.level == card.upgradeCost.Count)
                 continue;
-            
-            for (int i = 0; i < card.timesCasted; i++)
-                cards.Add(card);
+
+            if (card.timesCasted > 0)
+            {
+                cards.Add(card.name, card);
+                weights.Add(card.name, card.timesCasted * 10);
+                xMax += card.timesCasted * 10;
+            }
         }
 
         foreach (CardSO card in rangedUnits)
@@ -380,27 +398,69 @@ public class EnemyAI : MonoBehaviour
             if (card.level == card.upgradeCost.Count)
                 continue;
 
-            for (int i = 0; i < card.timesCasted; i++)
-                cards.Add(card);
+            if (card.timesCasted > 0)
+            {
+                cards.Add(card.name, card);
+                weights.Add(card.name, card.timesCasted * 10);
+                xMax += card.timesCasted * 10;
+            }
         }
 
-        if (defense.level != defense.upgradeCost.Count)
-            for (int i = 0; i < defense.timesCasted; i++)
-                cards.Add(defense);
+        foreach (CardSO card in spells)
+        {
+            if (card.level == card.upgradeCost.Count)
+                continue;
 
-        if (cards.Count == 0)
+            if (card.timesCasted > 0)
+            {
+                cards.Add(card.name, card);
+                weights.Add(card.name, card.timesCasted * 10);
+                xMax += card.timesCasted * 10;
+            }
+        }
+
+        foreach (GameObject unit in PlayerRed.Instance.GetSpawnedMilitary())
+        {
+            if (weights.ContainsKey(unit.name))
+            {
+                weights[unit.name] += 10;
+                xMax += 10;
+            }
+        }
+
+        if (xMax == 0)
             return false;
 
+        int rand = Random.Range(0, xMax);
+        foreach (string key in weights.Keys)
+        {
+            if (rand < weights[key])
+            {
+                actionType = ActionType.Upgrade;
+                actionCard = cards[key];
+                return true;
+            }
+            else
+                rand -= weights[key];
+        }
 
         return true;
     }
     private bool BuildDefense()
     {
+        if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
+        {
+            actionType = ActionType.Build;
+            actionCard = defense;
+            return true;
+        }
         return false;
     }
     private bool DevelopMilitaryOrCastSpell()
     {
-        return false;
+
+
+        return true;
     }
     #endregion  
     
@@ -410,19 +470,26 @@ public class EnemyAI : MonoBehaviour
         switch (actionType)
         {
             case ActionType.Spawn:
-                if (Gold >= actionCard.cardCost[actionCard.level])
+                if (Gold >= actionCard.cardCost[actionCard.level - 1])
+                {
                     PlayerRed.Instance.SpawnCharacter(actionCard);
+                    Debug.Log("AI is spawning a " + actionCard.name);
+                }
                 break;
             case ActionType.Upgrade:
                 if (Gold >= actionCard.upgradeCost[actionCard.level - 1])
                 {
                     PlayerRed.Instance.SubtractGold(actionCard.upgradeCost[actionCard.level - 1]);
                     actionCard.IncreaseCardLevel();
+                    Debug.Log("AI upgraded " + actionCard.name + " from level " + (actionCard.level - 1) + " to level " + actionCard.level);
                 }
                 break;
             case ActionType.Build:
-                if (Gold >= actionCard.cardCost[actionCard.level])
+                if (Gold >= actionCard.cardCost[actionCard.level - 1])
+                {
                     PlayerRed.Instance.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[2]);
+                    Debug.Log("AI is building a " + actionCard.name);
+                }
                 break;
             case ActionType.Cast:
 
