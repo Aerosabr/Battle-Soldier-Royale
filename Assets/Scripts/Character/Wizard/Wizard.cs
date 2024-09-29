@@ -176,8 +176,8 @@ public class Wizard : Character, IDamageable, IEffectable
     {
         this.card = card;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        this.baseAttackSpeed = attackSpeed;
-        this.baseMoveSpeed = moveSpeed;
+        baseAttackSpeed = attackSpeed;
+        baseMoveSpeed = moveSpeed;
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
@@ -197,12 +197,12 @@ public class Wizard : Character, IDamageable, IEffectable
 
     private void SetStats()
     {
-        if (maxHealth < evolutionStats[card.level - 1].Health)
+        if (maxHealth < card.evolutionStats[card.level - 1].Health)
         {
-            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = evolutionStats[card.level - 1].Health;
+            currentHealth += card.evolutionStats[card.level - 1].Health - maxHealth;
+            maxHealth = card.evolutionStats[card.level - 1].Health;
 
-            attack = evolutionStats[card.level - 1].Attack;
+            attack = card.evolutionStats[card.level - 1].Attack;
         }
     }
 

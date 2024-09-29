@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public struct EvolutionStats
+{
+    public int Health;
+    public int Attack;
+}
 
 [CreateAssetMenu()]
 public class CardSO : ScriptableObject
@@ -19,7 +25,7 @@ public class CardSO : ScriptableObject
 	public List<Sprite> backgrounds;
 	public List<int> cardCost;
 	public List<int> upgradeCost;
-	public List<int> damageOutput;
+    public List<EvolutionStats> evolutionStats;
     public List<float> spawnCooldown;
 	public GameObject upgradesTab;
 	public Transform spawnableObject;

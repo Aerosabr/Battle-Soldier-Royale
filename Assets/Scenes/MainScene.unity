@@ -1505,7 +1505,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eadb09cee33a43247b68b5d4182dd5bd, type: 2}
   - {fileID: 11400000, guid: 7da34b2fa7e0bdd4fbcffb536012a9b2, type: 2}
   - {fileID: 11400000, guid: edbec65c5e0d6ac4881588fffdd01771, type: 2}
-  startingGold: 5000
+  startingGold: 10000
   spawnRotation: {x: 0, y: -90, z: 0}
 --- !u!1 &853626284
 GameObject:

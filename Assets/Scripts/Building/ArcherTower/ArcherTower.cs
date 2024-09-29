@@ -68,10 +68,6 @@ public class ArcherTower : Building, IDamageable
         {
             healthPercentage = hpPercent
         });
-		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-		{
-			damage = 0
-		});
 		int progress = 0;
         for (int i = 1; i <= archerTowerVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
@@ -101,6 +97,10 @@ public class ArcherTower : Building, IDamageable
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
         {
             healthPercentage = (float)currentHealth / maxHealth
+        });
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = damage
         });
 
         if (currentHealth <= 0)
@@ -174,11 +174,13 @@ public class ArcherTower : Building, IDamageable
         {
             player = PlayerBlue.Instance;
             targetLayer = 1 << 7;
+            archerTowerVisual.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         }
         else
         {
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
+            archerTowerVisual.gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
         player.AddToMilitary(gameObject);
     }

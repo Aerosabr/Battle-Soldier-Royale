@@ -19,6 +19,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0c5de83bdc385f3409d864c812388767, type: 3}
   cardCost: 2c0100002c0100002c010000
   upgradeCost: 58020000b004000000000000
+  damageOutput: 
+  spawnCooldown:
+  - 5
+  - 7
+  - 9
   upgradesTab: {fileID: 3052903388204280067, guid: b78c0d893a01bd446a234e673659a2d2, type: 3}
   spawnableObject: {fileID: 4549758980162715631, guid: 422948367d981534a815372e6c9f8c35, type: 3}
   level: 1
+  timesCasted: 0
