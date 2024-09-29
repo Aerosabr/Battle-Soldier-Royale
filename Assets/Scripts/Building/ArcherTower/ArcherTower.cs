@@ -98,6 +98,10 @@ public class ArcherTower : Building, IDamageable
         {
             healthPercentage = (float)currentHealth / maxHealth
         });
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = damage
+        });
 
         if (currentHealth <= 0)
         {

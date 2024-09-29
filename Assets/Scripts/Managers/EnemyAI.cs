@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class EnemyAI : MonoBehaviour
 {
-    private State state;
     [SerializeField] private List<AIGameStateSO> gameStates;
 
     private float gameStateTimer;
@@ -24,27 +23,22 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        state = State.Idle;
+        
     }
 
     private void Start()
     {
         ReadLoadout();
-
-        Debug.Log(UpgradeMilitary());
-        ExecuteAction();
     }
 
     private void Update()
     {
-        /*
         gameStateTimer += Time.deltaTime;
         if (gameStateTimer >= gameStateTimerMax)
         {
-            DetermineGameState();
+            //DetermineGameState();
             gameStateTimer = 0f;
-        }
-        */
+        }   
     }
 
     private void ReadLoadout()
@@ -458,7 +452,25 @@ public class EnemyAI : MonoBehaviour
     }
     private bool DevelopMilitaryOrCastSpell()
     {
-
+        int numEnemies = 0, rand = Random.Range(0, 100);
+        if (rand < numEnemies)
+        {
+            //Cast Spell
+        }
+        else
+        {
+            float ranged = 0, melee = 0;
+            foreach (GameObject unit in PlayerRed.Instance.GetSpawnedMilitary())
+            {
+                if (unit.GetComponent<Character>() != null)
+                {
+                    if (unit.GetComponent<Character>().characterType == CharacterType.Ranged)
+                        ranged++;
+                    else if (unit.GetComponent<Character>().characterType == CharacterType.Melee)
+                        melee++;
+                }
+            }
+        }
 
         return true;
     }
@@ -504,17 +516,6 @@ public enum AlertLevel
     Unfavored,
     Even,
     Favored
-}
-
-public enum State
-{
-    Idle,
-    DevelopingEconomy,
-    DevelopingMilitary,
-    CreatingDefenses,
-    LaunchingAttack,
-    UpgradingEconomy,
-    UpgradingMilitary,
 }
 
 [System.Serializable]
