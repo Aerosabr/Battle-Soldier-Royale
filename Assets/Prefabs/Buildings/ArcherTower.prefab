@@ -10734,21 +10734,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  attack: 0
-  attackSpeed: 2
-  attackRange: 4
-  buildTimer: 5
-  evolutionStats:
-  - Health: 3000
-    Attack: 200
-  - Health: 4500
-    Attack: 300
-  - Health: 7500
-    Attack: 450
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
   buildingType: 1
+  attackType: 1
   archerTowerVisual: {fileID: 1490907628875926307}
   buildingAnim: {fileID: 4841138477124635169}
 --- !u!1 &5030259749476660050

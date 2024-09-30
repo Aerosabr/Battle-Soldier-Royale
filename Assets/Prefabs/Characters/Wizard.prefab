@@ -4508,20 +4508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  attack: 0
-  attackSpeed: 2
-  attackRange: 3
-  evolutionStats:
-  - Health: 900
-    Attack: 250
-  - Health: 1350
-    Attack: 375
-  - Health: 2100
-    Attack: 600
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
   characterType: 2
+  attackType: 2
   spellBolt: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
   anim: {fileID: 5286886468735753323}
   state: 0

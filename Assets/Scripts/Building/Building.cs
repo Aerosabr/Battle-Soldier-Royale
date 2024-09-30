@@ -8,29 +8,24 @@ public enum BuildingType
     Defense
 }
 
-[Serializable]
-public struct BuildingStats
-{
-    public int Health;
-    public int Attack;
-}
-
 public class Building : Entity, IDamageable
 {
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
-    [SerializeField] protected int attack;
-    [SerializeField] protected float attackSpeed;
-    [SerializeField] protected float attackRange;
-    [SerializeField] protected float buildTimer;
+    protected int baseAttack;
+    protected int attack;
+    protected float baseAttackSpeed;
+    protected float attackSpeed;
+    protected float attackRange;
+    protected float buildTimer;
 
-    [SerializeField] protected List<BuildingStats> evolutionStats;
-    [SerializeField] protected LayerMask targetLayer;
-    public BuildingType buildingType;
     protected Player player;
-    protected CardSO card;
+    protected BuildingCardSO card;
     protected BuildingSlot buildingSlot;
+    protected LayerMask targetLayer;
+    public BuildingType buildingType;
+    public AttackType attackType;
 
     public virtual void Damaged(int damage) { }
     protected void HealthChangedVisual()

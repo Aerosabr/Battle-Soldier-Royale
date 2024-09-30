@@ -115,12 +115,10 @@ public class Swordsman : Character
         }
     }
 
-	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
+    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
-        this.card = card;
+        this.card = card as CharacterCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        baseMoveSpeed = moveSpeed;
-        baseAttackSpeed = attackSpeed;
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
@@ -138,21 +136,23 @@ public class Swordsman : Character
         player.AddToMilitary(gameObject);
     }
 
-    private void SetStats()
-    {
-        if (maxHealth < card.evolutionStats[card.level - 1].Health)
-        {
-            currentHealth += card.evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = card.evolutionStats[card.level - 1].Health;
-
-            attack = card.evolutionStats[card.level - 1].Attack;
-        }
-    }
-
     private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
+    }
+
+    private void SetStats()
+    {
+        currentHealth += card.Health[card.level - 1] - maxHealth;
+        maxHealth = card.Health[card.level - 1];
+        baseAttack = card.Attack[card.level - 1];
+        attack = baseAttack;
+        baseAttackSpeed = card.AttackSpeed[card.level - 1];
+        attackSpeed = baseAttackSpeed;
+        baseMoveSpeed = card.MoveSpeed[card.level - 1];
+        moveSpeed = baseMoveSpeed;
+        attackRange = card.AttackRange;
     }
 }
 

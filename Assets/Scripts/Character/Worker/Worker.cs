@@ -121,43 +121,43 @@ public class Worker : Character
         }
     }
 
-	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
+    public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
-        this.card = card;
+        this.card = card as CharacterCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        baseAttackSpeed = attackSpeed;
-        baseMoveSpeed = moveSpeed;
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
-        if (layerMask == 6)
+        if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
-            targetLayer = 1 << 6 | 1 << 8;
+            targetLayer = 1 << 7;
         }
-        else if (layerMask == 7)
+        else
         {
             player = PlayerRed.Instance;
-            targetLayer = 1 << 7 | 1 << 8;
+            targetLayer = 1 << 6;
         }
-        player.AddToEconomy(gameObject, true);
-    }
-
-    private void SetStats()
-    {
-        if (maxHealth < card.evolutionStats[card.level - 1].Health)
-        {
-            currentHealth += card.evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = card.evolutionStats[card.level - 1].Health;
-
-            attack = card.evolutionStats[card.level - 1].Attack;
-        }
+        player.AddToMilitary(gameObject);
     }
 
     private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
+    }
+
+    private void SetStats()
+    {
+        currentHealth += card.Health[card.level - 1] - maxHealth;
+        maxHealth = card.Health[card.level - 1];
+        baseAttack = card.Attack[card.level - 1];
+        attack = baseAttack;
+        baseAttackSpeed = card.AttackSpeed[card.level - 1];
+        attackSpeed = baseAttackSpeed;
+        baseMoveSpeed = card.MoveSpeed[card.level - 1];
+        moveSpeed = baseMoveSpeed;
+        attackRange = card.AttackRange;
     }
 }

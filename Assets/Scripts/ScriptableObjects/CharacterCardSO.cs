@@ -4,5 +4,9 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class CharacterCardSO : CardSO
 {
-    //public List<EvolutionStats> evolutionStats;
+    public List<int> Health;
+    public List<int> Attack;
+    public List<float> AttackSpeed;
+    public List<float> MoveSpeed;
+    public float AttackRange;
 }

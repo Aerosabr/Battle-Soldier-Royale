@@ -4,5 +4,5 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class SpellCardSO : CardSO
 {
-
+    public List<int> Attack;
 }

@@ -151,14 +151,12 @@ public class ArcherTower : Building
 
     public override void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
     {
-        this.card = card;
+        this.card = card as BuildingCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        maxHealth = evolutionStats[card.level - 1].Health;
-        attack = evolutionStats[card.level - 1].Attack;
-        state = State.Building;
         gameObject.layer = layerMask;
         this.buildingSlot = buildingSlot;
         buildingSlot.SetBuilding(this);
+
         if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
@@ -172,6 +170,9 @@ public class ArcherTower : Building
             archerTowerVisual.gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
         player.AddToMilitary(gameObject);
+
+        state = State.Building;
+        SetStats();
     }
 
     private void Card_OnLevelChanged(object sender, EventArgs e)
@@ -183,12 +184,15 @@ public class ArcherTower : Building
 
     private void SetStats()
     {
-        if (maxHealth < evolutionStats[card.level - 1].Health)
-        {
-            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = evolutionStats[card.level - 1].Health;
+        if (state != State.Building)
+            currentHealth += card.Health[card.level - 1] - maxHealth;
 
-            attack = evolutionStats[card.level - 1].Attack;
-        }
+        maxHealth = card.Health[card.level - 1];
+        baseAttack = card.Attack[card.level - 1];
+        attack = baseAttack;
+        baseAttackSpeed = card.AttackSpeed[card.level - 1];
+        attackSpeed = baseAttackSpeed;
+        attackRange = card.AttackRange;
+        buildTimer = card.BuildTimer[card.level - 1];
     }
 }

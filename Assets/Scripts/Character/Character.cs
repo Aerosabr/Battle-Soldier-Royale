@@ -25,9 +25,9 @@ public class Character : Entity, IDamageable, IEffectable
 
     protected int baseAttack;
     protected int attack;
-    protected float baseAttackSpeed = 1.5f;
+    protected float baseAttackSpeed;
     protected float attackSpeed;
-    protected float baseMoveSpeed = 1f;
+    protected float baseMoveSpeed;
     protected float moveSpeed;
 
     protected float attackRange;
@@ -39,11 +39,11 @@ public class Character : Entity, IDamageable, IEffectable
     protected bool isSlowed = false;
     protected bool isPoisoned = false;
 
-    [SerializeField] protected LayerMask targetLayer;
+    protected Player player;
+    protected CharacterCardSO card;
+    protected LayerMask targetLayer;
     public CharacterType characterType;
     public AttackType attackType;
-    protected Player player;
-    protected CardSO card;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
     public int GetAttack() => attack;

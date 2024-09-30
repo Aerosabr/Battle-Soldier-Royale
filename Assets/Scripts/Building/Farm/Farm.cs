@@ -97,15 +97,12 @@ public class Farm : Building
 
     public override void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
     {
-        this.card = card;
+        this.card = card as BuildingCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        maxHealth = evolutionStats[card.level - 1].Health;
-        attack = evolutionStats[card.level - 1].Attack;
-        passiveGoldTimerMax = 1f / (float)attack;
-        state = State.Building;
         gameObject.layer = layerMask;
         this.buildingSlot = buildingSlot;
         buildingSlot.SetBuilding(this);
+
         if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
@@ -117,6 +114,9 @@ public class Farm : Building
             targetLayer = 1 << 6;
         }
         player.AddToMilitary(gameObject);
+
+        state = State.Building;
+        SetStats();
     }
 
     private void Card_OnLevelChanged(object sender, EventArgs e)
@@ -128,13 +128,17 @@ public class Farm : Building
 
     private void SetStats()
     {
-        if (maxHealth < evolutionStats[card.level - 1].Health)
-        {
-            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = evolutionStats[card.level - 1].Health;
+        if (state != State.Building)
+            currentHealth += card.Health[card.level - 1] - maxHealth;
 
-            attack = evolutionStats[card.level - 1].Attack;
-        }
-        passiveGoldTimerMax = 1f / (float)attack;
+        maxHealth = card.Health[card.level - 1];
+        baseAttack = card.Attack[card.level - 1];
+        attack = baseAttack;
+        baseAttackSpeed = card.AttackSpeed[card.level - 1];
+        attackSpeed = baseAttackSpeed;
+        attackRange = card.AttackRange;
+        buildTimer = card.BuildTimer[card.level - 1];
+
+        passiveGoldTimerMax = 1f / attack;
     }
 }
