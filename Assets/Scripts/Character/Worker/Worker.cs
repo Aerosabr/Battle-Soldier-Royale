@@ -19,9 +19,11 @@ public class Worker : Character
  
     [SerializeField] private WorkerVisual anim;
 
+    private GameObject mine;
     private State state;
     private float miningTimer;
     private float time;
+
     private void Awake()
     {
         characterType = CharacterType.Worker;
@@ -119,6 +121,12 @@ public class Worker : Character
             GetComponent<BoxCollider>().enabled = false;
             player.RemoveFromEconomy(gameObject, true);
         }
+    }
+
+    public void InitializeWorker(LayerMask layerMask, Vector3 rotation, CardSO card, GameObject mine)
+    {
+        this.mine = mine;
+        InitializeCharacter(layerMask, rotation, card);
     }
 
     public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)

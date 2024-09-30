@@ -56,6 +56,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void BuildBuilding(CardSO CSO, GameObject buildingSlot)
+    {
+        SubtractGold(CSO.cardCost[CSO.level - 1]);
+        if (playerColor == PlayerColor.Blue && !MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>().ContainsBuilding())
+        {
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[0].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>());
+        }
+        else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
+        {
+            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[2].transform.position, Quaternion.identity).transform;
+            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>());
+        }
+
+        CSO.timesCasted++;
+    }
+
     public void SpawnCharacter(CardSO CSO)
     {
         SubtractGold(CSO.cardCost[CSO.level - 1]);
@@ -72,6 +89,17 @@ public class Player : MonoBehaviour
         SpellCardSO SCSO = CSO as SpellCardSO;
         Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
         StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, SCSO.Attack[CSO.level - 1], CSO.cardCost[CSO.level - 1]));
+        CSO.timesCasted++;
+    }
+
+    public void SpawnWorker(CardSO CSO, GameObject mine)
+    {
+        SubtractGold(CSO.cardCost[CSO.level - 1]);
+
+        Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+        float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
+        character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
+        character.GetComponent<Worker>().InitializeWorker(gameObject.layer, spawnRotation, CSO, mine);
         CSO.timesCasted++;
     }
 
@@ -109,23 +137,6 @@ public class Player : MonoBehaviour
             }
         }
         return maxXRange;
-    }
-
-    public void BuildBuilding(CardSO CSO, GameObject buildingSlot)
-    {
-        SubtractGold(CSO.cardCost[CSO.level - 1]);
-        if (playerColor == PlayerColor.Blue && !MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>().ContainsBuilding())
-        {
-            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[0].transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
-            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>());
-        }
-        else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
-        {
-            Transform building = Instantiate(CSO.spawnableObject, MapManager.Instance.buildingSlots[2].transform.position, Quaternion.identity).transform;
-            building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>());
-        }
-
-        CSO.timesCasted++;
     }
 
     public void AddToEconomy(GameObject character, bool isWorker)
