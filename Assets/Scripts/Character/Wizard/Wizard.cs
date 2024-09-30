@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Wizard : Character
 {
@@ -93,12 +95,17 @@ public class Wizard : Character
     {
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, attackRange, targetLayer))
         {
-            if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
+            Collider[] hitColliders = Physics.OverlapSphere(hit.transform.position, .75f, targetLayer);
+            Instantiate(spellBolt, hit.transform.position, transform.rotation);
+            foreach (Collider collider in hitColliders)
             {
-                Instantiate(spellBolt, hit.transform.position, transform.rotation);
-                hit.transform.GetComponent<IDamageable>().Damaged(attack);
-                anim.AnimAction(IS_IDLE);
+                if (collider.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
+                {
+                    collider.transform.GetComponent<IDamageable>().Damaged(attack);
+                    anim.AnimAction(IS_IDLE);
+                }
             }
+            
         }
         else
             state = State.Walking;
