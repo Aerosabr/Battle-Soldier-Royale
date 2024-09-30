@@ -9,17 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c7208f459b445a498eb40ea65fd2c84, type: 3}
-  m_Name: SnowStorm
+  m_Script: {fileID: 11500000, guid: 55b589039f886714faac268d0669e51d, type: 3}
+  m_Name: Snowstorm
   m_EditorClassIdentifier: 
-  cardType: 1
+  cardType: 2
   backgrounds:
   - {fileID: 21300000, guid: 46bc8eccdc0c9b9469daa9f580b03054, type: 3}
   - {fileID: 21300000, guid: 46bc8eccdc0c9b9469daa9f580b03054, type: 3}
   - {fileID: 21300000, guid: 46bc8eccdc0c9b9469daa9f580b03054, type: 3}
-  cardCost: c8000000c8000000c8000000
-  upgradeCost: 260200008a02000000000000
-  damageOutput: 0a000000140000001e000000
+  cardCost: c2010000c2010000c2010000
+  upgradeCost: 840300000807000000000000
   spawnCooldown:
   - 5
   - 7
@@ -28,3 +27,4 @@ MonoBehaviour:
   spawnableObject: {fileID: 8820015729650250570, guid: 741d50e16438777469ce8127e2cc80ff, type: 3}
   level: 1
   timesCasted: 0
+  Attack: 010000000100000001000000

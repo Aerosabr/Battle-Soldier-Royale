@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farm : Building, IDamageable
+public class Farm : Building
 {
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
-
     private enum State
     {
         None,
@@ -59,11 +56,9 @@ public class Farm : Building, IDamageable
     private void Building()
     {
         currentHealth += (int)((maxHealth / buildTimer) * Time.deltaTime);
+        HealthChangedVisual();
+
         float hpPercent = (float)currentHealth / maxHealth;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = hpPercent
-        });
         int progress = 0;
         for (int i = 1; i <= farmVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
@@ -84,17 +79,11 @@ public class Farm : Building, IDamageable
         }
     }
 
-    public void Damaged(int damage)
+    public override void Damaged(int damage)
     {
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            damage = damage
-        });
+        HealthChangedVisual();
+        DamageTakenVisual(damage);
 
         if (currentHealth <= 0)
         {
@@ -108,15 +97,12 @@ public class Farm : Building, IDamageable
 
     public override void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
     {
-        this.card = card;
+        this.card = card as BuildingCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        maxHealth = evolutionStats[card.level - 1].Health;
-        attack = evolutionStats[card.level - 1].Attack;
-        passiveGoldTimerMax = 1f / (float)attack;
-        state = State.Building;
         gameObject.layer = layerMask;
         this.buildingSlot = buildingSlot;
         buildingSlot.SetBuilding(this);
+
         if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
@@ -128,6 +114,9 @@ public class Farm : Building, IDamageable
             targetLayer = 1 << 6;
         }
         player.AddToMilitary(gameObject);
+
+        state = State.Building;
+        SetStats();
     }
 
     private void Card_OnLevelChanged(object sender, EventArgs e)
@@ -139,13 +128,17 @@ public class Farm : Building, IDamageable
 
     private void SetStats()
     {
-        if (maxHealth < evolutionStats[card.level - 1].Health)
-        {
-            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = evolutionStats[card.level - 1].Health;
+        if (state != State.Building)
+            currentHealth += card.Health[card.level - 1] - maxHealth;
 
-            attack = evolutionStats[card.level - 1].Attack;
-        }
-        passiveGoldTimerMax = 1f / (float)attack;
+        maxHealth = card.Health[card.level - 1];
+        baseAttack = card.Attack[card.level - 1];
+        attack = baseAttack;
+        baseAttackSpeed = card.AttackSpeed[card.level - 1];
+        attackSpeed = baseAttackSpeed;
+        attackRange = card.AttackRange;
+        buildTimer = card.BuildTimer[card.level - 1];
+
+        passiveGoldTimerMax = 1f / attack;
     }
 }

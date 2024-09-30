@@ -21,7 +21,7 @@ public class CooldownUI : MonoBehaviour
     public void InitializeCooldownUI(float cdTimer)
     {
         cooldownTimerMax = cdTimer;
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
     }
 
     private void OnEnable()

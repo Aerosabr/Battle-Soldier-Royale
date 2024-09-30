@@ -3,15 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Archer : Character, IDamageable, IEffectable
+public class Archer : Character
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
     private const int IS_ATTACKING = 2;
     private const int IS_DEAD = 3;
-
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -105,19 +102,10 @@ public class Archer : Character, IDamageable, IEffectable
             state = State.Walking;
     }
 
-    public void Damaged(int damage)
+    public override void Damaged(int damage)
     {
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
-
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            damage = damage
-        });
-
+        DamageVisuals(damage);
         if (currentHealth <= 0)
         {
             anim.AnimAction(IS_DEAD);
@@ -127,57 +115,10 @@ public class Archer : Character, IDamageable, IEffectable
         }
     }
 
-	#region IEffectable Handler
-	public void Slowed(int speed)
-	{
-		if (!isSlowed)
-		{
-			isSlowed = true;
-			moveSpeed = moveSpeed - ((float)speed / 50);
-			attackSpeed = attackSpeed - ((float)speed / 50);
-		}
-	}
-	public void UnSlowed(int speed)
-	{
-		if (isSlowed)
-		{
-			isSlowed = false;
-			moveSpeed = baseMoveSpeed;
-			attackSpeed = baseAttackSpeed;
-		}
-	}
-
-	public void Poisoned(int damage, int poisonDuration)
-	{
-		if (!isPoisoned)
-		{
-			StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
-		}
-		else
-		{
-			poisonTimer = 0f;
-		}
-	}
-	private IEnumerator HandlePoisonDamage(int damage, float duration)
-	{
-		isPoisoned = true;
-		float poisonDamageInterval = 1f;
-		while (poisonTimer < duration)
-		{
-			Damaged(damage);
-			yield return new WaitForSeconds(poisonDamageInterval);
-			poisonTimer += poisonDamageInterval;
-		}
-		isPoisoned = false;
-	}
-	#endregion
-
 	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {
-        this.card = card;
+        this.card = card as CharacterCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        baseMoveSpeed = moveSpeed;
-        baseAttackSpeed = attackSpeed;
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
@@ -203,13 +144,15 @@ public class Archer : Character, IDamageable, IEffectable
 
     private void SetStats()
     {
-        if (maxHealth < card.evolutionStats[card.level - 1].Health)
-        {
-            currentHealth += card.evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = card.evolutionStats[card.level - 1].Health;
-            
-            attack = card.evolutionStats[card.level - 1].Attack;
-        }
+        currentHealth += card.Health[card.level - 1] - maxHealth;
+        maxHealth = card.Health[card.level - 1];
+        baseAttack = card.Attack[card.level - 1];
+        attack = baseAttack;
+        baseAttackSpeed = card.AttackSpeed[card.level - 1];
+        attackSpeed = baseAttackSpeed;
+        baseMoveSpeed = card.MoveSpeed[card.level - 1];
+        moveSpeed = baseMoveSpeed;
+        attackRange = card.AttackRange;
     }
 }
 

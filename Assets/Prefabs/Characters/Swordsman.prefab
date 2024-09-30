@@ -20971,20 +20971,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  attack: 0
-  attackSpeed: 1
-  attackRange: 1
-  evolutionStats:
-  - Health: 1000
-    Attack: 100
-  - Health: 1500
-    Attack: 150
-  - Health: 2300
-    Attack: 225
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
   characterType: 1
+  attackType: 1
   anim: {fileID: 7274961404938831116}
   state: 0
 --- !u!65 &5962955321852043317

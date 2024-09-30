@@ -8,26 +8,40 @@ public enum BuildingType
     Defense
 }
 
-[Serializable]
-public struct BuildingStats
+public class Building : Entity, IDamageable
 {
-    public int Health;
-    public int Attack;
-}
+    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
-public class Building : Entity
-{
-    [SerializeField] protected int attack;
-    [SerializeField] protected float attackSpeed;
-    [SerializeField] protected float attackRange;
-    [SerializeField] protected float buildTimer;
+    protected int baseAttack;
+    protected int attack;
+    protected float baseAttackSpeed;
+    protected float attackSpeed;
+    protected float attackRange;
+    protected float buildTimer;
 
-    [SerializeField] protected List<BuildingStats> evolutionStats;
-    [SerializeField] protected LayerMask targetLayer;
-    public BuildingType buildingType;
     protected Player player;
-    protected CardSO card;
+    protected BuildingCardSO card;
     protected BuildingSlot buildingSlot;
+    protected LayerMask targetLayer;
+    public BuildingType buildingType;
+    public AttackType attackType;
+
+    public virtual void Damaged(int damage) { }
+    protected void HealthChangedVisual()
+    {
+        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
+        {
+            healthPercentage = (float)currentHealth / maxHealth
+        });
+    }
+    protected void DamageTakenVisual(int damage)
+    {
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = damage
+        });
+    }
 
     public virtual void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot) => Debug.Log("Initialize not implemented");
     protected virtual void BuildingBuilt() => Debug.Log("Built not implemented");

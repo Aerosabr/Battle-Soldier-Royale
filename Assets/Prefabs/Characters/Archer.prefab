@@ -5052,20 +5052,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  attack: 0
-  attackSpeed: 2
-  attackRange: 4
-  evolutionStats:
-  - Health: 500
-    Attack: 75
-  - Health: 750
-    Attack: 110
-  - Health: 1200
-    Attack: 175
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
   characterType: 2
+  attackType: 1
   anim: {fileID: 5910953757751475656}
 --- !u!65 &8577889945637332760
 BoxCollider:

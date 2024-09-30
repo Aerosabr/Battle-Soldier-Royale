@@ -225,14 +225,14 @@ MonoBehaviour:
   playerColor: 0
   loadout: []
   tempLoadout:
-  - {fileID: 11400000, guid: 4cdaece5218672c4ab1a065e10723d1e, type: 2}
-  - {fileID: 11400000, guid: b5c0dc51721efca4ebd271c5b0d08729, type: 2}
-  - {fileID: 11400000, guid: 4cf04a39f4dcd074092634dc1d94cc0b, type: 2}
-  - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
-  - {fileID: 11400000, guid: ba7d0e515fc522e4aa2b3af507c395f9, type: 2}
-  - {fileID: 11400000, guid: 4ffc0d5801b0b724ca8eb71bdae20438, type: 2}
+  - {fileID: 11400000, guid: 5074492746820b741a19371015dc03f7, type: 2}
+  - {fileID: 11400000, guid: 18aa9c1a9918c0b4493afea9347f02c8, type: 2}
+  - {fileID: 11400000, guid: de885bb10ba0e1f488434b0360ef6229, type: 2}
+  - {fileID: 11400000, guid: 2b2e186f86bca894fa2f905f0772df28, type: 2}
   - {fileID: 11400000, guid: eadb09cee33a43247b68b5d4182dd5bd, type: 2}
   - {fileID: 11400000, guid: edbec65c5e0d6ac4881588fffdd01771, type: 2}
+  - {fileID: 11400000, guid: c55fc63988ef4784d933dd3d84ed1a46, type: 2}
+  - {fileID: 11400000, guid: d99ef67c94fefac40a2d06f1d76b3bee, type: 2}
   startingGold: 6000
   spawnRotation: {x: 0, y: 90, z: 0}
 --- !u!1 &172604234
@@ -1497,14 +1497,14 @@ MonoBehaviour:
   playerColor: 1
   loadout: []
   tempLoadout:
-  - {fileID: 11400000, guid: 4ffc0d5801b0b724ca8eb71bdae20438, type: 2}
-  - {fileID: 11400000, guid: ba7d0e515fc522e4aa2b3af507c395f9, type: 2}
-  - {fileID: 11400000, guid: 6c89f728845f1af43a407f984f0ccb69, type: 2}
-  - {fileID: 11400000, guid: e252e5104f7177f4a965012fa73cc55a, type: 2}
-  - {fileID: 11400000, guid: 127ed1017cd2e6d44b01b577956537af, type: 2}
+  - {fileID: 11400000, guid: 5074492746820b741a19371015dc03f7, type: 2}
+  - {fileID: 11400000, guid: 18aa9c1a9918c0b4493afea9347f02c8, type: 2}
+  - {fileID: 11400000, guid: de885bb10ba0e1f488434b0360ef6229, type: 2}
+  - {fileID: 11400000, guid: 2b2e186f86bca894fa2f905f0772df28, type: 2}
+  - {fileID: 11400000, guid: c55fc63988ef4784d933dd3d84ed1a46, type: 2}
   - {fileID: 11400000, guid: eadb09cee33a43247b68b5d4182dd5bd, type: 2}
-  - {fileID: 11400000, guid: 7da34b2fa7e0bdd4fbcffb536012a9b2, type: 2}
-  - {fileID: 11400000, guid: edbec65c5e0d6ac4881588fffdd01771, type: 2}
+  - {fileID: 11400000, guid: f1eddd20ef6cd0a4d84f41141a758864, type: 2}
+  - {fileID: 11400000, guid: d99ef67c94fefac40a2d06f1d76b3bee, type: 2}
   startingGold: 10000
   spawnRotation: {x: 0, y: -90, z: 0}
 --- !u!1 &853626284
@@ -1801,11 +1801,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4549758980162715631, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -27.5
+      value: -7.79
       objectReference: {fileID: 0}
     - target: {fileID: 4549758980162715631, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 4549758980162715631, guid: 422948367d981534a815372e6c9f8c35, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2497,7 +2497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1628875855
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2599,16 +2599,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 999999
   maxHealth: 999999
-  attack: 0
-  attackSpeed: 0
-  attackRange: 0
-  moveSpeed: 1
-  evolutionStats: []
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  characterType: 0
-  attackType: 0
+  characterType: 1
+  attackType: 1
 --- !u!1 &1654817211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,6 +2903,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 1628875854}
+    - target: {fileID: 4590383109131978397, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
       propertyPath: hasProgressGameObject
       value: 
       objectReference: {fileID: 1628875854}

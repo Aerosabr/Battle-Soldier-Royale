@@ -3,15 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcherTower : Building, IDamageable
+public class ArcherTower : Building
 {
     private const int IS_IDLE = 0;
     private const int IS_BUILDING = 1;
     private const int IS_ATTACKING = 2;
     private const int IS_DESTROYED = 3;
-
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -63,12 +60,10 @@ public class ArcherTower : Building, IDamageable
     private void Building()
     {
         currentHealth += (int)((maxHealth / buildTimer) * Time.deltaTime);
+        HealthChangedVisual();
+
         float hpPercent = (float)currentHealth / maxHealth;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = hpPercent
-        });
-		int progress = 0;
+        int progress = 0;
         for (int i = 1; i <= archerTowerVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
             if (hpPercent >= (i / (float)archerTowerVisual.GetEvolutionVisual(card.level).bodyParts.Count))
@@ -91,17 +86,11 @@ public class ArcherTower : Building, IDamageable
         }
     }
 
-    public void Damaged(int damage)
+    public override void Damaged(int damage)
     {
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            damage = damage
-        });
+        HealthChangedVisual();
+        DamageTakenVisual(damage);
 
         if (currentHealth <= 0)
         {
@@ -162,14 +151,12 @@ public class ArcherTower : Building, IDamageable
 
     public override void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
     {
-        this.card = card;
+        this.card = card as BuildingCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
-        maxHealth = evolutionStats[card.level - 1].Health;
-        attack = evolutionStats[card.level - 1].Attack;
-        state = State.Building;
         gameObject.layer = layerMask;
         this.buildingSlot = buildingSlot;
         buildingSlot.SetBuilding(this);
+
         if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
@@ -183,6 +170,9 @@ public class ArcherTower : Building, IDamageable
             archerTowerVisual.gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
         player.AddToMilitary(gameObject);
+
+        state = State.Building;
+        SetStats();
     }
 
     private void Card_OnLevelChanged(object sender, EventArgs e)
@@ -194,12 +184,15 @@ public class ArcherTower : Building, IDamageable
 
     private void SetStats()
     {
-        if (maxHealth < evolutionStats[card.level - 1].Health)
-        {
-            currentHealth += evolutionStats[card.level - 1].Health - maxHealth;
-            maxHealth = evolutionStats[card.level - 1].Health;
+        if (state != State.Building)
+            currentHealth += card.Health[card.level - 1] - maxHealth;
 
-            attack = evolutionStats[card.level - 1].Attack;
-        }
+        maxHealth = card.Health[card.level - 1];
+        baseAttack = card.Attack[card.level - 1];
+        attack = baseAttack;
+        baseAttackSpeed = card.AttackSpeed[card.level - 1];
+        attackSpeed = baseAttackSpeed;
+        attackRange = card.AttackRange;
+        buildTimer = card.BuildTimer[card.level - 1];
     }
 }

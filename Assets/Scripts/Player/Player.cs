@@ -69,8 +69,9 @@ public class Player : MonoBehaviour
 
     public void SpawnSpell(CardSO CSO)
     {
+        SpellCardSO SCSO = CSO as SpellCardSO;
         Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
-        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, CSO.evolutionStats[CSO.level - 1].Attack, CSO.cardCost[CSO.level - 1]));
+        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, SCSO.Attack[CSO.level - 1], CSO.cardCost[CSO.level - 1]));
         CSO.timesCasted++;
     }
 
