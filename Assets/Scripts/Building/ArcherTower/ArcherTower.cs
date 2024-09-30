@@ -3,15 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcherTower : Building, IDamageable
+public class ArcherTower : Building
 {
     private const int IS_IDLE = 0;
     private const int IS_BUILDING = 1;
     private const int IS_ATTACKING = 2;
     private const int IS_DESTROYED = 3;
-
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -63,12 +60,10 @@ public class ArcherTower : Building, IDamageable
     private void Building()
     {
         currentHealth += (int)((maxHealth / buildTimer) * Time.deltaTime);
+        HealthChangedVisual();
+
         float hpPercent = (float)currentHealth / maxHealth;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = hpPercent
-        });
-		int progress = 0;
+        int progress = 0;
         for (int i = 1; i <= archerTowerVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
             if (hpPercent >= (i / (float)archerTowerVisual.GetEvolutionVisual(card.level).bodyParts.Count))
@@ -91,17 +86,11 @@ public class ArcherTower : Building, IDamageable
         }
     }
 
-    public void Damaged(int damage)
+    public override void Damaged(int damage)
     {
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            damage = damage
-        });
+        HealthChangedVisual();
+        DamageTakenVisual(damage);
 
         if (currentHealth <= 0)
         {

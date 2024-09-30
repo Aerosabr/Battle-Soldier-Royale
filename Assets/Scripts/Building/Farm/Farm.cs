@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Farm : Building, IDamageable
+public class Farm : Building
 {
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
-
     private enum State
     {
         None,
@@ -59,11 +56,9 @@ public class Farm : Building, IDamageable
     private void Building()
     {
         currentHealth += (int)((maxHealth / buildTimer) * Time.deltaTime);
+        HealthChangedVisual();
+
         float hpPercent = (float)currentHealth / maxHealth;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = hpPercent
-        });
         int progress = 0;
         for (int i = 1; i <= farmVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
@@ -84,17 +79,11 @@ public class Farm : Building, IDamageable
         }
     }
 
-    public void Damaged(int damage)
+    public override void Damaged(int damage)
     {
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
-        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-        {
-            damage = damage
-        });
+        HealthChangedVisual();
+        DamageTakenVisual(damage);
 
         if (currentHealth <= 0)
         {

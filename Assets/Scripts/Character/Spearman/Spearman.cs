@@ -3,15 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spearman : Character, IDamageable, IEffectable
+public class Spearman : Character
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
     private const int IS_ATTACKING = 2;
     private const int IS_DEAD = 3;
-
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -105,18 +102,11 @@ public class Spearman : Character, IDamageable, IEffectable
             state = State.Walking;
     }
 
-    public void Damaged(int damage)
+    public override void Damaged(int damage)
     {
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
-		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-		{
-			damage = damage
-		});
-		if (currentHealth <= 0)
+        DamageVisuals(damage);
+        if (currentHealth <= 0)
         {
             anim.AnimAction(IS_DEAD);
             state = State.Dead;
@@ -124,51 +114,6 @@ public class Spearman : Character, IDamageable, IEffectable
             player.RemoveFromMilitary(gameObject);
         }
     }
-
-	#region IEffectable Handler
-	public void Slowed(int speed)
-	{
-		if (!isSlowed)
-		{
-			isSlowed = true;
-			moveSpeed = moveSpeed - ((float)speed / 50);
-			attackSpeed = attackSpeed - ((float)speed / 50);
-		}
-	}
-	public void UnSlowed(int speed)
-	{
-		if (isSlowed)
-		{
-			isSlowed = false;
-			moveSpeed = baseMoveSpeed;
-			attackSpeed = baseAttackSpeed;
-		}
-	}
-
-	public void Poisoned(int damage, int poisonDuration)
-	{
-		if (!isPoisoned)
-		{
-			StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
-		}
-		else
-		{
-			poisonTimer = 0f;
-		}
-	}
-	private IEnumerator HandlePoisonDamage(int damage, float duration)
-	{
-		isPoisoned = true;
-		float poisonDamageInterval = 1f;
-		while (poisonTimer < duration)
-		{
-			Damaged(damage);
-			yield return new WaitForSeconds(poisonDamageInterval);
-			poisonTimer += poisonDamageInterval;
-		}
-		isPoisoned = false;
-	}
-	#endregion
 
 	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {

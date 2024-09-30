@@ -18,21 +18,26 @@ public enum AttackType
     AOE
 }
 
-public class Character : Entity
+public class Character : Entity, IDamageable, IEffectable
 {
-    [SerializeField] protected int attack;
-    [SerializeField] protected float attackSpeed;
-    [SerializeField] protected float attackRange;
-	[SerializeField] protected float moveSpeed = 1f;
+    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
-	protected bool canAttack = true;
+    protected int baseAttack;
+    protected int attack;
+    protected float baseAttackSpeed = 1.5f;
+    protected float attackSpeed;
+    protected float baseMoveSpeed = 1f;
+    protected float moveSpeed;
+
+    protected float attackRange;
     protected float deathTimer;
     protected float deathTimerMax = 3f;
-    protected float baseMoveSpeed = 1f;
-    protected float baseAttackSpeed = 1.5f;
+    protected float poisonTimer = 0f;
+
+    protected bool canAttack = true;
     protected bool isSlowed = false;
     protected bool isPoisoned = false;
-	protected float poisonTimer = 0f;
 
     [SerializeField] protected LayerMask targetLayer;
     public CharacterType characterType;
@@ -41,8 +46,6 @@ public class Character : Entity
     protected CardSO card;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
-    protected virtual void CharacterSpawned() => Debug.Log("Spawned not implemented");
-    protected virtual void CharacterDied() => Debug.Log("Died not implemented");
     public int GetAttack() => attack;
     public int GetUnitStrength()
     {
@@ -61,4 +64,64 @@ public class Character : Entity
 
         return unitStrength;
     }
+
+    #region IDamageable Components
+    public virtual void Damaged(int damage) { }
+    protected void DamageVisuals(int damage)
+    {
+        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
+        {
+            healthPercentage = (float)currentHealth / maxHealth
+        });
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = damage
+        });
+    }
+    #endregion
+
+    #region IEffectable Components
+    public void Slowed(int speed)
+    {
+        if (!isSlowed)
+        {
+            isSlowed = true;
+            moveSpeed = moveSpeed - ((float)speed / 50);
+            attackSpeed = attackSpeed - ((float)speed / 50);
+        }
+    }
+    public void UnSlowed(int speed)
+    {
+        if (isSlowed)
+        {
+            isSlowed = false;
+            moveSpeed = baseMoveSpeed;
+            attackSpeed = baseAttackSpeed;
+        }
+    }
+
+    public void Poisoned(int damage, int poisonDuration)
+    {
+        if (!isPoisoned)
+        {
+            StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
+        }
+        else
+        {
+            poisonTimer = 0f;
+        }
+    }
+    private IEnumerator HandlePoisonDamage(int damage, float duration)
+    {
+        isPoisoned = true;
+        float poisonDamageInterval = 1f;
+        while (poisonTimer < duration)
+        {
+            Damaged(damage);
+            yield return new WaitForSeconds(poisonDamageInterval);
+            poisonTimer += poisonDamageInterval;
+        }
+        isPoisoned = false;
+    }
+    #endregion
 }

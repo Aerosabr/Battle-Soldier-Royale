@@ -17,9 +17,10 @@ public class CardSO : ScriptableObject
 
     public enum CardType
 	{
-		Character,
+		Building,
+        Character,
 		Spell,
-		Building
+		Worker
 	}
 	public CardType cardType;
 	public List<Sprite> backgrounds;

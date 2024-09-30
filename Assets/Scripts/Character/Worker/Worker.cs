@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Worker : Character, IDamageable, IEffectable
+public class Worker : Character
 {
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
     private const int IS_DEAD = 2;
-
-    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
-    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     private enum State
     {
@@ -95,7 +92,6 @@ public class Worker : Character, IDamageable, IEffectable
 
     private void FinishMining()
     {
-        Debug.Log("Finished mining");
         state = State.Idle;
         miningTimer = 0f;
         GetComponent<BoxCollider>().enabled = true;
@@ -105,9 +101,6 @@ public class Worker : Character, IDamageable, IEffectable
 
     private void Deposit()
     {
-        Debug.Log("Deposited");
-        Debug.Log(Time.time);
-
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
         if (player.playerColor == Player.PlayerColor.Blue)
             PlayerBlue.Instance.AddGold(attack);
@@ -115,17 +108,10 @@ public class Worker : Character, IDamageable, IEffectable
             PlayerRed.Instance.AddGold(attack);
     }
 
-    public void Damaged(int damage)
+    public override void Damaged(int damage)
     {
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
-        {
-            healthPercentage = (float)currentHealth / maxHealth
-        });
-		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-		{
-			damage = damage
-		});
+        DamageVisuals(damage);
 		if (currentHealth <= 0)
         {
             anim.AnimAction(IS_DEAD);
@@ -134,51 +120,6 @@ public class Worker : Character, IDamageable, IEffectable
             player.RemoveFromEconomy(gameObject, true);
         }
     }
-
-	#region IEffectable Handler
-	public void Slowed(int speed)
-	{
-		if (!isSlowed)
-		{
-			isSlowed = true;
-			moveSpeed = moveSpeed - ((float)speed / 50);
-			attackSpeed = attackSpeed - ((float)speed / 50);
-		}
-	}
-	public void UnSlowed(int speed)
-	{
-		if (isSlowed)
-		{
-			isSlowed = false;
-			moveSpeed = baseMoveSpeed;
-			attackSpeed = baseAttackSpeed;
-		}
-	}
-
-	public void Poisoned(int damage, int poisonDuration)
-	{
-		if (!isPoisoned)
-		{
-			StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
-		}
-		else
-		{
-			poisonTimer = 0f;
-		}
-	}
-	private IEnumerator HandlePoisonDamage(int damage, float duration)
-	{
-		isPoisoned = true;
-		float poisonDamageInterval = 1f;
-		while (poisonTimer < duration)
-		{
-			Damaged(damage);
-			yield return new WaitForSeconds(poisonDamageInterval);
-			poisonTimer += poisonDamageInterval;
-		}
-		isPoisoned = false;
-	}
-	#endregion
 
 	public override void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card)
     {

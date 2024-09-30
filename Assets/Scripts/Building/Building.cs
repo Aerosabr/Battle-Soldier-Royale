@@ -15,8 +15,11 @@ public struct BuildingStats
     public int Attack;
 }
 
-public class Building : Entity
+public class Building : Entity, IDamageable
 {
+    public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
+    public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
+
     [SerializeField] protected int attack;
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected float attackRange;
@@ -28,6 +31,22 @@ public class Building : Entity
     protected Player player;
     protected CardSO card;
     protected BuildingSlot buildingSlot;
+
+    public virtual void Damaged(int damage) { }
+    protected void HealthChangedVisual()
+    {
+        OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
+        {
+            healthPercentage = (float)currentHealth / maxHealth
+        });
+    }
+    protected void DamageTakenVisual(int damage)
+    {
+        OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+        {
+            damage = damage
+        });
+    }
 
     public virtual void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot) => Debug.Log("Initialize not implemented");
     protected virtual void BuildingBuilt() => Debug.Log("Built not implemented");
