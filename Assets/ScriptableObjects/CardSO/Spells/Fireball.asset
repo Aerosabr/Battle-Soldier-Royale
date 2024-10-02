@@ -17,6 +17,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 631d7bfcba23a984a91ba96f18889224, type: 3}
   - {fileID: 21300000, guid: 631d7bfcba23a984a91ba96f18889224, type: 3}
   - {fileID: 21300000, guid: 631d7bfcba23a984a91ba96f18889224, type: 3}
+  backgroundVertical:
+  - {fileID: 21300000, guid: eb2be7824316c72419607d4d2d4d79f6, type: 3}
+  - {fileID: 21300000, guid: eb2be7824316c72419607d4d2d4d79f6, type: 3}
+  - {fileID: 21300000, guid: eb2be7824316c72419607d4d2d4d79f6, type: 3}
   cardCost: 5e0100005e0100005e010000
   upgradeCost: bc0200007805000000000000
   spawnCooldown:
