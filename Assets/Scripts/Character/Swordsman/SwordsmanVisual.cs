@@ -13,15 +13,31 @@ public class SwordsmanVisual : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Swordsman.State state)
     {
-        anim.SetInteger("State", state);
+        int stateInt = 0;
+        switch (state)
+        {
+            case Swordsman.State.Idle:
+                stateInt = 0;
+                break;
+            case Swordsman.State.Walking:
+                stateInt = 1;
+                break;
+            case Swordsman.State.Attacking:
+                stateInt = 2;
+                break;
+            case Swordsman.State.Dead:
+                stateInt = 3;
+                break;
+        }
+
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()
     {
         character.Attack01();
-
     }
 
     public void ActivateEvolutionVisual(int level)

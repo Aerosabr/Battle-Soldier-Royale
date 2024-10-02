@@ -5054,19 +5054,8 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 0
   attack: 0
-  attackSpeed: 5
-  attackRange: 0
-  evolutionStats:
-  - Health: 400
-    Attack: 80
-  - Health: 600
-    Attack: 160
-  - Health: 900
-    Attack: 320
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   characterType: 0
+  attackType: 0
   anim: {fileID: 7023078922825290736}
 --- !u!65 &1113284561125372729
 BoxCollider:
@@ -5135,8 +5124,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &2312360592522670672
 GameObject:
   m_ObjectHideFlags: 0

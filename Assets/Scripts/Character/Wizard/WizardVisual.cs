@@ -13,9 +13,26 @@ public class WizardVisual : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Wizard.State state)
     {
-        anim.SetInteger("State", state);
+        int stateInt = 0;
+        switch (state)
+        {
+            case Wizard.State.Idle:
+                stateInt = 0;
+                break;
+            case Wizard.State.Walking:
+                stateInt = 1;
+                break;
+            case Wizard.State.Attacking:
+                stateInt = 2;
+                break;
+            case Wizard.State.Dead:
+                stateInt = 3;
+                break;
+        }
+
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()

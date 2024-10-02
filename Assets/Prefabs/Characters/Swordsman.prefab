@@ -1595,6 +1595,54 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00000017881393, y: -0.005219698, z: 0.38326168}
     m_Extent: {x: 0.7754658, y: 0.19942279, z: 0.40432477}
   m_DirtyAABB: 0
+--- !u!1 &879802572220176041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8461671724571151882}
+  - component: {fileID: 4328067540888829116}
+  m_Layer: 0
+  m_Name: SwordsmanSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8461671724571151882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879802572220176041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3843355384752894528}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4328067540888829116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879802572220176041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e77b14613841330469a3d982b785b55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordsman: {fileID: 3468286194814704036}
+  attack: {fileID: 8300000, guid: 5f1cec854af9c8c44827e8f8af10293c, type: 3}
+  damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}
+  dead: {fileID: 8300000, guid: 1ae6faf363274854d85dc05548c12b77, type: 3}
 --- !u!1 &889102577591747673
 GameObject:
   m_ObjectHideFlags: 0
@@ -20955,6 +21003,7 @@ Transform:
   m_Children:
   - {fileID: 4680903231608192275}
   - {fileID: 4696385160676931926}
+  - {fileID: 8461671724571151882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3468286194814704036
@@ -20971,10 +21020,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  attack: 0
   characterType: 1
   attackType: 1
   anim: {fileID: 7274961404938831116}
-  state: 0
+  sound: {fileID: 4328067540888829116}
 --- !u!65 &5962955321852043317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21042,8 +21092,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &9065960962592798903
 GameObject:
   m_ObjectHideFlags: 0

@@ -5036,6 +5036,7 @@ Transform:
   m_Children:
   - {fileID: 4438485542624887016}
   - {fileID: 7361990828112741578}
+  - {fileID: 1593144327914809599}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8525006084406745442
@@ -5052,9 +5053,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  attack: 0
   characterType: 2
   attackType: 1
   anim: {fileID: 5910953757751475656}
+  sound: {fileID: 6849717030443577735}
 --- !u!65 &8577889945637332760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5122,8 +5125,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &2257842624145801394
 GameObject:
   m_ObjectHideFlags: 0
@@ -15996,6 +15999,54 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6811082861439543401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1593144327914809599}
+  - component: {fileID: 6849717030443577735}
+  m_Layer: 0
+  m_Name: ArcherSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1593144327914809599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6811082861439543401}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8437906022094310070}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6849717030443577735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6811082861439543401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91e8f462a227f5488f92d5065823d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  archer: {fileID: 8525006084406745442}
+  attack: {fileID: 8300000, guid: 48c014e76126c004cb3f71506a4ad4f3, type: 3}
+  damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}
+  dead: {fileID: 8300000, guid: 98ace49072fe6914995fa35fa19aa84e, type: 3}
 --- !u!1 &6873974746048451236
 GameObject:
   m_ObjectHideFlags: 0

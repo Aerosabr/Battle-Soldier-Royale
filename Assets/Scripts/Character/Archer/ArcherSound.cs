@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class ArcherSound : MonoBehaviour
+{
+    [SerializeField] private Archer archer;
+    private AudioSource audioSource;
+
+    [SerializeField] private AudioClip attack;
+    [SerializeField] private AudioClip damaged;
+    [SerializeField] private AudioClip dead;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    public void Attack()
+    {
+        AudioSource.PlayClipAtPoint(attack, transform.position, GameManager.Instance.GetSoundVolume());
+    }
+
+    public void Damaged()
+    {
+        AudioSource.PlayClipAtPoint(damaged, transform.position, GameManager.Instance.GetSoundVolume());
+    }
+
+    public void Died()
+    {
+        AudioSource.PlayClipAtPoint(dead, transform.position, GameManager.Instance.GetSoundVolume());
+    }
+}

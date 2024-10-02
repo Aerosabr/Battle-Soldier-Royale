@@ -29,6 +29,7 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         ReadLoadout();
+        PlayerRed.Instance.SpawnCharacter(meleeUnits[1]);
     }
 
     private void Update()

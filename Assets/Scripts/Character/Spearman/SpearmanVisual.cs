@@ -13,15 +13,31 @@ public class SpearmanVisual : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Spearman.State state)
     {
-        anim.SetInteger("State", state);
+        int stateInt = 0;
+        switch (state)
+        {
+            case Spearman.State.Idle:
+                stateInt = 0;
+                break;
+            case Spearman.State.Walking:
+                stateInt = 1;
+                break;
+            case Spearman.State.Attacking:
+                stateInt = 2;
+                break;
+            case Spearman.State.Dead:
+                stateInt = 3;
+                break;
+        }
+
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()
     {
         character.Attack01();
-
     }
 
     public void ActivateEvolutionVisual(int level)

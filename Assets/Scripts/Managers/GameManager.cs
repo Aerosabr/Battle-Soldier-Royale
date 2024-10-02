@@ -14,12 +14,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        soundVolume = 1;
         Instance = this;
         MapSize = 60f;
         MaxWorkerAmount = 10;
 		DontDestroyOnLoad(gameObject);
 	}
-
 
     public void SetGamemode(int gamemode) => this.gamemode = gamemode;
     public void SetDifficulty(int difficulty) => this.difficulty = difficulty;
@@ -31,8 +31,4 @@ public class GameManager : MonoBehaviour
     public float GetMusicVolume() => musicVolume;
     public float GetMapSize() => MapSize;
     public int GetMaxWorkerAmount() => MaxWorkerAmount; 
-
-
-
-    
 }

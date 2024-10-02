@@ -13,9 +13,26 @@ public class KnightVisual : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Knight.State state)
     {
-        anim.SetInteger("State", state);
+        int stateInt = 0;
+        switch (state)
+        {
+            case Knight.State.Idle:
+                stateInt = 0;
+                break;
+            case Knight.State.Walking:
+                stateInt = 1;
+                break;
+            case Knight.State.Attacking:
+                stateInt = 2;
+                break;
+            case Knight.State.Dead:
+                stateInt = 3;
+                break;
+        }
+
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()

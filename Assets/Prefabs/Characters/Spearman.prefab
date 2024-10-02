@@ -1978,6 +1978,7 @@ Transform:
   m_Children:
   - {fileID: 3413361531193820049}
   - {fileID: 2128704112866863260}
+  - {fileID: 658614228193037857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2681171785448276500
@@ -1994,10 +1995,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  attack: 0
   characterType: 1
   attackType: 1
   anim: {fileID: 1126212173245788260}
-  state: 0
+  sound: {fileID: 4122449650151355903}
 --- !u!65 &-2476830759847121632
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2065,8 +2067,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &946652454072010995
 GameObject:
   m_ObjectHideFlags: 0
@@ -14208,6 +14210,54 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6259166830380157757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 658614228193037857}
+  - component: {fileID: 4122449650151355903}
+  m_Layer: 0
+  m_Name: SpearmanSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &658614228193037857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6259166830380157757}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8689107071632085771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4122449650151355903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6259166830380157757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e426abdec95fb7a4c83c1d44889c07f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Spearman: {fileID: 2681171785448276500}
+  attack: {fileID: 8300000, guid: 4f47a2f6b20abcd4fbf54e0f96c91b5e, type: 3}
+  damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}
+  dead: {fileID: 8300000, guid: 0c38b275b22ddb941830158cb81f5d4a, type: 3}
 --- !u!1 &6316077342279242019
 GameObject:
   m_ObjectHideFlags: 0
