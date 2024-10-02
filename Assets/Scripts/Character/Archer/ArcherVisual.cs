@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArcherVisual : MonoBehaviour
@@ -14,15 +15,31 @@ public class ArcherVisual : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Archer.State state)
     {
-        anim.SetInteger("State", state);
+        int stateInt = 0;
+        switch (state)
+        {
+            case Archer.State.Idle:
+                stateInt = 0;
+                break;
+            case Archer.State.Walking:
+                stateInt = 1;
+                break;
+            case Archer.State.Attacking:
+                stateInt = 2;
+                break;
+            case Archer.State.Dead:
+                stateInt = 3;
+                break;
+        }
+
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()
     {
         character.Attack01();
-
     }
 
     public void ActivateEvolutionVisual(int level)
