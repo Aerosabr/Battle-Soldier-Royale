@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnAreaIndicator : MonoBehaviour
 {
 	[SerializeField] private Player player;
-	[SerializeField] private float distanceAwayfromCharacter = 3.0f;
+	[SerializeField] private float distanceAwayfromCharacter = 0f;
 
 	void Start()
 	{

@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     protected float passiveGoldTimerMax = .1f;
 
     [SerializeField] private Vector3 spawnRotation;
+    public GameObject spawnArea;
 
     private int numberOfWorkers = 0;
     private List<GameObject> Economy = new List<GameObject>();
@@ -77,8 +78,6 @@ public class Player : MonoBehaviour
     {
 
         Transform character = Instantiate(CSO.spawnableObject, transform).transform;
-        float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
-        character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
         StartCoroutine(character.GetComponent<Character>().Project(gameObject.layer, spawnRotation, CSO));
         //character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
         CSO.timesCasted++;
