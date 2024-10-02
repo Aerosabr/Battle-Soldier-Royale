@@ -8,6 +8,7 @@ public class WizardSound : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField] private AudioClip attack;
+    [SerializeField] private AudioClip damaged;
     [SerializeField] private AudioClip dead;
 
     private void Awake()
@@ -15,21 +16,18 @@ public class WizardSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start()
+    public void Attack(Vector3 pos)
     {
-        wizard.OnSoundPlay += Wizard_OnSoundPlay;
+        AudioSource.PlayClipAtPoint(attack, pos, GameManager.Instance.GetSoundVolume());
     }
 
-    private void Wizard_OnSoundPlay(object sender, Wizard.OnSoundPlayEventArgs e)
+    public void Damaged()
     {
-        switch (e.state)
-        {
-            case Wizard.State.Attacking:
-                AudioSource.PlayClipAtPoint(attack, e.pos, GameManager.Instance.GetSoundVolume());
-                break;
-            case Wizard.State.Dead:
-                AudioSource.PlayClipAtPoint(dead, e.pos, GameManager.Instance.GetSoundVolume());
-                break;
-        }
+        AudioSource.PlayClipAtPoint(damaged, transform.position, GameManager.Instance.GetSoundVolume());
+    }
+
+    public void Died()
+    {
+        AudioSource.PlayClipAtPoint(dead, transform.position, GameManager.Instance.GetSoundVolume());
     }
 }

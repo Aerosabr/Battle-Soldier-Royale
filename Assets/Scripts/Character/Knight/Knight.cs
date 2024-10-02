@@ -2,21 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.U2D;
 using UnityEngine;
 
 public class Knight : Character
 {
-    public event EventHandler<OnSoundPlayEventArgs> OnSoundPlay;
-    public class OnSoundPlayEventArgs : EventArgs
-    {
-        public State state;
-    }
-
-    private const int IS_IDLE = 0;
-    private const int IS_WALKING = 1;
-    private const int IS_ATTACKING = 2;
-    private const int IS_DEAD = 3;
-
     public enum State
     {
         Idle,
@@ -26,6 +16,7 @@ public class Knight : Character
     }
 
     [SerializeField] private KnightVisual anim;
+    [SerializeField] private KnightSound sound;
     private State state;
 
     private void Awake()
@@ -39,8 +30,7 @@ public class Knight : Character
         switch (state)
         {
             case State.Idle:
-                state = State.Walking;
-                anim.AnimAction(IS_WALKING);
+                DetectEnemies();
                 break;
             case State.Walking:
                 Movement();
@@ -57,6 +47,15 @@ public class Knight : Character
         }
     }
 
+    private void ChangeState(State newState)
+    {
+        if (state == State.Dead || state == newState)
+            return;
+
+        state = newState;
+        anim.AnimAction(state);
+    }
+
     private void Movement()
     {   
         float moveDistance = moveSpeed * Time.deltaTime;
@@ -70,22 +69,16 @@ public class Knight : Character
 
         if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, attackRange, targetLayer))
         {
-            if (state == State.Walking)
+            if (canAttack)
             {
-                state = State.Attacking;
-                anim.AnimAction(IS_IDLE);
-            }
-            else if (canAttack)
-            {
+                ChangeState(State.Attacking);
                 StartCoroutine(ChargeAttack());
-                anim.AnimAction(IS_ATTACKING);
             }
+            else
+                ChangeState(State.Idle);
         }
         else
-        {
-            state = State.Walking;
-            anim.AnimAction(IS_WALKING);
-        }
+            ChangeState(State.Walking);
     }
 
     private IEnumerator ChargeAttack()
@@ -101,32 +94,24 @@ public class Knight : Character
         {
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
+                sound.Attack();
                 hit.transform.GetComponent<IDamageable>().Damaged(attack);
-                OnSoundPlay?.Invoke(this, new OnSoundPlayEventArgs
-                {
-                    state = state
-                });
-                anim.AnimAction(IS_IDLE);
             }
         }
         else
-            state = State.Walking;
+            ChangeState(State.Idle);
     }
 
     public override void Damaged(int damage)
     {
         currentHealth -= damage;
         DamageVisuals(damage);
+        sound.Damaged();
         if (currentHealth <= 0)
         {
             GetComponent<BoxCollider>().enabled = false;
-            anim.AnimAction(IS_DEAD);
-            anim.active = false;
-            state = State.Dead;
-            OnSoundPlay?.Invoke(this, new OnSoundPlayEventArgs
-            {
-                state = state
-            });        
+            ChangeState(State.Dead);
+            sound.Died();    
             player.RemoveFromMilitary(gameObject);
         }
     }

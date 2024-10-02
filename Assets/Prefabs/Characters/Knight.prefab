@@ -16474,10 +16474,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 99999
   maxHealth: 99999
+  attack: 0
   characterType: 1
   attackType: 1
   anim: {fileID: 6156469004722996060}
-  state: 0
+  sound: {fileID: 7605024471254342867}
 --- !u!65 &2532555925057319742
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16545,8 +16546,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &6795800565501054293
 GameObject:
   m_ObjectHideFlags: 0
@@ -19177,6 +19178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knight: {fileID: 8613732814716348785}
   attack: {fileID: 8300000, guid: 251fbe666283d2444af52ba63c98d598, type: 3}
+  damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}
   dead: {fileID: 8300000, guid: acb0522b49584dc46b0426750b26bf36, type: 3}
 --- !u!1 &8007229698020003532
 GameObject:

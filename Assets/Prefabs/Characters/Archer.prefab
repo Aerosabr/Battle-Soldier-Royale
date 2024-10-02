@@ -5053,9 +5053,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  attack: 0
   characterType: 2
   attackType: 1
   anim: {fileID: 5910953757751475656}
+  sound: {fileID: 6849717030443577735}
 --- !u!65 &8577889945637332760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5123,8 +5125,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &2257842624145801394
 GameObject:
   m_ObjectHideFlags: 0
@@ -16043,6 +16045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   archer: {fileID: 8525006084406745442}
   attack: {fileID: 8300000, guid: 48c014e76126c004cb3f71506a4ad4f3, type: 3}
+  damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}
   dead: {fileID: 8300000, guid: 98ace49072fe6914995fa35fa19aa84e, type: 3}
 --- !u!1 &6873974746048451236
 GameObject:

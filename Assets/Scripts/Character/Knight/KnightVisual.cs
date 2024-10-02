@@ -7,19 +7,32 @@ public class KnightVisual : MonoBehaviour
     private Animator anim;
     [SerializeField] private Knight character;
     [SerializeField] private List<EvolutionVisual> evolutionVisuals;
-    public bool active = true;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Knight.State state)
     {
-        if (!active)
-            return;
+        int stateInt = 0;
+        switch (state)
+        {
+            case Knight.State.Idle:
+                stateInt = 0;
+                break;
+            case Knight.State.Walking:
+                stateInt = 1;
+                break;
+            case Knight.State.Attacking:
+                stateInt = 2;
+                break;
+            case Knight.State.Dead:
+                stateInt = 3;
+                break;
+        }
 
-        anim.SetInteger("State", state);
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()

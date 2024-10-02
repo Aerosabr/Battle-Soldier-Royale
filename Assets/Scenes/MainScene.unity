@@ -2129,6 +2129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 999999
   maxHealth: 999999
+  attack: 0
   characterType: 1
   attackType: 1
   damaged: {fileID: 0}
@@ -2735,7 +2736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1628875855
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2816,7 +2817,7 @@ Transform:
   m_GameObject: {fileID: 1628875854}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.27, y: 0.5, z: -0.636}
+  m_LocalPosition: {x: -10.1, y: 0.5, z: -0.636}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2837,6 +2838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 999999
   maxHealth: 999999
+  attack: 0
   characterType: 1
   attackType: 1
   damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}

@@ -1641,6 +1641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swordsman: {fileID: 3468286194814704036}
   attack: {fileID: 8300000, guid: 5f1cec854af9c8c44827e8f8af10293c, type: 3}
+  damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}
   dead: {fileID: 8300000, guid: 1ae6faf363274854d85dc05548c12b77, type: 3}
 --- !u!1 &889102577591747673
 GameObject:
@@ -21019,10 +21020,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  attack: 0
   characterType: 1
   attackType: 1
   anim: {fileID: 7274961404938831116}
-  state: 0
+  sound: {fileID: 4328067540888829116}
 --- !u!65 &5962955321852043317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21090,8 +21092,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &9065960962592798903
 GameObject:
   m_ObjectHideFlags: 0

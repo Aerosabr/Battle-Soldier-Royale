@@ -8,6 +8,7 @@ public class SpearmanSound : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField] private AudioClip attack;
+    [SerializeField] private AudioClip damaged;
     [SerializeField] private AudioClip dead;
 
     private void Awake()
@@ -15,21 +16,18 @@ public class SpearmanSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start()
+    public void Attack()
     {
-        Spearman.OnSoundPlay += Spearman_OnSoundPlay;
+        AudioSource.PlayClipAtPoint(attack, transform.position, GameManager.Instance.GetSoundVolume());
     }
 
-    private void Spearman_OnSoundPlay(object sender, Spearman.OnSoundPlayEventArgs e)
+    public void Damaged()
     {
-        switch (e.state)
-        {
-            case Spearman.State.Attacking:
-                AudioSource.PlayClipAtPoint(attack, transform.position, GameManager.Instance.GetSoundVolume());
-                break;
-            case Spearman.State.Dead:
-                AudioSource.PlayClipAtPoint(dead, transform.position, GameManager.Instance.GetSoundVolume());
-                break;
-        }
+        AudioSource.PlayClipAtPoint(damaged, transform.position, GameManager.Instance.GetSoundVolume());
+    }
+
+    public void Died()
+    {
+        AudioSource.PlayClipAtPoint(dead, transform.position, GameManager.Instance.GetSoundVolume());
     }
 }

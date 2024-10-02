@@ -7,19 +7,32 @@ public class SwordsmanVisual : MonoBehaviour
     private Animator anim;
     [SerializeField] private Swordsman character;
     [SerializeField] private List<EvolutionVisual> evolutionVisuals;
-    public bool active = true;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Swordsman.State state)
     {
-        if (!active)
-            return;
+        int stateInt = 0;
+        switch (state)
+        {
+            case Swordsman.State.Idle:
+                stateInt = 0;
+                break;
+            case Swordsman.State.Walking:
+                stateInt = 1;
+                break;
+            case Swordsman.State.Attacking:
+                stateInt = 2;
+                break;
+            case Swordsman.State.Dead:
+                stateInt = 3;
+                break;
+        }
 
-        anim.SetInteger("State", state);
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()

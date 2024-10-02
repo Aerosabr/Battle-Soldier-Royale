@@ -7,19 +7,32 @@ public class SpearmanVisual : MonoBehaviour
     private Animator anim;
     [SerializeField] private Spearman character;
     [SerializeField] private List<EvolutionVisual> evolutionVisuals;
-    public bool active = true;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void AnimAction(int state)
+    public void AnimAction(Spearman.State state)
     {
-        if (!active)
-            return;
+        int stateInt = 0;
+        switch (state)
+        {
+            case Spearman.State.Idle:
+                stateInt = 0;
+                break;
+            case Spearman.State.Walking:
+                stateInt = 1;
+                break;
+            case Spearman.State.Attacking:
+                stateInt = 2;
+                break;
+            case Spearman.State.Dead:
+                stateInt = 3;
+                break;
+        }
 
-        anim.SetInteger("State", state);
+        anim.SetInteger("State", stateInt);
     }
 
     public void Attack01()

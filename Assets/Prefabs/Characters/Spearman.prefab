@@ -1995,10 +1995,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  attack: 0
   characterType: 1
   attackType: 1
   anim: {fileID: 1126212173245788260}
-  state: 0
+  sound: {fileID: 4122449650151355903}
 --- !u!65 &-2476830759847121632
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2066,8 +2067,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.114809126
+  m_Center: {x: 0, y: 0.09902164, z: 0}
 --- !u!1 &946652454072010995
 GameObject:
   m_ObjectHideFlags: 0
@@ -14255,6 +14256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Spearman: {fileID: 2681171785448276500}
   attack: {fileID: 8300000, guid: 4f47a2f6b20abcd4fbf54e0f96c91b5e, type: 3}
+  damaged: {fileID: 8300000, guid: 0c5d3967f589cfd4485281469ac056d5, type: 3}
   dead: {fileID: 8300000, guid: 0c38b275b22ddb941830158cb81f5d4a, type: 3}
 --- !u!1 &6316077342279242019
 GameObject:
