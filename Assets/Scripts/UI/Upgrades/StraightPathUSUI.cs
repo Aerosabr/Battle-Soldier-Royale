@@ -24,6 +24,7 @@ public class StraightPathUSUI : UpgradesSingleUI
     {
         if (PlayerBlue.Instance.GetGold() >= loadoutCard.upgradeCost[loadoutCard.level - 1])
         {
+            SoundManager.Instance.CardUpgraded();
             buttonList[loadoutCard.level].levelText.color = Color.green;
             buttonList[loadoutCard.level].costText.enabled = false;
             buttonList[loadoutCard.level].button.onClick.RemoveAllListeners();
