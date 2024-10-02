@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Archer : Character
 {
     public enum State
     {
+        Ghost,
         Idle,
         Walking,
         Attacking,
@@ -21,7 +24,7 @@ public class Archer : Character
     private void Awake()
     {
         characterType = CharacterType.Ranged;
-        state = State.Idle;
+        state = State.Ghost;
     }
 
     private void Update()
@@ -133,10 +136,56 @@ public class Archer : Character
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
         }
-        player.AddToMilitary(gameObject);
     }
 
-    private void Card_OnLevelChanged(object sender, EventArgs e)
+	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
+	{
+		float cameraDistance = 0.75f;
+		InitializeCharacter(layerMask, rotation, card);
+		while (Mouse.current.leftButton.isPressed)
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit))
+			{
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, cameraDistance);
+			}
+			yield return null;
+		}
+
+		if (IsMouseOverUI())
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+            CharacterBarUI.Instance.ActivateCooldown();
+            player.SubtractGold(card.cardCost[card.level - 1]);
+			player.AddToMilitary(gameObject);
+            state = State.Idle;
+
+		}
+		PlayerControlManager.Instance.CardHandled();
+
+	}
+	private bool IsMouseOverUI()
+	{
+		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
+		if (corners == null)
+		{
+			return false;
+		}
+		Vector3 mousePosition = Input.mousePosition;
+		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();

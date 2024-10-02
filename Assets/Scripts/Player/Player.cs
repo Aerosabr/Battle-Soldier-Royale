@@ -75,12 +75,12 @@ public class Player : MonoBehaviour
 
     public void SpawnCharacter(CardSO CSO)
     {
-        SubtractGold(CSO.cardCost[CSO.level - 1]);
 
         Transform character = Instantiate(CSO.spawnableObject, transform).transform;
         float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
         character.transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
-        character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+        StartCoroutine(character.GetComponent<Character>().Project(gameObject.layer, spawnRotation, CSO));
+        //character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
         CSO.timesCasted++;
     }
 

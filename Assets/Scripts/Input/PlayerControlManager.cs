@@ -39,7 +39,7 @@ public class PlayerControlManager : MonoBehaviour
 		if (cardSO.cardType == CardSO.CardType.Character)
 		{
 			PlayerBlue.Instance.SpawnCharacter(cardSO);
-			mode = Mode.Command;
+			mode = Mode.Cast;
 		}
 		else if (cardSO.cardType == CardSO.CardType.Spell)
 		{

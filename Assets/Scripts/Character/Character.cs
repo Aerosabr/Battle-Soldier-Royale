@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 public enum CharacterType
 {
     Worker,
@@ -46,6 +47,7 @@ public class Character : Entity, IDamageable, IEffectable
     public AttackType attackType;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
+    public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card) { yield return null; }
     public int GetAttack() => attack;
     public int GetUnitStrength()
     {

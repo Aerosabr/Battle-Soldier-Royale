@@ -23,12 +23,12 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
         this.cardSO = cardSO;
         cooldownUI.InitializeCooldownUI(cardSO.spawnCooldown[cardSO.level - 1]);
 
-        if(cardSO.cardType == CardSO.CardType.Character)
+        if(cardSO.cardType == CardSO.CardType.Building)
         {
 			button.onClick.AddListener(() =>
 			{
 				PlayerControlManager.Instance.CardSelected(cardSO);
-                cooldownUI.gameObject.SetActive(true);
+                
             });
 		}
         else
@@ -43,11 +43,16 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		if(cardSO.cardType == CardSO.CardType.Spell)
+		if(cardSO.cardType == CardSO.CardType.Spell || cardSO.cardType == CardSO.CardType.Character)
         {
 			PlayerControlManager.Instance.CardSelected(cardSO);
             CharacterBarUI.Instance.SetCurrentButtonSelected(this.transform);
 		}
+	}
+    
+    public void StartCooldown()
+    {
+		cooldownUI.gameObject.SetActive(true);
 	}
 
 	private void PlayerManager_OnGoldChanged(object sender, System.EventArgs e)
