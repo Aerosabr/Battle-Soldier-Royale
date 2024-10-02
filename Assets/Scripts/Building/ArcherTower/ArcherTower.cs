@@ -90,7 +90,7 @@ public class ArcherTower : Building
     {
         currentHealth -= damage;
         HealthChangedVisual();
-        DamageTakenVisual(damage);
+        //DamageTakenVisual(damage);
 
         if (currentHealth <= 0)
         {
@@ -161,13 +161,13 @@ public class ArcherTower : Building
         {
             player = PlayerBlue.Instance;
             targetLayer = 1 << 7;
-            archerTowerVisual.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+            gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         }
         else
         {
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
-            archerTowerVisual.gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
+            gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
         player.AddToMilitary(gameObject);
 

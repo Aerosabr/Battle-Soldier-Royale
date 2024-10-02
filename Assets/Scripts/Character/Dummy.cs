@@ -5,10 +5,20 @@ using UnityEngine;
 
 public class Dummy : Character
 {
+    private AudioSource audioSource;
+
+    [SerializeField] private AudioClip damaged;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public override void Damaged(int damage)
     {
         currentHealth -= damage;
         DamageVisuals(damage);
+        AudioSource.PlayClipAtPoint(damaged, transform.position, GameManager.Instance.GetSoundVolume());
         Debug.Log("Dummy took " + damage + " damage!");
         if (currentHealth <= 0)
             StartCoroutine(Died());

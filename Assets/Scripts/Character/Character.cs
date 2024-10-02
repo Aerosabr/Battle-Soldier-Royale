@@ -24,7 +24,7 @@ public class Character : Entity, IDamageable, IEffectable
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
     protected int baseAttack;
-    protected int attack;
+    [SerializeField] protected int attack;
     protected float baseAttackSpeed;
     protected float attackSpeed;
     protected float baseMoveSpeed;
@@ -73,10 +73,12 @@ public class Character : Entity, IDamageable, IEffectable
         {
             healthPercentage = (float)currentHealth / maxHealth
         });
+        /*
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {
             damage = damage
         });
+        */
     }
     #endregion
 

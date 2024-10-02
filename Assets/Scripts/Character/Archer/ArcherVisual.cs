@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArcherVisual : MonoBehaviour
@@ -8,6 +9,7 @@ public class ArcherVisual : MonoBehaviour
     private Animator anim;
     [SerializeField] private Archer character;
     [SerializeField] private List<EvolutionVisual> evolutionVisuals;
+    public bool active = true;
 
     private void Awake()
     {
@@ -16,13 +18,15 @@ public class ArcherVisual : MonoBehaviour
 
     public void AnimAction(int state)
     {
+        if (!active)
+            return;
+
         anim.SetInteger("State", state);
     }
 
     public void Attack01()
     {
         character.Attack01();
-
     }
 
     public void ActivateEvolutionVisual(int level)

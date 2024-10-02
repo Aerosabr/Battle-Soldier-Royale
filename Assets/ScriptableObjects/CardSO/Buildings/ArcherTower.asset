@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 0
   backgrounds:
-  - {fileID: 21300000, guid: bfa7ca7289989a74bbdf123f4511dc7f, type: 3}
-  - {fileID: 21300000, guid: 5ef1147c1b72e0f48b60d9dc3ca7059e, type: 3}
-  - {fileID: 21300000, guid: 5ac29342718893847b1000048e3f16bb, type: 3}
+  - {fileID: 21300000, guid: bbc845dfc31c7bc46bbfff77c03090ba, type: 3}
+  - {fileID: 21300000, guid: c4490e7e97326d14e83fa2c047a09a5a, type: 3}
+  - {fileID: 21300000, guid: 21fa455688c567b45b16f12743bc4ec6, type: 3}
   cardCost: f4010000f4010000f4010000
   upgradeCost: e8030000d007000000000000
   spawnCooldown:

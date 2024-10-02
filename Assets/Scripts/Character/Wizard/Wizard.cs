@@ -3,16 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 
 public class Wizard : Character
 {
+    public event EventHandler<OnSoundPlayEventArgs> OnSoundPlay;
+    public class OnSoundPlayEventArgs : EventArgs
+    {
+        public State state;
+        public Vector3 pos;
+    }
+
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
     private const int IS_ATTACKING = 2;
     private const int IS_DEAD = 3;
 
-    private enum State
+    public enum State
     {
         Idle,
         Walking,
@@ -22,7 +30,7 @@ public class Wizard : Character
 
     [SerializeField] private GameObject spellBolt;
     [SerializeField] private WizardVisual anim;
-    [SerializeField] private State state; 
+    private State state; 
 
     private void Awake()
     {
@@ -97,6 +105,11 @@ public class Wizard : Character
         {
             Collider[] hitColliders = Physics.OverlapSphere(hit.transform.position, .75f, targetLayer);
             Instantiate(spellBolt, hit.transform.position, transform.rotation);
+            OnSoundPlay?.Invoke(this, new OnSoundPlayEventArgs
+            {
+                state = state,
+                pos = hit.transform.position
+            });
             foreach (Collider collider in hitColliders)
             {
                 if (collider.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
@@ -117,9 +130,15 @@ public class Wizard : Character
         DamageVisuals(damage);
         if (currentHealth <= 0)
         {
-            anim.AnimAction(IS_DEAD);
-            state = State.Dead;
             GetComponent<BoxCollider>().enabled = false;
+            anim.AnimAction(IS_DEAD);
+            anim.active = false;
+            state = State.Dead;
+            OnSoundPlay?.Invoke(this, new OnSoundPlayEventArgs
+            {
+                state = state,
+                pos = transform.position
+            });            
             player.RemoveFromMilitary(gameObject);
         }
     }

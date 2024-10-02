@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class Spearman : Character
 {
+    public event EventHandler<OnSoundPlayEventArgs> OnSoundPlay;
+    public class OnSoundPlayEventArgs : EventArgs
+    {
+        public State state;
+    }
+
     private const int IS_IDLE = 0;
     private const int IS_WALKING = 1;
     private const int IS_ATTACKING = 2;
     private const int IS_DEAD = 3;
 
-    private enum State
+    public enum State
     {
         Idle,
         Walking,
@@ -19,7 +25,7 @@ public class Spearman : Character
     }
 
     [SerializeField] private SpearmanVisual anim;
-    [SerializeField] private State state;
+    private State state;
 
     private void Awake()
     {
@@ -95,6 +101,10 @@ public class Spearman : Character
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
                 hit.transform.GetComponent<IDamageable>().Damaged(attack);
+                OnSoundPlay?.Invoke(this, new OnSoundPlayEventArgs
+                {
+                    state = state
+                });
                 anim.AnimAction(IS_IDLE);
             }
         }
@@ -108,9 +118,14 @@ public class Spearman : Character
         DamageVisuals(damage);
         if (currentHealth <= 0)
         {
-            anim.AnimAction(IS_DEAD);
-            state = State.Dead;
             GetComponent<BoxCollider>().enabled = false;
+            anim.AnimAction(IS_DEAD);
+            anim.active = false;
+            state = State.Dead;
+            OnSoundPlay?.Invoke(this, new OnSoundPlayEventArgs
+            {
+                state = state
+            });         
             player.RemoveFromMilitary(gameObject);
         }
     }

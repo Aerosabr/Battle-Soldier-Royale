@@ -7,6 +7,7 @@ public class WizardVisual : MonoBehaviour
     private Animator anim;
     [SerializeField] private Wizard character;
     [SerializeField] private List<EvolutionVisual> evolutionVisuals;
+    public bool active = true;
 
     private void Awake()
     {
@@ -15,6 +16,9 @@ public class WizardVisual : MonoBehaviour
 
     public void AnimAction(int state)
     {
+        if (!active)
+            return;
+
         anim.SetInteger("State", state);
     }
 
