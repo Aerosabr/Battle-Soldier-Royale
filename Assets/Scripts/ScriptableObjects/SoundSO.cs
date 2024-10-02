@@ -6,4 +6,5 @@ public class SoundSO : ScriptableObject
 {
     public AudioClip moneySpent;
     public AudioClip cardUpgraded;
+    public AudioClip buttonPressed;
 }
