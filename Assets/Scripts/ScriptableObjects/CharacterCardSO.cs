@@ -9,4 +9,5 @@ public class CharacterCardSO : CardSO
     public List<float> AttackSpeed;
     public List<float> MoveSpeed;
     public float AttackRange;
+    public AttackType AttackType;
 }
