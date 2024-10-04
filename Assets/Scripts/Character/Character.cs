@@ -67,8 +67,43 @@ public class Character : Entity, IDamageable, IEffectable
         return unitStrength;
     }
 
-    #region IDamageable Components
-    public virtual void Damaged(int damage) { }
+	protected bool IsMouseOverUI()
+	{
+		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
+		if (corners == null)
+		{
+			return false;
+		}
+		Vector3 mousePosition = Input.mousePosition;
+		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	protected bool IsCharacterInSpawnArea()
+	{
+		float distanceFromFurthest = 1.75f;
+		if (player.transform.position.x < 0)
+		{
+			if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x + player.GetFurthestControlledArea() - distanceFromFurthest))
+				return true;
+			else
+				return false;
+		}
+		else
+		{
+			if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x - player.GetFurthestControlledArea() - distanceFromFurthest))
+				return true;
+			else
+				return false;
+		}
+	}
+
+	#region IDamageable Components
+	public virtual void Damaged(int damage) { }
     protected void DamageVisuals(int damage)
     {
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs

@@ -174,40 +174,6 @@ public class Archer : Character
 		PlayerControlManager.Instance.CardHandled();
 
 	}
-	private bool IsMouseOverUI()
-	{
-		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
-		if (corners == null)
-		{
-			return false;
-		}
-		Vector3 mousePosition = Input.mousePosition;
-		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-    private bool IsCharacterInSpawnArea()
-    {
-        float distanceFromFurthest = 1.75f;
-        if (player.transform.position.x < 0)
-        {
-            if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x + player.GetFurthestControlledArea() - distanceFromFurthest))
-                return true;
-            else
-                return false;
-        }
-        else
-        {
-			if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x - player.GetFurthestControlledArea() - distanceFromFurthest))
-				return true;
-			else
-				return false;
-		}
-    }
 
 	private void Card_OnLevelChanged(object sender, EventArgs e)
     {
