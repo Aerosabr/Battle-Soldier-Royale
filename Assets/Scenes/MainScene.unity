@@ -8798,10 +8798,10 @@ MonoBehaviour:
   upgradesButton: {fileID: 887855064}
   closeButton: {fileID: 2101924178}
   upgradesTab: {fileID: 53167328}
-  tabContainer: {fileID: 0}
-  tab: {fileID: 0}
-  infoImage: {fileID: 0}
-  characterInfoUI: {fileID: 0}
+  tabContainer: {fileID: 688507835}
+  tab: {fileID: 1512440609}
+  infoImage: {fileID: 150832508}
+  characterInfoUI: {fileID: 448811415}
 --- !u!1001 &2091744559
 PrefabInstance:
   m_ObjectHideFlags: 0
