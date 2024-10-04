@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b589039f886714faac268d0669e51d, type: 3}
   m_Name: ArrowBarrage
   m_EditorClassIdentifier: 
+  Name: Arrow Barrage
   cardType: 2
   backgrounds:
   - {fileID: 21300000, guid: 3465b4dd7a890974aae417ebf767416f, type: 3}
   - {fileID: 21300000, guid: 3465b4dd7a890974aae417ebf767416f, type: 3}
   - {fileID: 21300000, guid: 3465b4dd7a890974aae417ebf767416f, type: 3}
+  backgroundVertical:
+  - {fileID: 21300000, guid: afee0699c3bc047409b0172a1550e60c, type: 3}
+  - {fileID: 21300000, guid: afee0699c3bc047409b0172a1550e60c, type: 3}
+  - {fileID: 21300000, guid: afee0699c3bc047409b0172a1550e60c, type: 3}
   cardCost: c8000000c8000000c8000000
   upgradeCost: 900100002003000000000000
   spawnCooldown:

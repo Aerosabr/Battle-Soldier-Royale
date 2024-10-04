@@ -2,11 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum BuildingType
-{
-    Farm,
-    Defense
-}
 
 public class Building : Entity, IDamageable
 {
@@ -24,8 +19,6 @@ public class Building : Entity, IDamageable
     protected BuildingCardSO card;
     protected BuildingSlot buildingSlot;
     protected LayerMask targetLayer;
-    public BuildingType buildingType;
-    public AttackType attackType;
 
     public virtual void Damaged(int damage) { }
     protected void HealthChangedVisual()
@@ -63,4 +56,5 @@ public class Building : Entity, IDamageable
 
 		return false;
 	}
+    public BuildingCardSO GetCard() => card;
 }

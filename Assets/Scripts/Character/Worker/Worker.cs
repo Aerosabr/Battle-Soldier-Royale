@@ -24,14 +24,11 @@ public class Worker : Character
     private GameObject mine;
     private State state;
     private float miningTimer;
-    private float time;
 
     private void Awake()
     {
-        characterType = CharacterType.Worker;
         state = State.Ghost;
         miningTimer = 0;
-        time = Time.time;
     }
 
     private void Update()

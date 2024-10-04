@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88af863b6100cb14f9bfc81db351baa6, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
+  Name: Archer
   cardType: 1
   backgrounds:
   - {fileID: 21300000, guid: bfa7ca7289989a74bbdf123f4511dc7f, type: 3}
   - {fileID: 21300000, guid: 5ef1147c1b72e0f48b60d9dc3ca7059e, type: 3}
   - {fileID: 21300000, guid: 5ac29342718893847b1000048e3f16bb, type: 3}
+  backgroundVertical:
+  - {fileID: 21300000, guid: 367ecc6236e3d1244ba4a7785a1649bc, type: 3}
+  - {fileID: 21300000, guid: dab53f429a175614e96164f594205047, type: 3}
+  - {fileID: 21300000, guid: 5fef2ab0358bfd0488364fe06196a8af, type: 3}
   cardCost: af000000af000000af000000
   upgradeCost: 5e010000bc02000000000000
   spawnCooldown:
@@ -38,3 +43,5 @@ MonoBehaviour:
   - 1
   - 1
   AttackRange: 4
+  CharacterType: 2
+  AttackType: 1

@@ -43,17 +43,16 @@ public class Character : Entity, IDamageable, IEffectable
     protected Player player;
     protected CharacterCardSO card;
     protected LayerMask targetLayer;
-    public CharacterType characterType;
-    public AttackType attackType;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
     public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card) { yield return null; }
     public int GetAttack() => attack;
+    public CharacterCardSO GetCard() => card;
     public int GetUnitStrength()
     {
         int unitStrength = 0;
         unitStrength += currentHealth / 2;
-        switch (attackType)
+        switch (card.AttackType)
         {
             case AttackType.None:
             case AttackType.Single:

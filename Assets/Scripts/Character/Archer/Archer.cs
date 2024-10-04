@@ -24,7 +24,6 @@ public class Archer : Character
 
     private void Awake()
     {
-        characterType = CharacterType.Ranged;
         state = State.Ghost;
     }
 
