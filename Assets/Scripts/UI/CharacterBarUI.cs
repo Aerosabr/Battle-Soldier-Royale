@@ -43,6 +43,11 @@ public class CharacterBarUI : MonoBehaviour
         currentTemplateSelected = button;
     }
 
+    public void ActivateCooldown()
+    {
+		currentTemplateSelected.GetComponent<CharacterBarSingleUI>().StartCooldown();
+	}
+
     public Vector3[] GetCancelArea()
     {
         RectTransform rectTransform = currentTemplateSelected.GetComponent<RectTransform>();
