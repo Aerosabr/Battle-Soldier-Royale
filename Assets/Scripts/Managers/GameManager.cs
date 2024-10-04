@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
+    public event EventHandler<OnGameEndedEventArgs> OnGameEnded;
+    public class OnGameEndedEventArgs : EventArgs
+    {
+        public Player.PlayerColor color;
+    }
+
     public static GameManager Instance;
     private float MapSize;
     private int MaxWorkerAmount;
@@ -31,4 +38,12 @@ public class GameManager : MonoBehaviour
     public float GetMusicVolume() => musicVolume;
     public float GetMapSize() => MapSize;
     public int GetMaxWorkerAmount() => MaxWorkerAmount; 
+
+    public void GameEnded(Player.PlayerColor color)
+    {
+        OnGameEnded?.Invoke(this, new OnGameEndedEventArgs
+        {
+            color = color
+        });
+    }
 }
