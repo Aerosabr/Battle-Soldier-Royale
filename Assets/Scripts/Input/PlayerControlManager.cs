@@ -39,7 +39,12 @@ public class PlayerControlManager : MonoBehaviour
 		if (cardSO.cardType == CardSO.CardType.Character)
 		{
 			PlayerBlue.Instance.SpawnCharacter(cardSO);
-			mode = Mode.Command;
+			mode = Mode.Cast;
+		}
+		else if(cardSO.cardType == CardSO.CardType.Worker)
+		{
+			PlayerBlue.Instance.SpawnWorker(cardSO, null);
+			mode = Mode.Cast;
 		}
 		else if (cardSO.cardType == CardSO.CardType.Spell)
 		{
@@ -48,7 +53,7 @@ public class PlayerControlManager : MonoBehaviour
 		}
 		else if (cardSO.cardType == CardSO.CardType.Building)
 		{
-			//PlayerBlue.Instance.SpawnBuilding(cardSO);
+			PlayerBlue.Instance.BuildBuilding(cardSO, MapManager.Instance.buildingSlots[0]);
 			mode = Mode.Build;
 		}
 	}

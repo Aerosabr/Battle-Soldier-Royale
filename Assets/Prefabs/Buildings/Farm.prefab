@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1679736883618731695
 Transform:
   m_ObjectHideFlags: 0
@@ -881,21 +881,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  attack: 0
-  attackSpeed: 0
-  attackRange: 0
-  buildTimer: 6
-  evolutionStats:
-  - Health: 1500
-    Attack: 10
-  - Health: 3000
-    Attack: 15
-  - Health: 6000
-    Attack: 30
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
   buildingType: 0
+  attackType: 0
   farmVisual: {fileID: 939330349953713378}
 --- !u!1 &7705565740336527077
 GameObject:
