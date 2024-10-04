@@ -4,20 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum CharacterType
-{
-    Worker,
-    Melee,
-    Ranged
-}
-
-public enum AttackType
-{
-    None,
-    Single,
-    AOE
-}
-
 public class Character : Entity, IDamageable, IEffectable
 {
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
@@ -42,16 +28,15 @@ public class Character : Entity, IDamageable, IEffectable
     protected Player player;
     protected CharacterCardSO card;
     protected LayerMask targetLayer;
-    public CharacterType characterType;
-    public AttackType attackType;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
     public int GetAttack() => attack;
+    public CharacterCardSO GetCard() => card;
     public int GetUnitStrength()
     {
         int unitStrength = 0;
         unitStrength += currentHealth / 2;
-        switch (attackType)
+        switch (card.AttackType)
         {
             case AttackType.None:
             case AttackType.Single:

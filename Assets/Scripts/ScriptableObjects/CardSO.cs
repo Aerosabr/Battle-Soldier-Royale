@@ -6,7 +6,7 @@ using UnityEngine;
 public class CardSO : ScriptableObject
 {
     public event EventHandler OnLevelChanged;
-
+    public string Name;
     public enum CardType
 	{
 		Building,

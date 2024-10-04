@@ -21,7 +21,6 @@ public class Knight : Character
 
     private void Awake()
     {
-        characterType = CharacterType.Melee;
         state = State.Idle;
     }
 

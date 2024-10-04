@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b589039f886714faac268d0669e51d, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
+  Name: Fireball
   cardType: 2
   backgrounds:
   - {fileID: 21300000, guid: 631d7bfcba23a984a91ba96f18889224, type: 3}
