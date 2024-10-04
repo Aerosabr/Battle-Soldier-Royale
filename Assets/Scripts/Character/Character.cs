@@ -5,19 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-public enum CharacterType
-{
-    Worker,
-    Melee,
-    Ranged
-}
 
-public enum AttackType
-{
-    None,
-    Single,
-    AOE
-}
 
 public class Character : Entity, IDamageable, IEffectable
 {
