@@ -6,7 +6,6 @@ public class BuildingSlot : MonoBehaviour
 {
     private Building building;
     [SerializeField] private GameObject buildingSlotVisual;
-    [SerializeField] private GameObject placementIndicator;
     private bool containsBuilding;
 
     public void SetBuilding(Building building)
@@ -25,7 +24,4 @@ public class BuildingSlot : MonoBehaviour
 
     public bool ContainsBuilding() => containsBuilding;
     public Building GetBuilding() => building;
-
-    public void HidePlacementIndicator() => placementIndicator.SetActive(false);
-    public void ShowPlacementIndicator() => placementIndicator.SetActive(true);
 }

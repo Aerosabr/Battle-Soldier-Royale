@@ -77,30 +77,8 @@ public class GameInput : MonoBehaviour
 		}
         else if (mode == 3)
         {
-			if (Keyboard.current.aKey.isPressed || Keyboard.current.dKey.isPressed)
-			{
-				Vector2 inputDir = playerControls.Player.Move.ReadValue<Vector2>();
-				inputDir = inputDir.normalized;
-				return inputDir;
-			}
-			else if (Mouse.current.leftButton.isPressed)
-			{
-				Vector2 mousePosition = Input.mousePosition;
-				float screenWidth = Screen.width;
-				float edgeThreshold = screenWidth * 0.1f;
 
-				if (mousePosition.x < edgeThreshold)
-				{
-					Vector2 inputDir = new Vector2(-1, 0);
-					return inputDir.normalized;
-				}
-				else if (mousePosition.x > screenWidth - edgeThreshold)
-				{
-					Vector2 inputDir = new Vector2(1, 0);
-					return inputDir.normalized;
-				}
-			}
-		}
+        }
 
 		return Vector2.zero;
     }

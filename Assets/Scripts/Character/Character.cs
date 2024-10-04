@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
-
 
 public class Character : Entity, IDamageable, IEffectable
 {
@@ -33,7 +30,6 @@ public class Character : Entity, IDamageable, IEffectable
     protected LayerMask targetLayer;
 
     public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
-    public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card) { yield return null; }
     public int GetAttack() => attack;
     public CharacterCardSO GetCard() => card;
     public int GetUnitStrength()
@@ -54,43 +50,8 @@ public class Character : Entity, IDamageable, IEffectable
         return unitStrength;
     }
 
-	protected bool IsMouseOverUI()
-	{
-		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
-		if (corners == null)
-		{
-			return false;
-		}
-		Vector3 mousePosition = Input.mousePosition;
-		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	protected bool IsCharacterInSpawnArea()
-	{
-		float distanceFromFurthest = 1.75f;
-		if (player.transform.position.x < 0)
-		{
-			if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x + player.GetFurthestControlledArea() - distanceFromFurthest))
-				return true;
-			else
-				return false;
-		}
-		else
-		{
-			if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x - player.GetFurthestControlledArea() - distanceFromFurthest))
-				return true;
-			else
-				return false;
-		}
-	}
-
-	#region IDamageable Components
-	public virtual void Damaged(int damage) { }
+    #region IDamageable Components
+    public virtual void Damaged(int damage) { }
     protected void DamageVisuals(int damage)
     {
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs

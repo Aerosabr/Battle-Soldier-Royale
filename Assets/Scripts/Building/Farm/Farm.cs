@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 public class Farm : Building
 {
     private enum State
@@ -118,53 +118,8 @@ public class Farm : Building
         state = State.Building;
         SetStats();
     }
-	public override IEnumerator Project(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
-	{
-		bool OnPlaceable = false;
-		BuildingSlot slot = this.buildingSlot;
-		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
-		LayerMask neutralWallMask = 1 << neutralWallLayer;
-		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
-		LayerMask buildableWallMask = 1 << buildableWallLayer;
-		while (Mouse.current.leftButton.isPressed)
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildableWallMask))
-			{
-				if (!hit.transform.parent.GetComponent<BuildingSlot>().ContainsBuilding())
-				{
-					OnPlaceable = true;
-					slot = hit.transform.parent.GetComponent<BuildingSlot>();
-					Transform hitTransform = hit.transform;
-					transform.position = hitTransform.position;
-				}
-			}
-			else if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
-			{
-				OnPlaceable = false;
-				Vector3 worldPosition = hit.point;
-				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
-			}
-			yield return null;
-		}
-		if (IsMouseOverUI() || OnPlaceable == false)
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-			transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-			InitializeBuilding(layerMask, card, slot);
-			CharacterBarUI.Instance.ActivateCooldown();
-			player.SubtractGold(card.cardCost[card.level - 1]);
-		}
-		MapManager.Instance.HideAllBuildingSlotsIndicator();
-		PlayerControlManager.Instance.CardHandled();
 
-	}
-
-	private void Card_OnLevelChanged(object sender, EventArgs e)
+    private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         if (buildingProgress != 0)
             farmVisual.ChangeBuildingVisual(card.level, buildingProgress);

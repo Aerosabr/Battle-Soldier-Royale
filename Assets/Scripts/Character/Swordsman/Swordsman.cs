@@ -2,13 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Swordsman : Character
 {
     public enum State
     {
-        Ghost,
         Idle,
         Walking,
         Attacking,
@@ -21,7 +19,7 @@ public class Swordsman : Character
 
     private void Awake()
     {
-        state = State.Ghost;
+        state = State.Idle;
     }
 
     private void Update()
@@ -133,43 +131,10 @@ public class Swordsman : Character
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
         }
+        player.AddToMilitary(gameObject);
     }
-	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
-	{
-		InitializeCharacter(layerMask, rotation, card);
-		player.spawnArea.gameObject.SetActive(true);
-		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
-		LayerMask neutralWallMask = 1 << neutralWallLayer;
-		while (Mouse.current.leftButton.isPressed)
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
-			{
-				Vector3 worldPosition = hit.point;
-				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
-			}
-			yield return null;
-		}
-		player.spawnArea.gameObject.SetActive(false);
-		if (IsMouseOverUI() || !IsCharacterInSpawnArea())
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-			CharacterBarUI.Instance.ActivateCooldown();
-			float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
-			transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
-			player.SubtractGold(card.cardCost[card.level - 1]);
-			player.AddToMilitary(gameObject);
-			state = State.Idle;
 
-		}
-		PlayerControlManager.Instance.CardHandled();
-
-	}
-	private void Card_OnLevelChanged(object sender, EventArgs e)
+    private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();
