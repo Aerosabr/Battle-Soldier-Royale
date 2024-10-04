@@ -20,7 +20,6 @@ public class Spearman : Character
 
     private void Awake()
     {
-        characterType = CharacterType.Melee;
         state = State.Idle;
     }
 

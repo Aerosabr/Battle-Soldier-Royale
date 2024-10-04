@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88af863b6100cb14f9bfc81db351baa6, type: 3}
   m_Name: Spearman
   m_EditorClassIdentifier: 
+  Name: Spearman
   cardType: 1
   backgrounds:
   - {fileID: 21300000, guid: cd3faef0c9ca7c246808b73a9d5bdfef, type: 3}
@@ -42,3 +43,5 @@ MonoBehaviour:
   - 1
   - 1
   AttackRange: 1.5
+  CharacterType: 1
+  AttackType: 1

@@ -82,6 +82,7 @@ public class UpgradesUI : MonoBehaviour
 
         CardSO card = PlayerBlue.Instance.GetLoadout()[currentTab];
         infoImage.sprite = card.backgroundVertical[card.level - 1];
+        characterInfoUI.showingCurrent = true;
         characterInfoUI.LoadCardStats(card);
     }
 

@@ -23,7 +23,6 @@ public class Wizard : Character
 
     private void Awake()
     {
-        characterType = CharacterType.Ranged;
         state = State.Idle;
     }
 

@@ -8,16 +8,17 @@ public class CharacterInfoUI : MonoBehaviour
 {
     //Stat Components
     [SerializeField] private TextMeshProUGUI Name;
-    [SerializeField] private TextMeshProUGUI Health; 
-    [SerializeField] private TextMeshProUGUI Attack; 
-    [SerializeField] private TextMeshProUGUI AttackSpeed;
-    [SerializeField] private TextMeshProUGUI AttackRange; 
-    [SerializeField] private TextMeshProUGUI AttackType;
-    [SerializeField] private TextMeshProUGUI MoveSpeed;
-    [SerializeField] private TextMeshProUGUI Cost; 
-    [SerializeField] private TextMeshProUGUI Cooldown;
-    [SerializeField] private TextMeshProUGUI GoldPerSecond;
-    [SerializeField] private TextMeshProUGUI BuildTime;
+    [SerializeField] private TextMeshProUGUI Level;
+    [SerializeField] private TextMeshProUGUI Health; //Building, Character, Worker
+    [SerializeField] private TextMeshProUGUI Attack; //Building.Defense
+    [SerializeField] private TextMeshProUGUI AttackSpeed; //Character, Building.Defense
+    [SerializeField] private TextMeshProUGUI AttackRange; //Character, Building.Defense
+    [SerializeField] private TextMeshProUGUI AttackType; //Character, Building.Defense
+    [SerializeField] private TextMeshProUGUI MoveSpeed; //Character, Worker
+    [SerializeField] private TextMeshProUGUI Cost; //All
+    [SerializeField] private TextMeshProUGUI Cooldown; //All
+    [SerializeField] private TextMeshProUGUI Income; //Building.Economy, Worker
+    [SerializeField] private TextMeshProUGUI BuildTime; //Building
 
     //Button Components
     [SerializeField] private Button UpgradeButton;
@@ -25,11 +26,22 @@ public class CharacterInfoUI : MonoBehaviour
     [SerializeField] private Button LevelViewButton;
     [SerializeField] private TextMeshProUGUI LevelViewText;
 
-    private bool showingCurrent = true;
+    public bool showingCurrent = true;
     private CardSO currentCard;
 
     private void Awake()
     {
+        UpgradeButton.onClick.AddListener(() =>
+        {
+            if (PlayerBlue.Instance.GetGold() >= currentCard.upgradeCost[currentCard.level - 1])
+            {
+                currentCard.IncreaseCardLevel();
+                showingCurrent = true;
+                LoadCardStats(currentCard);
+                CharacterBarUI.Instance.UpdateVisual();
+            }
+        });
+
         LevelViewButton.onClick.AddListener(() =>
         {
             SwitchStatView();
@@ -41,21 +53,72 @@ public class CharacterInfoUI : MonoBehaviour
         switch (card.cardType)
         {
             case CardSO.CardType.Building:
+                currentCard = card;
+                LoadBuilding();
                 break;
             case CardSO.CardType.Character:
                 currentCard = card;
                 LoadCharacter();
                 break;
             case CardSO.CardType.Spell:
+                currentCard = card;
+                LoadSpell();
                 break;
             case CardSO.CardType.Worker:
+                currentCard = card;
+                LoadWorker();
                 break;
         }
+        CheckLevelMaxed();
     }
 
-    private void LoadBuilding(BuildingCardSO buildingCard)
+    private void LoadBuilding()
     {
+        BuildingCardSO buildingCard = currentCard as BuildingCardSO;
+        int level = 0;
+        if (showingCurrent)
+            level = buildingCard.level - 1;
+        else
+            level = buildingCard.level;
 
+        HideStats();
+
+        Name.text = buildingCard.Name;
+        Level.text = (level + 1).ToString();
+
+        Health.text = buildingCard.Health[level].ToString();
+        Health.transform.parent.gameObject.SetActive(true);
+
+        if (buildingCard.BuildingType == BuildingType.Defense)
+        {
+            Attack.text = buildingCard.Attack[level].ToString();
+            Attack.transform.parent.gameObject.SetActive(true);
+
+            AttackSpeed.text = buildingCard.AttackSpeed[level].ToString();
+            AttackSpeed.transform.parent.gameObject.SetActive(true);
+
+            AttackRange.text = buildingCard.AttackRange.ToString();
+            AttackRange.transform.parent.gameObject.SetActive(true);
+
+            this.AttackType.text = buildingCard.AttackType.ToString();
+            AttackType.transform.parent.gameObject.SetActive(true);
+        }
+        else
+        {
+            Income.text = buildingCard.Attack[level].ToString() + "/s";
+            Income.transform.parent.gameObject.SetActive(true);
+        }
+
+        Cost.text = buildingCard.cardCost[level].ToString();
+        Cost.transform.parent.gameObject.SetActive(true);
+
+        Cooldown.text = buildingCard.spawnCooldown[level].ToString();
+        Cooldown.transform.parent.gameObject.SetActive(true);
+
+        BuildTime.text = buildingCard.BuildTimer[level].ToString();
+        BuildTime.transform.parent.gameObject.SetActive(true);
+
+        UpgradeCost.text = buildingCard.upgradeCost[buildingCard.level - 1].ToString();
     }
 
     private void LoadCharacter()
@@ -68,6 +131,9 @@ public class CharacterInfoUI : MonoBehaviour
             level = characterCard.level;
 
         HideStats();
+
+        Name.text = characterCard.Name;
+        Level.text = (level + 1).ToString();
 
         Health.text = characterCard.Health[level].ToString();
         Health.transform.parent.gameObject.SetActive(true);
@@ -96,14 +162,57 @@ public class CharacterInfoUI : MonoBehaviour
         UpgradeCost.text = characterCard.upgradeCost[characterCard.level - 1].ToString();
     }
 
-    private void LoadSpell(SpellCardSO spellCard)
+    private void LoadSpell()
     {
+        SpellCardSO spellCard = currentCard as SpellCardSO;
+        int level = 0;
+        if (showingCurrent)
+            level = spellCard.level - 1;
+        else
+            level = spellCard.level;
 
+        HideStats();
+
+        Name.text = spellCard.Name;
+        Level.text = (level + 1).ToString();
+
+        Attack.text = spellCard.Attack[level].ToString();
+        Attack.transform.parent.gameObject.SetActive(true);
     }
 
-    private void LoadWorker(CharacterCardSO characterCard)
+    private void LoadWorker()
     {
+        CharacterCardSO characterCard = currentCard as CharacterCardSO;
+        int level = 0;
+        if (showingCurrent)
+            level = characterCard.level - 1;
+        else
+            level = characterCard.level;
 
+        HideStats();
+
+        Name.text = characterCard.Name;
+        Level.text = (level + 1).ToString();
+
+        Health.text = characterCard.Health[level].ToString();
+        Health.transform.parent.gameObject.SetActive(true);
+
+        Attack.text = characterCard.Attack[level].ToString();
+        Attack.transform.parent.gameObject.SetActive(true);
+
+        AttackSpeed.text = characterCard.AttackSpeed[level].ToString();
+        AttackSpeed.transform.parent.gameObject.SetActive(true);
+
+        MoveSpeed.text = characterCard.MoveSpeed[level].ToString();
+        MoveSpeed.transform.parent.gameObject.SetActive(true);
+
+        Cost.text = characterCard.cardCost[level].ToString();
+        Cost.transform.parent.gameObject.SetActive(true);
+
+        Cooldown.text = characterCard.spawnCooldown[level].ToString();
+        Cooldown.transform.parent.gameObject.SetActive(true);
+
+        UpgradeCost.text = characterCard.upgradeCost[characterCard.level - 1].ToString();
     }
 
     private void HideStats()
@@ -116,7 +225,7 @@ public class CharacterInfoUI : MonoBehaviour
         MoveSpeed.transform.parent.gameObject.SetActive(false);
         Cost.transform.parent.gameObject.SetActive(false);
         Cooldown.transform.parent.gameObject.SetActive(false);
-        GoldPerSecond.transform.parent.gameObject.SetActive(false);
+        Income.transform.parent.gameObject.SetActive(false);
         BuildTime.transform.parent.gameObject.SetActive(false);
     }
 
@@ -130,5 +239,26 @@ public class CharacterInfoUI : MonoBehaviour
             LevelViewText.text = "Current Lv";
 
         LoadCardStats(currentCard);
+    }
+
+    private void CheckLevelMaxed()
+    {
+        if (currentCard.level == currentCard.upgradeCost.Count)
+        {
+            showingCurrent = true;
+            LevelViewText.text = "Lv MAX";
+            UpgradeCost.text = "Max";
+            LevelViewButton.enabled = false;
+            UpgradeButton.enabled = false;
+        }
+        else
+        {
+            if (showingCurrent)
+                LevelViewText.text = "Next Lv";
+            else
+                LevelViewText.text = "Current Lv";
+            LevelViewButton.enabled = true;
+            UpgradeButton.enabled = true;
+        }
     }
 }

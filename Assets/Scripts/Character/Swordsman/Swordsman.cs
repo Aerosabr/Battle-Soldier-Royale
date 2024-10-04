@@ -19,7 +19,6 @@ public class Swordsman : Character
 
     private void Awake()
     {
-        characterType = CharacterType.Melee;
         state = State.Idle;
     }
 
