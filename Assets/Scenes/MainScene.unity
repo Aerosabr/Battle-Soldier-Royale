@@ -407,10 +407,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c6be0f50e79c07c41bacd4ff6f3529f9, type: 2}
   - {fileID: 11400000, guid: f1eddd20ef6cd0a4d84f41141a758864, type: 2}
   - {fileID: 11400000, guid: de885bb10ba0e1f488434b0360ef6229, type: 2}
-  - {fileID: 11400000, guid: c55fc63988ef4784d933dd3d84ed1a46, type: 2}
-  - {fileID: 11400000, guid: ad43ccee3d6d79f4c8b7167c760135fc, type: 2}
-  - {fileID: 11400000, guid: edbec65c5e0d6ac4881588fffdd01771, type: 2}
   - {fileID: 11400000, guid: eadb09cee33a43247b68b5d4182dd5bd, type: 2}
+  - {fileID: 11400000, guid: edbec65c5e0d6ac4881588fffdd01771, type: 2}
+  - {fileID: 11400000, guid: ad43ccee3d6d79f4c8b7167c760135fc, type: 2}
+  - {fileID: 11400000, guid: c27a595e07a18154bbb06f65f7b6c9da, type: 2}
   startingGold: 6000
   spawnRotation: {x: 0, y: 90, z: 0}
   spawnArea: {fileID: 1408218812}
@@ -944,7 +944,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1095,7 +1095,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -2750,7 +2750,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -2855,7 +2855,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -6152,7 +6152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1408218813
 Transform:
   m_ObjectHideFlags: 0
@@ -6209,7 +6209,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f395abdd881bac48b3fdb6ed13439c0, type: 2}
+  - {fileID: 2100000, guid: c4efb8ba88e36a543aeb30dba57c1d3a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8174,7 +8174,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

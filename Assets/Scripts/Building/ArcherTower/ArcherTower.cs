@@ -152,7 +152,8 @@ public class ArcherTower : Building
 
     public override void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
     {
-        this.card = card as BuildingCardSO;
+		transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+		this.card = card as BuildingCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
         gameObject.layer = layerMask;
         this.buildingSlot = buildingSlot;
@@ -174,10 +175,11 @@ public class ArcherTower : Building
         SetStats();
     }
 
-	public override IEnumerator Project(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
+	public override IEnumerator Project(LayerMask layerMask, CardSO card)
 	{
         bool OnPlaceable = false;
-        BuildingSlot slot = this.buildingSlot;
+        transform.GetComponent<BoxCollider>().enabled = false;
+        BuildingSlot slot = null;
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
@@ -210,14 +212,19 @@ public class ArcherTower : Building
 		}
 		else
 		{
-			transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
-			InitializeBuilding(layerMask, card, slot);
+			if (layerMask == 6)
+			{
+                PlayerBlue.Instance.BuildBuilding(card, slot.gameObject);
+			}
+			else
+			{
+				PlayerRed.Instance.BuildBuilding(card, slot.gameObject);
+			}
 			CharacterBarUI.Instance.ActivateCooldown();
-			player.SubtractGold(card.cardCost[card.level - 1]);
+			Destroy(gameObject);
 		}
-        MapManager.Instance.HideAllBuildingSlotsIndicator();
+		MapManager.Instance.HideAllBuildingSlotsIndicator();
 		PlayerControlManager.Instance.CardHandled();
-
 	}
 
 	private void Card_OnLevelChanged(object sender, EventArgs e)

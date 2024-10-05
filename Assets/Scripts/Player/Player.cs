@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -28,7 +29,6 @@ public class Player : MonoBehaviour
     private int numberOfWorkers = 0;
     private List<GameObject> Economy = new List<GameObject>();
     private List<GameObject> Military = new List<GameObject>();
-    private List<int> ObtainedBuildingSlotsIndex = new List<int>();
 
 	public int GetGold() => Gold;
 
@@ -60,44 +60,84 @@ public class Player : MonoBehaviour
 
     public void BuildBuilding(CardSO CSO, GameObject buildingSlot)
     {
-        MapManager.Instance.ShowPossibleBuildingSlotsIndicator(transform.position.x, GetFurthestControlledArea());
-        SubtractGold(CSO.cardCost[CSO.level - 1]);
+
         if (playerColor == PlayerColor.Blue && !MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            Transform building = Instantiate(CSO.spawnableObject, transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
-			StartCoroutine(building.GetComponent<Building>().Project(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>()));
+            Transform building = Instantiate(CSO.spawnableObject, buildingSlot.transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+			building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, buildingSlot.GetComponent<BuildingSlot>());
 		}
         else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
         {
             Transform building = Instantiate(CSO.spawnableObject, transform.position, Quaternion.identity).transform;
-			StartCoroutine(building.GetComponent<Building>().Project(gameObject.layer, CSO, MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>()));
+			building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, buildingSlot.GetComponent<BuildingSlot>());
 		}
+		SubtractGold(CSO.cardCost[CSO.level - 1]);
 		CSO.timesCasted++;
     }
 
-    public void SpawnCharacter(CardSO CSO)
+    public void SpawnCharacter(CardSO CSO, Vector3 position)
     {
 
-        Transform character = Instantiate(CSO.spawnableObject, transform).transform;
-        StartCoroutine(character.GetComponent<Character>().Project(gameObject.layer, spawnRotation, CSO));
-        CSO.timesCasted++;
+		float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
+		Vector3 placement = new Vector3(position.x, spawnPos * 0.2f, spawnPos);
+		Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+		character.position = placement;
+		character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
+		SubtractGold(CSO.cardCost[CSO.level - 1]);
+		AddToMilitary(character.gameObject);
+		CSO.timesCasted++;
     }
 
-    public void SpawnSpell(CardSO CSO)
+    public void SpawnSpell(CardSO CSO, Vector3 position)
     {
-        SpellCardSO SCSO = CSO as SpellCardSO;
-        Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
-        StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, SCSO.Attack[CSO.level - 1], CSO.cardCost[CSO.level - 1]));
-        CSO.timesCasted++;
+		SpellCardSO SCSO = CSO as SpellCardSO;
+		Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
+        spell.position = position;
+		spell.GetComponent<Spell>().InitializeSpell(gameObject.layer, SCSO);
+		SubtractGold(SCSO.cardCost[SCSO.level - 1]);
+		CSO.timesCasted++;
     }
 
     public void SpawnWorker(CardSO CSO, GameObject mine)
     {
-		MapManager.Instance.ShowPossibleMineSlotsIndicator(transform.position.x, GetFurthestControlledArea());
-        Transform character = Instantiate(CSO.spawnableObject, transform).transform;
-		StartCoroutine(character.GetComponent<Worker>().Project(gameObject.layer, spawnRotation, CSO));
-        CSO.timesCasted++;
+		float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
+		Vector3 placement = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
+		Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+		character.position = placement;
+        character.GetComponent<Worker>().InitializeWorker(gameObject.layer, spawnRotation, CSO, mine);
+		SubtractGold(CSO.cardCost[CSO.level - 1]);
+		AddToMilitary(character.gameObject);
+		CSO.timesCasted++;
     }
+
+    public void ProjectCard(CardSO CSO)
+    {
+		if (CSO.cardType == CardSO.CardType.Character)
+		{
+			spawnArea.gameObject.SetActive(true);
+			Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+			StartCoroutine(character.GetComponent<Character>().Project(gameObject.layer, spawnRotation, CSO));
+		}
+		else if (CSO.cardType == CardSO.CardType.Worker)
+		{
+			MapManager.Instance.ShowPossibleMineSlotsIndicator(transform.position.x, GetFurthestControlledArea());
+			Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+			StartCoroutine(character.GetComponent<Worker>().Project(gameObject.layer, spawnRotation, CSO));
+		}
+		else if (CSO.cardType == CardSO.CardType.Spell)
+		{
+			SpellCardSO SCSO = CSO as SpellCardSO;
+			Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
+			StartCoroutine(spell.GetComponent<Spell>().Project(gameObject.layer, CSO));
+		}
+		else if (CSO.cardType == CardSO.CardType.Building)
+		{
+			MapManager.Instance.ShowPossibleBuildingSlotsIndicator(transform.position.x, GetFurthestControlledArea());
+			Transform building = Instantiate(CSO.spawnableObject, transform.position, Quaternion.Euler(0, spawnRotation.y, 0)).transform;
+			StartCoroutine(building.GetComponent<Building>().Project(gameObject.layer, CSO));
+		}
+
+	}
 
     public bool CheckCardPosition(float currentXPosition)
     {

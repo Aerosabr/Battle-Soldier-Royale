@@ -97,7 +97,8 @@ public class Farm : Building
 
     public override void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
     {
-        this.card = card as BuildingCardSO;
+		transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+		this.card = card as BuildingCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
         gameObject.layer = layerMask;
         this.buildingSlot = buildingSlot;
@@ -118,9 +119,10 @@ public class Farm : Building
         state = State.Building;
         SetStats();
     }
-	public override IEnumerator Project(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
+	public override IEnumerator Project(LayerMask layerMask, CardSO card)
 	{
 		bool OnPlaceable = false;
+		transform.GetComponent<BoxCollider>().enabled = false;
 		BuildingSlot slot = this.buildingSlot;
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
@@ -154,10 +156,16 @@ public class Farm : Building
 		}
 		else
 		{
-			transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-			InitializeBuilding(layerMask, card, slot);
+			if (layerMask == 6)
+			{
+				PlayerBlue.Instance.BuildBuilding(card, slot.gameObject);
+			}
+			else
+			{
+				PlayerRed.Instance.BuildBuilding(card, slot.gameObject);
+			}
 			CharacterBarUI.Instance.ActivateCooldown();
-			player.SubtractGold(card.cardCost[card.level - 1]);
+			Destroy(gameObject);
 		}
 		MapManager.Instance.HideAllBuildingSlotsIndicator();
 		PlayerControlManager.Instance.CardHandled();
