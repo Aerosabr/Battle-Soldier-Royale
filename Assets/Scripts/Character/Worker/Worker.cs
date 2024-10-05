@@ -136,6 +136,7 @@ public class Worker : Character
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
+        state = State.Idle;
         if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
@@ -151,6 +152,7 @@ public class Worker : Character
 
 	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
 	{
+		transform.GetComponent<BoxCollider>().enabled = false;
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
@@ -170,25 +172,31 @@ public class Worker : Character
                 mine = null;
 				Vector3 worldPosition = hit.point;
 				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+				transform.rotation = Quaternion.Euler(rotation);
 			}
 			yield return null;
 		}
-
-		if (IsMouseOverUI() || mine == null)
+		if (layerMask == 6)
 		{
-			Destroy(gameObject);
+			player = PlayerBlue.Instance;
+			targetLayer = 1 << 7;
 		}
 		else
 		{
-			InitializeWorker(layerMask, rotation, card, mine);
-			CharacterBarUI.Instance.ActivateCooldown();
-			float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
-			transform.position = new Vector3(player.transform.position.x, spawnPos * 0.2f, spawnPos);
-			player.SubtractGold(card.cardCost[card.level - 1]);
-			player.AddToMilitary(gameObject);
-			state = State.Idle;
+			player = PlayerRed.Instance;
+			targetLayer = 1 << 6;
 		}
-        MapManager.Instance.HideAllMineSlotsIndicator();
+		if (IsMouseOverUI() || mine == null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            CharacterBarUI.Instance.ActivateCooldown();
+            player.SpawnWorker(card, mine);
+            Destroy(gameObject);
+        }
+		MapManager.Instance.HideAllMineSlotsIndicator();
 		PlayerControlManager.Instance.CardHandled();
 	}
 

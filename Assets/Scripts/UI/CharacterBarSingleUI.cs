@@ -32,8 +32,11 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		PlayerControlManager.Instance.CardSelected(cardSO);
-		CharacterBarUI.Instance.SetCurrentButtonSelected(this.transform);
+        if (!cooldownUI.gameObject.activeSelf)
+        {
+            PlayerControlManager.Instance.CardSelected(cardSO);
+            CharacterBarUI.Instance.SetCurrentButtonSelected(this.transform);
+        }
 	}
     
     public void StartCooldown()

@@ -123,7 +123,8 @@ public class Swordsman : Character
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
-        if (gameObject.layer == 6)
+		state = State.Idle;
+		if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
             targetLayer = 1 << 7;
@@ -136,8 +137,7 @@ public class Swordsman : Character
     }
 	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
 	{
-		InitializeCharacter(layerMask, rotation, card);
-		player.spawnArea.gameObject.SetActive(true);
+		transform.GetComponent<BoxCollider>().enabled = false;
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		while (Mouse.current.leftButton.isPressed)
@@ -148,10 +148,21 @@ public class Swordsman : Character
 			{
 				Vector3 worldPosition = hit.point;
 				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+				transform.rotation = Quaternion.Euler(rotation);
 			}
 			yield return null;
 		}
-		player.spawnArea.gameObject.SetActive(false);
+		if (layerMask == 6)
+		{
+			player = PlayerBlue.Instance;
+			targetLayer = 1 << 7;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+			targetLayer = 1 << 6;
+		}
+
 		if (IsMouseOverUI() || !IsCharacterInSpawnArea())
 		{
 			Destroy(gameObject);
@@ -159,13 +170,11 @@ public class Swordsman : Character
 		else
 		{
 			CharacterBarUI.Instance.ActivateCooldown();
-			float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
-			transform.position = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
-			player.SubtractGold(card.cardCost[card.level - 1]);
-			player.AddToMilitary(gameObject);
-			state = State.Idle;
+			player.SpawnCharacter(card, transform.position);
+			Destroy(gameObject);
 
 		}
+		player.spawnArea.gameObject.SetActive(false);
 		PlayerControlManager.Instance.CardHandled();
 
 	}

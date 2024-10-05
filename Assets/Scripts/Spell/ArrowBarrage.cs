@@ -21,8 +21,10 @@ public class ArrowBarrage : Spell
 			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
 		}
 	}
-	public void InitializeArrowBarrage(LayerMask layerMask, int damage, int cost)
+	public override void InitializeSpell(LayerMask layerMask, SpellCardSO card)
 	{
+		transparentObject.gameObject.SetActive(false);
+		visualObject.gameObject.SetActive(true);
 		if (layerMask == 6)
 		{
 			player = PlayerBlue.Instance;
@@ -33,11 +35,12 @@ public class ArrowBarrage : Spell
 			player = PlayerRed.Instance;
 			targetLayer = 6;
 		}
-		this.damage = damage;
-		this.cost = cost;
+		this.damage = card.Attack[card.level - 1];
 		hitBox = GetComponent<BoxCollider>();
 		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
-		hitBox.enabled = false;
+		hitBox.enabled = true;
+		StartCoroutine(HandleHitBox());
+		StartCoroutine(HandleAttack());
 	}
 
 	private IEnumerator HandleHitBox()
@@ -67,61 +70,6 @@ public class ArrowBarrage : Spell
 			elapsedTime += damageInterval;
 		}
 		yield return null;
-	}
-
-
-	public override IEnumerator Project(LayerMask layerMask, int damage, int cost)
-	{
-		float cameraDistance = 0.75f;
-		InitializeArrowBarrage(layerMask, damage, cost);
-		transparentObject.gameObject.SetActive(true);
-		visualObject.gameObject.SetActive(false);
-		while (Mouse.current.leftButton.isPressed)
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit))
-			{
-				Vector3 worldPosition = hit.point;
-				transform.position = new Vector3(worldPosition.x, transform.position.y, cameraDistance);
-			}
-			yield return null;
-		}
-
-		if (IsMouseOverUI())
-		{
-			transparentObject.gameObject.SetActive(false);
-			visualObject.gameObject.SetActive(false);
-			Destroy(gameObject);
-		}
-		else
-		{
-			player.SubtractGold(cost);
-			transparentObject.gameObject.SetActive(false);
-			visualObject.gameObject.SetActive(true);
-			hitBox.enabled = true;
-			StartCoroutine(HandleHitBox());
-			StartCoroutine(HandleAttack());
-			Destroy(gameObject, MAX_DURATION);
-		}
-		PlayerControlManager.Instance.CardHandled();
-
-	}
-
-	private bool IsMouseOverUI()
-	{
-		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
-		if (corners == null)
-		{
-			return false;
-		}
-		Vector3 mousePosition = Input.mousePosition;
-		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
-		{
-			return true;
-		}
-
-		return false;
 	}
 
 	#region Entities in Range Handler
