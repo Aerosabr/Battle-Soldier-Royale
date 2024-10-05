@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         ReadLoadout();
-        PlayerRed.Instance.SpawnCharacter(meleeUnits[1]);
+        //PlayerRed.Instance.SpawnCharacter(meleeUnits[1]);
     }
 
     private void Update()
@@ -486,7 +486,7 @@ public class EnemyAI : MonoBehaviour
             case ActionType.Spawn:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.SpawnCharacter(actionCard);
+                    //PlayerRed.Instance.SpawnCharacter(actionCard);
                     Debug.Log("AI is spawning a " + actionCard.name);
                 }
                 break;
