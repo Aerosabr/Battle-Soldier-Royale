@@ -35,6 +35,7 @@ public class CharacterInfoUI : MonoBehaviour
         {
             if (PlayerBlue.Instance.GetGold() >= currentCard.upgradeCost[currentCard.level - 1])
             {
+                PlayerBlue.Instance.SubtractGold(currentCard.upgradeCost[currentCard.level - 1]);
                 currentCard.IncreaseCardLevel();
                 showingCurrent = true;
                 LoadCardStats(currentCard);
