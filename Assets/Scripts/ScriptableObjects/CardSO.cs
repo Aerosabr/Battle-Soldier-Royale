@@ -44,4 +44,6 @@ public class CardSO : ScriptableObject
         level++;
         OnLevelChanged?.Invoke(this, EventArgs.Empty);
     }
+
+	public virtual List<string> ViewCard(int level) { return null; }
 }

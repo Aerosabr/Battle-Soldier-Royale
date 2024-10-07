@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EquippedLoadoutManager : MonoBehaviour
 {
@@ -8,11 +9,11 @@ public class EquippedLoadoutManager : MonoBehaviour
     private List<CardSO> equippedCardSOList;
     [SerializeField] private List<EquippedCardSlotVisual> equippedVisualList;
 
-    // Start is called before the first frame update
-    void Start()
+	void Start()
     {
         Instance = this;
         equippedCardSOList = new List<CardSO>();
+
     }
 
     public void AddCard(CardSO cardSO)
@@ -22,7 +23,8 @@ public class EquippedLoadoutManager : MonoBehaviour
             equippedCardSOList.Add(cardSO);
             UpdateEquippedLoadout();
         }
-    }
+        PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
+	}
 
     public void RemoveCard(CardSO cardSO)
     {
@@ -31,7 +33,8 @@ public class EquippedLoadoutManager : MonoBehaviour
             equippedCardSOList.Remove(cardSO);
             UpdateEquippedLoadout();
         }
-    }
+		PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
+	}
 
     private void UpdateEquippedLoadout()
     {

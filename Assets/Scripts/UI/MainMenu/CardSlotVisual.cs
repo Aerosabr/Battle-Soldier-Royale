@@ -15,7 +15,7 @@ public class CardSlotVisual : MonoBehaviour
 		this.cardSO = cardSO;
 		if (cardSO != null)
 		{
-			icon.sprite = cardSO.backgrounds[0];
+			icon.sprite = cardSO.backgroundVertical[0];
 			text.text = cardSO.name;
 		}
 		else

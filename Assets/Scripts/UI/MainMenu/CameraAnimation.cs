@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class CameraAnimation : MonoBehaviour
 {
+	public static CameraAnimation Instance;
 	private Animator animator;
-
+	[SerializeField] private CanvasGroup canvasGroup;
+	[SerializeField] private float fadeDuration = 1f;
 	private void Awake()
 	{
+		Instance = this;
 		animator = GetComponent<Animator>();
 		animator.Play("CameraMoveDown", 0, 0f);
+		FadeIn();
 	}
 	public void MoveUp(string sceneName)
 	{
@@ -27,5 +31,33 @@ public class CameraAnimation : MonoBehaviour
 			yield return null;
 		}
 		SceneLoader.Instance.TransitionScene(sceneName);
+	}
+
+	public void FadeIn()
+	{
+		StartCoroutine(FadeCoroutine(0, 1));
+	}
+
+	private IEnumerator FadeCoroutine(float startAlpha, float endAlpha)
+	{
+		float elapsedTime = 0f;
+		float delay = 1.5f;
+
+		while(elapsedTime < delay)
+		{
+			elapsedTime += Time.deltaTime;
+			yield return null;
+		}
+		elapsedTime = 0f;
+
+		while (elapsedTime < fadeDuration)
+		{
+			elapsedTime += Time.deltaTime;
+			float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
+			canvasGroup.alpha = alpha;
+			yield return null;
+		}
+
+		canvasGroup.alpha = endAlpha;
 	}
 }

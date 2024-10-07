@@ -18,10 +18,10 @@ public class CharacterBarUI : MonoBehaviour
 
     private void Start()
     {
-        UpdateVisual();
-    }
+		UpdateVisual();
+	}
 
-    public void UpdateVisual()
+	public void UpdateVisual()
     {
         foreach (Transform child in container)
         {
