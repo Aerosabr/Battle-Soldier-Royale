@@ -3,20 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
-public enum CharacterType
-{
-    Worker,
-    Melee,
-    Ranged
-}
-
-public enum AttackType
-{
-    None,
-    Single,
-    AOE
-}
 
 public class Character : Entity, IDamageable, IEffectable
 {
@@ -36,22 +25,72 @@ public class Character : Entity, IDamageable, IEffectable
     protected float poisonTimer = 0f;
 
     protected bool canAttack = true;
-    protected bool isSlowed = false;
-    protected bool isPoisoned = false;
 
     protected Player player;
     protected CharacterCardSO card;
     protected LayerMask targetLayer;
-    public CharacterType characterType;
-    public AttackType attackType;
 
-    public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
-    public int GetAttack() => attack;
+	[SerializeField] protected GameObject indicator;
+	[SerializeField] protected Material allowed;
+	[SerializeField] protected Material denied;
+
+
+	public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
+	public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
+	{
+		transform.GetComponent<BoxCollider>().enabled = false;
+		indicator.SetActive(true);
+		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
+		LayerMask neutralWallMask = 1 << neutralWallLayer;
+		MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
+		if (layerMask == 6)
+		{
+			player = PlayerBlue.Instance;
+			targetLayer = 1 << 7;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+			targetLayer = 1 << 6;
+		}
+		while (Mouse.current.leftButton.isPressed)
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
+			{
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+				transform.rotation = Quaternion.Euler(rotation);
+			}
+			if (IsCharacterInSpawnArea())
+				meshRenderer.material = allowed;
+			else
+				meshRenderer.material = denied;
+			yield return null;
+		}
+		if (IsMouseOverUI() || !IsCharacterInSpawnArea())
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			CharacterBarUI.Instance.ActivateCooldown();
+			player.SpawnCharacter(card, transform.position);
+			Destroy(gameObject);
+
+		}
+		player.spawnArea.gameObject.SetActive(false);
+		PlayerControlManager.Instance.CardHandled();
+
+	}
+	public int GetAttack() => attack;
+    public CharacterCardSO GetCard() => card;
     public int GetUnitStrength()
     {
         int unitStrength = 0;
         unitStrength += currentHealth / 2;
-        switch (attackType)
+        switch (card.AttackType)
         {
             case AttackType.None:
             case AttackType.Single:
@@ -65,8 +104,43 @@ public class Character : Entity, IDamageable, IEffectable
         return unitStrength;
     }
 
-    #region IDamageable Components
-    public virtual void Damaged(int damage) { }
+	protected bool IsMouseOverUI()
+	{
+		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
+		if (corners == null)
+		{
+			return false;
+		}
+		Vector3 mousePosition = Input.mousePosition;
+		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	protected bool IsCharacterInSpawnArea()
+	{
+		float distanceFromFurthest = 1.75f;
+		if (player.transform.position.x < 0)
+		{
+			if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x + player.GetFurthestControlledArea() - distanceFromFurthest))
+				return true;
+			else
+				return false;
+		}
+		else
+		{
+			if (transform.position.x > player.transform.position.x && transform.position.x < (player.transform.position.x - player.GetFurthestControlledArea() - distanceFromFurthest))
+				return true;
+			else
+				return false;
+		}
+	}
+
+	#region IDamageable Components
+	public virtual void Damaged(int damage) { }
     protected void DamageVisuals(int damage)
     {
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
@@ -85,45 +159,40 @@ public class Character : Entity, IDamageable, IEffectable
     #region IEffectable Components
     public void Slowed(int speed)
     {
-        if (!isSlowed)
-        {
-            isSlowed = true;
-            moveSpeed = moveSpeed - ((float)speed / 50);
-            attackSpeed = attackSpeed - ((float)speed / 50);
-        }
+		Slowed existingSlowed = GetComponent<Slowed>();
+
+		if (existingSlowed == null)
+		{
+			Slowed newSlowed = gameObject.AddComponent<Slowed>();
+			moveSpeed = moveSpeed - ((float)speed / 50);
+			attackSpeed = attackSpeed - ((float)speed / 50);
+		}
     }
     public void UnSlowed(int speed)
     {
-        if (isSlowed)
-        {
-            isSlowed = false;
-            moveSpeed = baseMoveSpeed;
-            attackSpeed = baseAttackSpeed;
-        }
+		Slowed existingSlowed = GetComponent<Slowed>();
+
+		if (existingSlowed == null)
+		{
+			moveSpeed = baseMoveSpeed;
+			attackSpeed = baseAttackSpeed;
+			Destroy(existingSlowed);
+		}
     }
 
-    public void Poisoned(int damage, int poisonDuration)
-    {
-        if (!isPoisoned)
-        {
-            StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
-        }
-        else
-        {
-            poisonTimer = 0f;
-        }
-    }
-    private IEnumerator HandlePoisonDamage(int damage, float duration)
-    {
-        isPoisoned = true;
-        float poisonDamageInterval = 1f;
-        while (poisonTimer < duration)
-        {
-            Damaged(damage);
-            yield return new WaitForSeconds(poisonDamageInterval);
-            poisonTimer += poisonDamageInterval;
-        }
-        isPoisoned = false;
-    }
-    #endregion
+	public void Poisoned(int damage, int poisonDuration)
+	{
+		Poisoned existingPoisoned = GetComponent<Poisoned>();
+
+		if (existingPoisoned == null)
+		{
+			Poisoned newPoisoned = gameObject.AddComponent<Poisoned>();
+			newPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+		else
+		{
+			existingPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+	}
+	#endregion
 }

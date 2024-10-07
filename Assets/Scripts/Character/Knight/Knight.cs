@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.U2D;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Knight : Character
 {
     public enum State
     {
+        Ghost,
         Idle,
         Walking,
         Attacking,
@@ -21,8 +23,7 @@ public class Knight : Character
 
     private void Awake()
     {
-        characterType = CharacterType.Melee;
-        state = State.Idle;
+        state = State.Ghost;
     }
 
     private void Update()
@@ -124,7 +125,8 @@ public class Knight : Character
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
-        if (gameObject.layer == 6)
+		state = State.Idle;
+		if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
             targetLayer = 1 << 7;
@@ -134,10 +136,8 @@ public class Knight : Character
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
         }
-        player.AddToMilitary(gameObject);
     }
-
-    private void Card_OnLevelChanged(object sender, EventArgs e)
+	private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();

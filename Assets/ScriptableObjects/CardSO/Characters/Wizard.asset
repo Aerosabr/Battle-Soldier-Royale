@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88af863b6100cb14f9bfc81db351baa6, type: 3}
   m_Name: Wizard
   m_EditorClassIdentifier: 
+  Name: Wizard
   cardType: 1
   backgrounds:
   - {fileID: 21300000, guid: 7346cb79cbfd25942994b75a80bd1a5e, type: 3}
   - {fileID: 21300000, guid: 60dd34695a6966f4eaec4b0db7c24c2f, type: 3}
   - {fileID: 21300000, guid: 367fa64e35104724c92b7806e074ea76, type: 3}
+  backgroundVertical:
+  - {fileID: 21300000, guid: 3c34621808f82ec48b263175b2ba8ca2, type: 3}
+  - {fileID: 21300000, guid: 9bd34319d63c033428ad86c612fa1e3f, type: 3}
+  - {fileID: 21300000, guid: f099b5cd0e1c13747b90c3d41bb146df, type: 3}
   cardCost: 900100009001000090010000
   upgradeCost: 200300004006000000000000
   spawnCooldown:
@@ -38,3 +43,5 @@ MonoBehaviour:
   - 1
   - 1
   AttackRange: 3
+  CharacterType: 2
+  AttackType: 2

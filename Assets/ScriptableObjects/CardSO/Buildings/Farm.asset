@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9e03dcc81ff5048b7b7579f61d55a8, type: 3}
   m_Name: Farm
   m_EditorClassIdentifier: 
+  Name: Farm
   cardType: 0
   backgrounds:
   - {fileID: 21300000, guid: aead07f2e3de75944a758db8f307ab1d, type: 3}
   - {fileID: 21300000, guid: ae75df5eb973f3941be5a3bfeef4644c, type: 3}
   - {fileID: 21300000, guid: 6af0a32890125424b8f5e0fe7488f96a, type: 3}
+  backgroundVertical:
+  - {fileID: 21300000, guid: 875e89efad35d3347a627d74a1d8944c, type: 3}
+  - {fileID: 21300000, guid: 01aa4edef578b1b478f59d448120f5e4, type: 3}
+  - {fileID: 21300000, guid: fabb09965bbfafa4c991e9a34f508114, type: 3}
   cardCost: 710200007102000071020000
   upgradeCost: e2040000c409000000000000
   spawnCooldown:
@@ -38,3 +43,5 @@ MonoBehaviour:
   - 6
   - 6
   - 6
+  BuildingType: 0
+  AttackType: 0

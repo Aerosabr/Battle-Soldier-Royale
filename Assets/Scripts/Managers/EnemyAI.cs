@@ -29,7 +29,6 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         ReadLoadout();
-        PlayerRed.Instance.SpawnCharacter(meleeUnits[1]);
     }
 
     private void Update()
@@ -49,14 +48,15 @@ public class EnemyAI : MonoBehaviour
             switch (card.cardType)
             {
                 case CardSO.CardType.Building:
-                    if (card.spawnableObject.gameObject.GetComponent<Building>().buildingType == BuildingType.Defense)
+                    BuildingCardSO buildingCard = card as BuildingCardSO;
+                    if (buildingCard.BuildingType == BuildingType.Defense)
                         defense = card;
                     else
                         economy = card;
                     break;
                 case CardSO.CardType.Character:
-                    CharacterType type = card.spawnableObject.gameObject.GetComponent<Character>().characterType;
-                    switch (type)
+                    CharacterCardSO characterCard = card as CharacterCardSO;
+                    switch (characterCard.CharacterType)
                     {
                         case CharacterType.Melee:
                             meleeUnits.Add(card);
@@ -271,7 +271,7 @@ public class EnemyAI : MonoBehaviour
                     actionCard = economy;
                     return true;
                 }
-                else if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().GetBuilding().buildingType == BuildingType.Farm
+                else if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().GetBuilding().GetCard().BuildingType == BuildingType.Economy
                     && economy.level != economy.upgradeCost.Count)
                 {
                     actionType = ActionType.Upgrade;
@@ -336,7 +336,7 @@ public class EnemyAI : MonoBehaviour
             Building building = MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().GetBuilding();
             if (building != null)
             {
-                if (building.buildingType == BuildingType.Farm)
+                if (building.GetCard().BuildingType == BuildingType.Economy)
                     x = 50;
                 else
                     x = -100;
@@ -359,7 +359,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().GetBuilding().buildingType == BuildingType.Defense)
+            if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().GetBuilding().GetCard().BuildingType == BuildingType.Defense)
             {
                 if (alertMetrics.areaOfControl == AlertLevel.Unfavored || 
                     (alertMetrics.areaOfControl == AlertLevel.Even && alertMetrics.effectiveMilitaryStrength == AlertLevel.Unfavored))
@@ -465,9 +465,9 @@ public class EnemyAI : MonoBehaviour
             {
                 if (unit.GetComponent<Character>() != null)
                 {
-                    if (unit.GetComponent<Character>().characterType == CharacterType.Ranged)
+                    if (unit.GetComponent<Character>().GetCard().CharacterType == CharacterType.Ranged)
                         ranged++;
-                    else if (unit.GetComponent<Character>().characterType == CharacterType.Melee)
+                    else if (unit.GetComponent<Character>().GetCard().CharacterType == CharacterType.Melee)
                         melee++;
                 }
             }
@@ -485,7 +485,7 @@ public class EnemyAI : MonoBehaviour
             case ActionType.Spawn:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.SpawnCharacter(actionCard);
+                    PlayerRed.Instance.SpawnCharacter(actionCard, transform.position);
                     Debug.Log("AI is spawning a " + actionCard.name);
                 }
                 break;

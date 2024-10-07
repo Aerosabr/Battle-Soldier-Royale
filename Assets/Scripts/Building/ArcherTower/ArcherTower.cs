@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ArcherTower : Building
 {
@@ -151,7 +152,8 @@ public class ArcherTower : Building
 
     public override void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot)
     {
-        this.card = card as BuildingCardSO;
+		transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+		this.card = card as BuildingCardSO;
         this.card.OnLevelChanged += Card_OnLevelChanged;
         gameObject.layer = layerMask;
         this.buildingSlot = buildingSlot;
@@ -169,13 +171,63 @@ public class ArcherTower : Building
             targetLayer = 1 << 6;
             gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
-        player.AddToMilitary(gameObject);
-
         state = State.Building;
         SetStats();
     }
 
-    private void Card_OnLevelChanged(object sender, EventArgs e)
+	public override IEnumerator Project(LayerMask layerMask, CardSO card)
+	{
+        bool OnPlaceable = false;
+        transform.GetComponent<BoxCollider>().enabled = false;
+        BuildingSlot slot = null;
+		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
+		LayerMask neutralWallMask = 1 << neutralWallLayer;
+		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
+		LayerMask buildableWallMask = 1 << buildableWallLayer;
+		while (Mouse.current.leftButton.isPressed)
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildableWallMask))
+            {
+                if (!hit.transform.parent.GetComponent<BuildingSlot>().ContainsBuilding())
+                {
+                    OnPlaceable = true;
+                    slot = hit.transform.parent.GetComponent<BuildingSlot>();
+					Transform hitTransform = hit.transform;
+                    transform.position = hitTransform.position;
+                }
+			}
+			else if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
+			{
+                OnPlaceable = false;
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+			}
+			yield return null;
+		}
+		if (IsMouseOverUI() || OnPlaceable == false)
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			if (layerMask == 6)
+			{
+                PlayerBlue.Instance.BuildBuilding(card, slot.gameObject);
+			}
+			else
+			{
+				PlayerRed.Instance.BuildBuilding(card, slot.gameObject);
+			}
+			CharacterBarUI.Instance.ActivateCooldown();
+			Destroy(gameObject);
+		}
+		MapManager.Instance.HideAllBuildingSlotsIndicator();
+		PlayerControlManager.Instance.CardHandled();
+	}
+
+	private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         if (buildingProgress != 0)
             archerTowerVisual.ChangeBuildingVisual(card.level, buildingProgress);

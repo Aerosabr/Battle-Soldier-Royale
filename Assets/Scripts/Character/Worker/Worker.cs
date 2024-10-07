@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Worker : Character
 {
@@ -11,6 +12,7 @@ public class Worker : Character
 
     private enum State
     {
+        Ghost,
         Idle,
         Walking,
         Mining,
@@ -22,14 +24,11 @@ public class Worker : Character
     private GameObject mine;
     private State state;
     private float miningTimer;
-    private float time;
 
     private void Awake()
     {
-        characterType = CharacterType.Worker;
-        state = State.Idle;
+        state = State.Ghost;
         miningTimer = 0;
-        time = Time.time;
     }
 
     private void Update()
@@ -68,9 +67,9 @@ public class Worker : Character
     {
         float detectDistance = .2f;
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * detectDistance, Color.green);
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, targetLayer))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, 1 << 8 ))
         {
-            if (hit.collider.gameObject.tag == "Mine")
+			if (hit.collider.gameObject.tag == "Mine" && hit.collider.gameObject == mine)
             {
                 StartMining();
                 transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
@@ -137,6 +136,7 @@ public class Worker : Character
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
+        state = State.Idle;
         if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
@@ -150,7 +150,60 @@ public class Worker : Character
         player.AddToMilitary(gameObject);
     }
 
-    private void Card_OnLevelChanged(object sender, EventArgs e)
+	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
+	{
+		transform.GetComponent<BoxCollider>().enabled = false;
+		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
+		LayerMask neutralWallMask = 1 << neutralWallLayer;
+		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
+		LayerMask buildableWallMask = 1 << buildableWallLayer;
+        MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
+		while (Mouse.current.leftButton.isPressed)
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildableWallMask))
+			{
+                mine = hit.transform.parent.gameObject;
+				Transform hitTransform = hit.transform;
+				transform.position = hitTransform.position;
+                meshRenderer.material = allowed;
+			}
+			else if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
+			{
+                mine = null;
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+				transform.rotation = Quaternion.Euler(rotation);
+                meshRenderer.material = denied;
+			}
+			yield return null;
+		}
+		if (layerMask == 6)
+		{
+			player = PlayerBlue.Instance;
+			targetLayer = 1 << 7;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+			targetLayer = 1 << 6;
+		}
+		if (IsMouseOverUI() || mine == null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            CharacterBarUI.Instance.ActivateCooldown();
+            player.SpawnWorker(card, mine);
+            Destroy(gameObject);
+        }
+		MapManager.Instance.HideAllMineSlotsIndicator();
+		PlayerControlManager.Instance.CardHandled();
+	}
+
+	private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();

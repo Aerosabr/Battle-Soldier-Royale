@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+
 
 public class Wizard : Character
 {
     public enum State
     {
+        Ghost,
         Idle,
         Walking,
         Attacking,
@@ -23,8 +25,7 @@ public class Wizard : Character
 
     private void Awake()
     {
-        characterType = CharacterType.Ranged;
-        state = State.Idle;
+        state = State.Ghost;
     }
 
     private void Update()
@@ -130,7 +131,8 @@ public class Wizard : Character
         SetStats();
         gameObject.transform.rotation = Quaternion.Euler(rotation);
         gameObject.layer = layerMask;
-        if (gameObject.layer == 6)
+		state = State.Idle;
+		if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
             targetLayer = 1 << 7;
@@ -140,10 +142,8 @@ public class Wizard : Character
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
         }
-        player.AddToMilitary(gameObject);
     }
-
-    private void Card_OnLevelChanged(object sender, EventArgs e)
+	private void Card_OnLevelChanged(object sender, EventArgs e)
     {
         anim.ActivateEvolutionVisual(card.level);
         SetStats();

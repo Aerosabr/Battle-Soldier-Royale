@@ -38,17 +38,22 @@ public class PlayerControlManager : MonoBehaviour
 	{
 		if (cardSO.cardType == CardSO.CardType.Character)
 		{
-			PlayerBlue.Instance.SpawnCharacter(cardSO);
-			mode = Mode.Command;
+			PlayerBlue.Instance.ProjectCard(cardSO);
+			mode = Mode.Cast;
+		}
+		else if(cardSO.cardType == CardSO.CardType.Worker)
+		{
+			PlayerBlue.Instance.ProjectCard(cardSO);
+			mode = Mode.Cast;
 		}
 		else if (cardSO.cardType == CardSO.CardType.Spell)
 		{
-			PlayerBlue.Instance.SpawnSpell(cardSO);
+			PlayerBlue.Instance.ProjectCard(cardSO);
 			mode = Mode.Cast;
 		}
 		else if (cardSO.cardType == CardSO.CardType.Building)
 		{
-			//PlayerBlue.Instance.SpawnBuilding(cardSO);
+			PlayerBlue.Instance.ProjectCard(cardSO);
 			mode = Mode.Build;
 		}
 	}

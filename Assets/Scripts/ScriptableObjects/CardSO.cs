@@ -6,7 +6,7 @@ using UnityEngine;
 public class CardSO : ScriptableObject
 {
     public event EventHandler OnLevelChanged;
-
+    public string Name;
     public enum CardType
 	{
 		Building,
@@ -16,6 +16,7 @@ public class CardSO : ScriptableObject
 	}
 	public CardType cardType;
 	public List<Sprite> backgrounds;
+    public List<Sprite> backgroundVertical;
 	public List<int> cardCost;
 	public List<int> upgradeCost;
     public List<float> spawnCooldown;

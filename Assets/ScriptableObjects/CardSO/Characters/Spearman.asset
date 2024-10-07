@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88af863b6100cb14f9bfc81db351baa6, type: 3}
   m_Name: Spearman
   m_EditorClassIdentifier: 
+  Name: Spearman
   cardType: 1
   backgrounds:
   - {fileID: 21300000, guid: cd3faef0c9ca7c246808b73a9d5bdfef, type: 3}
   - {fileID: 21300000, guid: 30bee5c8856a7e14395795c180304eec, type: 3}
   - {fileID: 21300000, guid: 7592198428c2ca24499f5f47d9ddbaaf, type: 3}
+  backgroundVertical:
+  - {fileID: 21300000, guid: f1ca3b19f274f3a4b99316c1a42d5533, type: 3}
+  - {fileID: 21300000, guid: 584f160207f6d8a46a28c59d7af86d77, type: 3}
+  - {fileID: 21300000, guid: c3e406179a745f64ba67ac2eef6862c2, type: 3}
   cardCost: e1000000e1000000e1000000
   upgradeCost: c20100008403000000000000
   spawnCooldown:
@@ -38,3 +43,5 @@ MonoBehaviour:
   - 1
   - 1
   AttackRange: 1.5
+  CharacterType: 1
+  AttackType: 1
