@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     public void SpawnSpell(CardSO CSO, Vector3 position)
     {
 		SpellCardSO SCSO = CSO as SpellCardSO;
-		Transform spell = Instantiate(CSO.spawnableObject, transform).transform;
+		Transform spell = Instantiate(SCSO.spawnableObject, transform).transform;
         spell.position = position;
 		spell.GetComponent<Spell>().InitializeSpell(gameObject.layer, SCSO);
 		SubtractGold(SCSO.cardCost[SCSO.level - 1]);
