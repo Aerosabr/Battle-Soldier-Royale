@@ -75,7 +75,6 @@ public class Spell : MonoBehaviour
 		{
 			player.SpawnSpell(cardSO, transform.position);
 			Destroy(gameObject);
-
 		}
 		PlayerControlManager.Instance.CardHandled();
 	}
