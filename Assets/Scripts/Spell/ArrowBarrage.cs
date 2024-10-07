@@ -8,48 +8,13 @@ using UnityEngine.InputSystem;
 
 public class ArrowBarrage : Spell
 {
-	public GraphicRaycaster raycaster;
-
-	private const int MAX_SIZE = 9;
-	private const float MAX_DURATION = 3;
-
-	private void OnDrawGizmos()
+	protected override IEnumerator HandleHitBox()
 	{
-		if (hitBox != null)
-		{
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
-		}
-	}
-	public override void InitializeSpell(LayerMask layerMask, SpellCardSO card)
-	{
-		transparentObject.gameObject.SetActive(false);
-		visualObject.gameObject.SetActive(true);
-		if (layerMask == 6)
-		{
-			player = PlayerBlue.Instance;
-			targetLayer = 7;
-		}
-		else
-		{
-			player = PlayerRed.Instance;
-			targetLayer = 6;
-		}
-		this.damage = card.Attack[card.level - 1];
-		hitBox = GetComponent<BoxCollider>();
-		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
-		hitBox.enabled = true;
-		StartCoroutine(HandleHitBox());
-		StartCoroutine(HandleAttack());
-	}
-
-	private IEnumerator HandleHitBox()
-	{
-		hitBox.size = new Vector3(MAX_SIZE, hitBox.size.y, hitBox.size.z);
+		hitBox.size = new Vector3(cardSO.Size, hitBox.size.y, hitBox.size.z);
 		yield return null;
 	}
 
-	private IEnumerator HandleAttack()
+	protected override IEnumerator HandleAttack()
 	{
 		while(characters.Count == 0)
 		{
@@ -57,13 +22,13 @@ public class ArrowBarrage : Spell
 		}
 		float elapsedTime = 0f;
 		float damageInterval = 0.5f;
-		while (elapsedTime < MAX_DURATION)
+		while (elapsedTime < cardSO.Duration)
 		{
 			foreach (Character character in characters)
 			{
 				if (character.GetCurrentHealth() > 0)
 				{
-					character.transform.GetComponent<IDamageable>().Damaged(damage);
+					character.transform.GetComponent<IDamageable>().Damaged(cardSO.Attack[cardSO.level-1]);
 				}
 			}
 			yield return new WaitForSeconds(damageInterval);

@@ -157,6 +157,7 @@ public class Worker : Character
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
 		LayerMask buildableWallMask = 1 << buildableWallLayer;
+        MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
 		while (Mouse.current.leftButton.isPressed)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -166,6 +167,7 @@ public class Worker : Character
                 mine = hit.transform.parent.gameObject;
 				Transform hitTransform = hit.transform;
 				transform.position = hitTransform.position;
+                meshRenderer.material = allowed;
 			}
 			else if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
 			{
@@ -173,6 +175,7 @@ public class Worker : Character
 				Vector3 worldPosition = hit.point;
 				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
 				transform.rotation = Quaternion.Euler(rotation);
+                meshRenderer.material = denied;
 			}
 			yield return null;
 		}

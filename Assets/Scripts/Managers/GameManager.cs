@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour
     private int MaxWorkerAmount;
     private float soundVolume;
     private float musicVolume;
-    private int gamemode = 0;
+    private int gamemode = 2;
     private int difficulty = 0;
+
 
     private void Awake()
     {
@@ -32,4 +33,17 @@ public class GameManager : MonoBehaviour
     public float GetMusicVolume() => musicVolume;
     public float GetMapSize() => MapSize;
     public int GetMaxWorkerAmount() => MaxWorkerAmount; 
+
+    public void GameStart()
+    {
+        if (PlayerManager.Instance.CheckForOneAttackCharacter())
+            CameraAnimation.Instance.MoveUp("MainScene");
+        else
+            WarningSign.Instance.ActivateWithTimer();
+    }
+
+    public void GameEnded()
+    {
+
+    }
 }

@@ -8,42 +8,7 @@ using UnityEngine.InputSystem;
 
 public class Fireball : Spell
 {
-	public GraphicRaycaster raycaster;
-
-	private const int MAX_SIZE = 7;
-	private const float MAX_DURATION = 2;
-
-	private void OnDrawGizmos()
-	{
-		if (hitBox != null)
-		{
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
-		}
-	}
-	public override void InitializeSpell(LayerMask layerMask, SpellCardSO card)
-	{
-		transparentObject.gameObject.SetActive(false);
-		visualObject.gameObject.SetActive(true);
-		if (layerMask == 6)
-		{
-			player = PlayerBlue.Instance;
-			targetLayer = 7;
-		}
-		else
-		{
-			player = PlayerRed.Instance;
-			targetLayer = 6;
-		}
-		this.damage = card.Attack[card.level - 1];
-		hitBox = GetComponent<BoxCollider>();
-		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
-		hitBox.enabled = true;
-		StartCoroutine(HandleHitBox());
-		StartCoroutine(HandleAttack());
-	}
-
-	private IEnumerator HandleHitBox()
+	protected override IEnumerator HandleHitBox()
 	{
 		float duration = 0.3f;
 		float elapsedTime = 0f;
@@ -51,14 +16,14 @@ public class Fireball : Spell
 
 		while (elapsedTime < duration)
 		{
-			hitBox.size = new Vector3(Mathf.Lerp(initialSize, MAX_SIZE, elapsedTime / duration), hitBox.size.y, hitBox.size.z);
+			hitBox.size = new Vector3(Mathf.Lerp(initialSize, cardSO.Size, elapsedTime / duration), hitBox.size.y, hitBox.size.z);
 			elapsedTime += Time.deltaTime;
 			yield return null;
 		}
-		hitBox.size = new Vector3(MAX_SIZE, hitBox.size.y, hitBox.size.z);
+		hitBox.size = new Vector3(cardSO.Size, hitBox.size.y, hitBox.size.z);
 	}
 
-	private IEnumerator HandleAttack()
+	protected override IEnumerator HandleAttack()
 	{
 		float delay = 0.85f;
 		float elapsedTime = 0f;
@@ -71,11 +36,12 @@ public class Fireball : Spell
 		{
 			if (character.GetCurrentHealth() > 0)
 			{
-				character.transform.GetComponent<IDamageable>().Damaged(damage);
+				character.transform.GetComponent<IDamageable>().Damaged(cardSO.Attack[cardSO.level - 1]);
 				yield return null;
 			}
 		}
 		yield return null;
+		Destroy(gameObject);
 	}
 
 	#region Entities in Range Handler

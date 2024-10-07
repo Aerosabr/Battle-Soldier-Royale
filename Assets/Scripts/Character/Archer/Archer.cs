@@ -20,6 +20,7 @@ public class Archer : Character
 
     [SerializeField] private ArcherVisual anim;
     [SerializeField] private ArcherSound sound;
+
     private State state;
 
     private void Awake()
@@ -139,50 +140,6 @@ public class Archer : Character
             targetLayer = 1 << 6;
         }
     }
-
-	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
-	{
-		transform.GetComponent<BoxCollider>().enabled = false;
-		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
-		LayerMask neutralWallMask = 1 << neutralWallLayer;
-		while (Mouse.current.leftButton.isPressed)
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
-			{
-				Vector3 worldPosition = hit.point;
-				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
-                transform.rotation = Quaternion.Euler(rotation);
-			}
-			yield return null;
-		}
-		if (layerMask == 6)
-		{
-			player = PlayerBlue.Instance;
-			targetLayer = 1 << 7;
-		}
-		else
-		{
-			player = PlayerRed.Instance;
-			targetLayer = 1 << 6;
-		}
-
-		if (IsMouseOverUI() || !IsCharacterInSpawnArea())
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-            CharacterBarUI.Instance.ActivateCooldown();
-			player.SpawnCharacter(card, transform.position);
-			Destroy(gameObject);
-
-		}
-        player.spawnArea.gameObject.SetActive(false);
-		PlayerControlManager.Instance.CardHandled();
-
-	}
 
 	private void Card_OnLevelChanged(object sender, EventArgs e)
     {

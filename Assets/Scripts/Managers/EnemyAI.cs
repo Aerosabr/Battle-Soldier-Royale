@@ -488,8 +488,7 @@ public class EnemyAI : MonoBehaviour
             case ActionType.Spawn:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    Vector3 spawnPos = Vector3.zero;
-                    player.SpawnCharacter(actionCard, spawnPos);
+                    PlayerRed.Instance.SpawnCharacter(actionCard);
                     Debug.Log("AI is spawning a " + actionCard.name);
                 }
                 break;
