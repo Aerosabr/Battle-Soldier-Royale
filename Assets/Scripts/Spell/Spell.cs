@@ -3,21 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Spell : MonoBehaviour
 {
-	[SerializeField] protected string spellName;
-	[SerializeField] protected int damage;
-	[SerializeField] protected int cost;
 	[SerializeField] protected int targetLayer;
 	[SerializeField] protected Player player;
+	[SerializeField] protected SpellCardSO cardSO;
 
+	private GraphicRaycaster raycaster;
 	[SerializeField] protected BoxCollider hitBox;
 	[SerializeField] protected Transform transparentObject;
 	[SerializeField] protected Transform visualObject;
+
 	[SerializeField] protected List<Character> characters = new List<Character>();
 
-	public virtual void InitializeSpell(LayerMask layerMask, SpellCardSO cardSO) { }
+	public virtual void InitializeSpell(LayerMask layerMask, SpellCardSO cardSO) 
+	{
+		transparentObject.gameObject.SetActive(false);
+		visualObject.gameObject.SetActive(true);
+		this.cardSO = cardSO;
+		if (layerMask == 6)
+		{
+			player = PlayerBlue.Instance;
+			targetLayer = 7;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+			targetLayer = 6;
+		}
+		hitBox = GetComponent<BoxCollider>();
+		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
+		hitBox.enabled = true;
+		StartCoroutine(HandleHitBox());
+		StartCoroutine(HandleAttack());
+	}
 
 	public virtual IEnumerator Project(LayerMask layerMask, CardSO cardSO)
 	{
@@ -58,7 +79,6 @@ public class Spell : MonoBehaviour
 		}
 		PlayerControlManager.Instance.CardHandled();
 	}
-
 	private bool IsMouseOverUI()
 	{
 		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
@@ -74,4 +94,6 @@ public class Spell : MonoBehaviour
 
 		return false;
 	}
+	protected virtual IEnumerator HandleHitBox() { yield return null; }
+	protected virtual IEnumerator HandleAttack() { yield return null; }
 }

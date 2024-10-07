@@ -8,42 +8,7 @@ using UnityEngine.InputSystem;
 
 public class SnowStorm : Spell
 {
-	public GraphicRaycaster raycaster;
-
-	private const int MAX_SIZE = 9;
-	private const float MAX_DURATION = 8;
-
-	private void OnDrawGizmos()
-	{
-		if (hitBox != null)
-		{
-			Gizmos.color = Color.red;
-			Gizmos.DrawWireCube(hitBox.transform.position, hitBox.size);
-		}
-	}
-	public override  void InitializeSpell(LayerMask layerMask, SpellCardSO card)
-	{
-		transparentObject.gameObject.SetActive(false);
-		visualObject.gameObject.SetActive(true);
-		if (layerMask == 6)
-		{
-			player = PlayerBlue.Instance;
-			targetLayer = 7;
-		}
-		else
-		{
-			player = PlayerRed.Instance;
-			targetLayer = 6;
-		}
-		this.damage = card.Attack[card.level - 1];
-		hitBox = GetComponent<BoxCollider>();
-		raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
-		hitBox.enabled = true;
-		StartCoroutine(HandleHitBox());
-		StartCoroutine(HandleAttack());
-	}
-
-	private IEnumerator HandleHitBox()
+	protected override IEnumerator HandleHitBox()
 	{
 		float duration = 0.3f;
 		float elapsedTime = 0f;
@@ -51,17 +16,17 @@ public class SnowStorm : Spell
 
 		while (elapsedTime < duration)
 		{
-			hitBox.size = new Vector3(Mathf.Lerp(initialSize, MAX_SIZE, elapsedTime / duration), hitBox.size.y, hitBox.size.z);
+			hitBox.size = new Vector3(Mathf.Lerp(initialSize, cardSO.Size, elapsedTime / duration), hitBox.size.y, hitBox.size.z);
 			elapsedTime += Time.deltaTime;
 			yield return null;
 		}
-		hitBox.size = new Vector3(MAX_SIZE, hitBox.size.y, hitBox.size.z);
+		hitBox.size = new Vector3(cardSO.Size, hitBox.size.y, hitBox.size.z);
 	}
 
-	private IEnumerator HandleAttack()
+	protected override IEnumerator HandleAttack()
 	{
 		float elapsedTime = 0f;
-		while (elapsedTime < MAX_DURATION)
+		while (elapsedTime < cardSO.Duration)
 		{
 			for (int i = 0; i < characters.Count; i++)
 			{
@@ -70,7 +35,7 @@ public class SnowStorm : Spell
 				{
 					if (character.GetCurrentHealth() > 0)
 					{
-						character.transform.GetComponent<IEffectable>().Slowed(damage);
+						character.transform.GetComponent<IEffectable>().Slowed(cardSO.Attack[cardSO.level-1]);
 					}
 				}
 			}
@@ -81,7 +46,7 @@ public class SnowStorm : Spell
 		{
 			if (character.GetCurrentHealth() > 0)
 			{
-				character.transform.GetComponent<IEffectable>().UnSlowed(damage);
+				character.transform.GetComponent<IEffectable>().UnSlowed(cardSO.Attack[cardSO.level - 1]);
 				yield return null;
 			}
 		}
@@ -100,7 +65,7 @@ public class SnowStorm : Spell
 				if (!characters.Contains(collidedCharacter))
 				{
 					characters.Add(collidedCharacter);
-					collidedCharacter.GetComponent<IEffectable>().Slowed(damage);
+					collidedCharacter.GetComponent<IEffectable>().Slowed(cardSO.Attack[cardSO.level-1]);
 				}
 			}
 		}
@@ -115,7 +80,7 @@ public class SnowStorm : Spell
 				if (characters.Contains(collidedCharacter))
 				{
 					characters.Remove(collidedCharacter);
-					collidedCharacter.GetComponent<IEffectable>().UnSlowed(damage);
+					collidedCharacter.GetComponent<IEffectable>().UnSlowed(cardSO.Attack[cardSO.level - 1]);
 				}
 			}
 		}

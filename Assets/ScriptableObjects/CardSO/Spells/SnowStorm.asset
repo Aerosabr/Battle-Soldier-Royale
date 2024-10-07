@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55b589039f886714faac268d0669e51d, type: 3}
-  m_Name: Snowstorm
+  m_Name: SnowStorm
   m_EditorClassIdentifier: 
   Name: Snowstorm
   cardType: 2
