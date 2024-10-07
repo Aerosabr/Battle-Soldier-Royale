@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private List<AIGameStateSO> gameStates;
 
+    private Player player;
+
     private float gameStateTimer;
     private float gameStateTimerMax = 1f;
     private AlertMetrics alertMetrics;
@@ -28,6 +30,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        player = PlayerRed.Instance;
         ReadLoadout();
     }
 
@@ -43,7 +46,7 @@ public class EnemyAI : MonoBehaviour
 
     private void ReadLoadout()
     {
-        foreach (CardSO card in PlayerRed.Instance.GetLoadout())
+        foreach (CardSO card in player.GetLoadout())
         {
             switch (card.cardType)
             {
@@ -94,7 +97,7 @@ public class EnemyAI : MonoBehaviour
     private void CalculateAOC(out AlertLevel areaOfControl)
     {
         float mapSizeMultiplier = GameManager.Instance.GetMapSize() / 30;
-        float AOC = PlayerRed.Instance.GetFurthestControlledArea() / PlayerBlue.Instance.GetFurthestControlledArea();
+        float AOC = player.GetFurthestControlledArea() / PlayerBlue.Instance.GetFurthestControlledArea();
 
         if (AOC > mapSizeMultiplier)
             areaOfControl = AlertLevel.Favored;
@@ -106,7 +109,7 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateEMS(out AlertLevel effectiveMilitaryStrength)
     {
-        float EMS = GetEMSFromList(PlayerRed.Instance.GetSpawnedMilitary()) / (float)GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
+        float EMS = GetEMSFromList(player.GetSpawnedMilitary()) / (float)GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
 
         if (EMS > 2)
             effectiveMilitaryStrength = AlertLevel.Favored;
@@ -127,7 +130,7 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateGPM(out AlertLevel goldPerMinute)
     {
-        float GPM = GetGPMFromList(PlayerRed.Instance.GetSpawnedEconomy()) / (float)GetGPMFromList(PlayerBlue.Instance.GetSpawnedEconomy());
+        float GPM = GetGPMFromList(player.GetSpawnedEconomy()) / (float)GetGPMFromList(PlayerBlue.Instance.GetSpawnedEconomy());
 
         if (GPM > 1.5f)
             goldPerMinute = AlertLevel.Favored;
@@ -220,7 +223,7 @@ public class EnemyAI : MonoBehaviour
 
     private bool DevelopOrUpgradeEconomy()
     {
-        int numWorkers = PlayerRed.Instance.GetNumberOfWorkers();
+        int numWorkers = player.GetNumberOfWorkers();
         if (numWorkers < GameManager.Instance.GetMaxWorkerAmount() / 2)
         {
             actionType = ActionType.Spawn;
@@ -292,7 +295,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            int x = (GameManager.Instance.GetMaxWorkerAmount() - PlayerRed.Instance.GetNumberOfWorkers()) * 10;
+            int x = (GameManager.Instance.GetMaxWorkerAmount() - player.GetNumberOfWorkers()) * 10;
             if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
                 x += 0;
             else
@@ -414,7 +417,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        foreach (GameObject unit in PlayerRed.Instance.GetSpawnedMilitary())
+        foreach (GameObject unit in player.GetSpawnedMilitary())
         {
             if (weights.ContainsKey(unit.name))
             {
@@ -461,7 +464,7 @@ public class EnemyAI : MonoBehaviour
         else
         {
             float ranged = 0, melee = 0;
-            foreach (GameObject unit in PlayerRed.Instance.GetSpawnedMilitary())
+            foreach (GameObject unit in player.GetSpawnedMilitary())
             {
                 if (unit.GetComponent<Character>() != null)
                 {
@@ -479,20 +482,21 @@ public class EnemyAI : MonoBehaviour
     
     private void ExecuteAction()
     {
-        int Gold = PlayerRed.Instance.GetGold();
+        int Gold = player.GetGold();
         switch (actionType)
         {
             case ActionType.Spawn:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.SpawnCharacter(actionCard);
+                    Vector3 spawnPos = Vector3.zero;
+                    player.SpawnCharacter(actionCard, spawnPos);
                     Debug.Log("AI is spawning a " + actionCard.name);
                 }
                 break;
             case ActionType.Upgrade:
                 if (Gold >= actionCard.upgradeCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.SubtractGold(actionCard.upgradeCost[actionCard.level - 1]);
+                    player.SubtractGold(actionCard.upgradeCost[actionCard.level - 1]);
                     actionCard.IncreaseCardLevel();
                     Debug.Log("AI upgraded " + actionCard.name + " from level " + (actionCard.level - 1) + " to level " + actionCard.level);
                 }
@@ -500,7 +504,7 @@ public class EnemyAI : MonoBehaviour
             case ActionType.Build:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[2]);
+                    player.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[2]);
                     Debug.Log("AI is building a " + actionCard.name);
                 }
                 break;

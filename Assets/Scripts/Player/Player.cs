@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     protected float passiveGoldTimer;
     protected float passiveGoldTimerMax = .1f;
 
+    [SerializeField] private Base homeBase;
     [SerializeField] private Vector3 spawnRotation;
     public GameObject spawnArea;
 
@@ -175,6 +176,8 @@ public class Player : MonoBehaviour
         return maxXRange;
     }
 
+    public Vector3 GetBaseLocation() => homeBase.transform.position;
+
     public void AddToEconomy(GameObject character, bool isWorker)
     {
         if (isWorker)
@@ -195,6 +198,7 @@ public class Player : MonoBehaviour
     public void AddToMilitary(GameObject character) => Military.Add(character);
     public void RemoveFromMilitary(GameObject character) => Military.Remove(character);
     public List<GameObject> GetSpawnedMilitary() => Military;   
+
     public float GetFurthestControlledArea()
     {
         float area = 0;
