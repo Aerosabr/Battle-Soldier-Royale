@@ -70,7 +70,8 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	}
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		OpenCardViewer();
+		if(!IsDroppedOverSpecificUI())
+			OpenCardViewer();
 	}
 
 	private void OpenCardViewer()
