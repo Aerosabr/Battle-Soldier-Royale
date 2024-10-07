@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
 	[SerializeField] private Transform parentDuringDrag;
 	[SerializeField] private Transform parentBeforeDrag;
@@ -66,6 +66,16 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	{
 		childIndex = transform.GetSiblingIndex();
 		pointerEventData = new PointerEventData(EventSystem.current);
+
+	}
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		OpenCardViewer();
+	}
+
+	private void OpenCardViewer()
+	{
+		CardInformationBox.Instance.CardOpenViewer(transform.GetComponent<CardSlotVisual>().cardSO, transform.GetComponent<CardSlotVisual>().cardSO.level);
 	}
 
 }
