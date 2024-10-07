@@ -32,9 +32,61 @@ public class Character : Entity, IDamageable, IEffectable
     protected CharacterCardSO card;
     protected LayerMask targetLayer;
 
-    public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
-    public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card) { yield return null; }
-    public int GetAttack() => attack;
+	[SerializeField] protected GameObject indicator;
+	[SerializeField] protected Material allowed;
+	[SerializeField] protected Material denied;
+
+
+	public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
+	public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
+	{
+		transform.GetComponent<BoxCollider>().enabled = false;
+		indicator.SetActive(true);
+		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
+		LayerMask neutralWallMask = 1 << neutralWallLayer;
+		MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
+		if (layerMask == 6)
+		{
+			player = PlayerBlue.Instance;
+			targetLayer = 1 << 7;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+			targetLayer = 1 << 6;
+		}
+		while (Mouse.current.leftButton.isPressed)
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
+			{
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+				transform.rotation = Quaternion.Euler(rotation);
+			}
+			if (IsCharacterInSpawnArea())
+				meshRenderer.material = allowed;
+			else
+				meshRenderer.material = denied;
+			yield return null;
+		}
+		if (IsMouseOverUI() || !IsCharacterInSpawnArea())
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			CharacterBarUI.Instance.ActivateCooldown();
+			player.SpawnCharacter(card, transform.position);
+			Destroy(gameObject);
+
+		}
+		player.spawnArea.gameObject.SetActive(false);
+		PlayerControlManager.Instance.CardHandled();
+
+	}
+	public int GetAttack() => attack;
     public CharacterCardSO GetCard() => card;
     public int GetUnitStrength()
     {
