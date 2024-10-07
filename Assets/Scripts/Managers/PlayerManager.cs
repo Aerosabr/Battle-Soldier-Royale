@@ -19,4 +19,15 @@ public class PlayerManager : MonoBehaviour
     }
 
     public List<CardSO> GetPlayerLoadout() { return playerCardSO; }
+
+    public bool CheckForOneAttackCharacter()
+    {
+        foreach(var card in playerCardSO)
+        {
+            if(card.cardType == CardSO.CardType.Character)
+                return true;
+        }
+        return false;
+    }
+
 }

@@ -48,4 +48,12 @@ public class GameManager : MonoBehaviour
         });
     }
 
+    public void GameStart()
+    {
+        if (PlayerManager.Instance.CheckForOneAttackCharacter())
+            CameraAnimation.Instance.MoveUp("MainScene");
+        else
+            WarningSign.Instance.ActivateWithTimer();
+    }
+
 }

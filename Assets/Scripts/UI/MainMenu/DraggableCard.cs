@@ -76,7 +76,8 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 	private void OpenCardViewer()
 	{
-		CardInformationBox.Instance.CardOpenViewer(transform.GetComponent<CardSlotVisual>().cardSO, transform.GetComponent<CardSlotVisual>().cardSO.level);
+		if (!EquipSlot)
+			CardInformationBox.Instance.CardOpenViewer(transform.GetComponent<CardSlotVisual>().cardSO, transform.GetComponent<CardSlotVisual>().cardSO.level);
 	}
 
 }
