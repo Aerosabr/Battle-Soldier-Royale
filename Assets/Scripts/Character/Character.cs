@@ -25,8 +25,6 @@ public class Character : Entity, IDamageable, IEffectable
     protected float poisonTimer = 0f;
 
     protected bool canAttack = true;
-    protected bool isSlowed = false;
-    protected bool isPoisoned = false;
 
     protected Player player;
     protected CharacterCardSO card;
@@ -161,45 +159,40 @@ public class Character : Entity, IDamageable, IEffectable
     #region IEffectable Components
     public void Slowed(int speed)
     {
-        if (!isSlowed)
-        {
-            isSlowed = true;
-            moveSpeed = moveSpeed - ((float)speed / 50);
-            attackSpeed = attackSpeed - ((float)speed / 50);
-        }
+		Slowed existingSlowed = GetComponent<Slowed>();
+
+		if (existingSlowed == null)
+		{
+			Slowed newSlowed = gameObject.AddComponent<Slowed>();
+			moveSpeed = moveSpeed - ((float)speed / 50);
+			attackSpeed = attackSpeed - ((float)speed / 50);
+		}
     }
     public void UnSlowed(int speed)
     {
-        if (isSlowed)
-        {
-            isSlowed = false;
-            moveSpeed = baseMoveSpeed;
-            attackSpeed = baseAttackSpeed;
-        }
+		Slowed existingSlowed = GetComponent<Slowed>();
+
+		if (existingSlowed == null)
+		{
+			moveSpeed = baseMoveSpeed;
+			attackSpeed = baseAttackSpeed;
+			Destroy(existingSlowed);
+		}
     }
 
-    public void Poisoned(int damage, int poisonDuration)
-    {
-        if (!isPoisoned)
-        {
-            StartCoroutine(HandlePoisonDamage(damage, poisonDuration));
-        }
-        else
-        {
-            poisonTimer = 0f;
-        }
-    }
-    private IEnumerator HandlePoisonDamage(int damage, float duration)
-    {
-        isPoisoned = true;
-        float poisonDamageInterval = 1f;
-        while (poisonTimer < duration)
-        {
-            Damaged(damage);
-            yield return new WaitForSeconds(poisonDamageInterval);
-            poisonTimer += poisonDamageInterval;
-        }
-        isPoisoned = false;
-    }
-    #endregion
+	public void Poisoned(int damage, int poisonDuration)
+	{
+		Poisoned existingPoisoned = GetComponent<Poisoned>();
+
+		if (existingPoisoned == null)
+		{
+			Poisoned newPoisoned = gameObject.AddComponent<Poisoned>();
+			newPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+		else
+		{
+			existingPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+	}
+	#endregion
 }
