@@ -33,6 +33,6 @@ MonoBehaviour:
   level: 1
   timesCasted: 0
   Attack: 010000000100000001000000
-  Size: 7
+  Size: 9
   Duration: 8
   PostSpellDuration: 0
