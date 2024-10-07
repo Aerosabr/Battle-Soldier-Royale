@@ -389,6 +389,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89999841}
   m_CullTransparentMesh: 1
+--- !u!1 &105308823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 105308824}
+  m_Layer: 0
+  m_Name: temp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &105308824
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105308823}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.434519, y: -129.54745, z: 205.4655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &135119916
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +479,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad43ccee3d6d79f4c8b7167c760135fc, type: 2}
   - {fileID: 11400000, guid: c27a595e07a18154bbb06f65f7b6c9da, type: 2}
   startingGold: 6000
+  homeBase: {fileID: 0}
   spawnRotation: {x: 0, y: 90, z: 0}
   spawnArea: {fileID: 1408218812}
 --- !u!1 &150082350
@@ -3277,65 +3309,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4222115506902641399, guid: 97ea854046bbea8479508269abc4b375, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 621011623}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97ea854046bbea8479508269abc4b375, type: 3}
 --- !u!4 &621011621 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5813375558040302931, guid: 97ea854046bbea8479508269abc4b375, type: 3}
   m_PrefabInstance: {fileID: 621011620}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &621011622 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4222115506902641399, guid: 97ea854046bbea8479508269abc4b375, type: 3}
-  m_PrefabInstance: {fileID: 621011620}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &621011623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 623099150}
-  m_Layer: 5
-  m_Name: GameEndedUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &623099150
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623099149}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 658238735}
-  m_Father: {fileID: 1914534102}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
-  m_GameObject: {fileID: 621011622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49e526851c37c8242bdcfffceb7f91be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bobbingSpeed: 2
-  bobbingHeight: 0.5
 --- !u!1 &636349210
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,7 +3596,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 623099150}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4231,6 +4211,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1eddd20ef6cd0a4d84f41141a758864, type: 2}
   - {fileID: 11400000, guid: d99ef67c94fefac40a2d06f1d76b3bee, type: 2}
   startingGold: 10000
+  homeBase: {fileID: 0}
   spawnRotation: {x: 0, y: -90, z: 0}
   spawnArea: {fileID: 0}
 --- !u!1 &832604629
@@ -10230,7 +10211,6 @@ RectTransform:
   - {fileID: 1044975093}
   - {fileID: 853626285}
   - {fileID: 2089046588}
-  - {fileID: 623099150}
   - {fileID: 1991382577}
   - {fileID: 1516142892}
   m_Father: {fileID: 0}
@@ -12434,3 +12414,5 @@ SceneRoots:
   - {fileID: 1981689152}
   - {fileID: 968179119}
   - {fileID: 1380287474}
+  - {fileID: 658238735}
+  - {fileID: 105308824}
