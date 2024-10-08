@@ -8,6 +8,8 @@ public class Base : Entity, IDamageable
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
+    [SerializeField] private Player.PlayerColor playerColor;
+
     public void Damaged(int damage)
     {
         currentHealth -= damage;
@@ -26,7 +28,7 @@ public class Base : Entity, IDamageable
     private IEnumerator Died()
     {
         gameObject.layer = 0;
-        Debug.Log("Base destroyed");
+        GameEnded.Instance.EndGame(playerColor);
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }

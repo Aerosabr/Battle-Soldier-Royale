@@ -10,14 +10,28 @@ public class PlayerBlue : Player
     {
         Instance = this;
         AddGold(startingGold);
+    }
 
-        foreach (CardSO CSO in PlayerManager.Instance.GetPlayerLoadout())
+    private void Start()
+    {
+        if (GameManager.Instance.GetGamemode() == 0)
         {
-            CardSO newCard = Instantiate(CSO);
-            newCard.newCardSO(CSO);
-            loadout.Add(newCard);
+            foreach (CardSO CSO in tempLoadout)
+            {
+                CardSO newCard = Instantiate(CSO);
+                newCard.newCardSO(CSO);
+                loadout.Add(newCard);
+            }
         }
-
+        else
+        {
+            foreach (CardSO CSO in PlayerManager.Instance.GetPlayerLoadout())
+            {
+                CardSO newCard = Instantiate(CSO);
+                newCard.newCardSO(CSO);
+                loadout.Add(newCard);
+            }
+        }
     }
 
     private void Update()

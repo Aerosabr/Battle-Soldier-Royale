@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
+using static UnityEngine.UI.CanvasScaler;
 
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private List<AIGameStateSO> gameStates;
 
+    private Player player;
+
     private float gameStateTimer;
-    private float gameStateTimerMax = 1f;
+    private float gameStateTimerMax = 2f;
     private AlertMetrics alertMetrics;
     private ActionType actionType;
     private CardSO actionCard;
@@ -23,11 +27,12 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        
+        actionType = ActionType.None;
     }
 
     private void Start()
     {
+        player = PlayerRed.Instance;
         ReadLoadout();
     }
 
@@ -36,14 +41,15 @@ public class EnemyAI : MonoBehaviour
         gameStateTimer += Time.deltaTime;
         if (gameStateTimer >= gameStateTimerMax)
         {
-            //DetermineGameState();
+            DetermineGameState();
+            ExecuteAction();
             gameStateTimer = 0f;
         }   
     }
 
     private void ReadLoadout()
     {
-        foreach (CardSO card in PlayerRed.Instance.GetLoadout())
+        foreach (CardSO card in player.GetLoadout())
         {
             switch (card.cardType)
             {
@@ -72,6 +78,9 @@ public class EnemyAI : MonoBehaviour
                 case CardSO.CardType.Spell:
                     spells.Add(card);
                     break;
+                case CardSO.CardType.Worker:
+                    worker = card;
+                    break;
             }
         }
     }
@@ -94,7 +103,7 @@ public class EnemyAI : MonoBehaviour
     private void CalculateAOC(out AlertLevel areaOfControl)
     {
         float mapSizeMultiplier = GameManager.Instance.GetMapSize() / 30;
-        float AOC = PlayerRed.Instance.GetFurthestControlledArea() / PlayerBlue.Instance.GetFurthestControlledArea();
+        float AOC = player.GetFurthestControlledArea() / PlayerBlue.Instance.GetFurthestControlledArea();
 
         if (AOC > mapSizeMultiplier)
             areaOfControl = AlertLevel.Favored;
@@ -106,7 +115,7 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateEMS(out AlertLevel effectiveMilitaryStrength)
     {
-        float EMS = GetEMSFromList(PlayerRed.Instance.GetSpawnedMilitary()) / (float)GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
+        float EMS = GetEMSFromList(player.GetSpawnedMilitary()) / (float)GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
 
         if (EMS > 2)
             effectiveMilitaryStrength = AlertLevel.Favored;
@@ -127,7 +136,7 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateGPM(out AlertLevel goldPerMinute)
     {
-        float GPM = GetGPMFromList(PlayerRed.Instance.GetSpawnedEconomy()) / (float)GetGPMFromList(PlayerBlue.Instance.GetSpawnedEconomy());
+        float GPM = GetGPMFromList(player.GetSpawnedEconomy()) / (float)GetGPMFromList(PlayerBlue.Instance.GetSpawnedEconomy());
 
         if (GPM > 1.5f)
             goldPerMinute = AlertLevel.Favored;
@@ -161,7 +170,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (alertMetrics.areaOfControl == gameStateSO.AOC && alertMetrics.effectiveMilitaryStrength == gameStateSO.EMS && alertMetrics.goldPerMinute == gameStateSO.GPM)
             {
-                actionOrder = GetActionOrder(gameStateSO.DecisionTable);
+                actionOrder = GetActionOrder(new List<int> (gameStateSO.DecisionTable));
                 break;
             }
         }
@@ -193,7 +202,7 @@ public class EnemyAI : MonoBehaviour
     private List<int> GetActionOrder(List<int> decisionTable)
     {
         int totalWeight = 100;
-        List<int> weights = new List<int> { 60, 30, 8, 2 };
+        List<int> weights = new List<int> { 70, 24, 5, 1 };
         List<int> actionOrder = new List<int>();
         
         for (int i = 4; i > 0; i--)
@@ -220,11 +229,12 @@ public class EnemyAI : MonoBehaviour
 
     private bool DevelopOrUpgradeEconomy()
     {
-        int numWorkers = PlayerRed.Instance.GetNumberOfWorkers();
+        int numWorkers = player.GetNumberOfWorkers();
         if (numWorkers < GameManager.Instance.GetMaxWorkerAmount() / 2)
         {
             actionType = ActionType.Spawn;
             actionCard = worker;
+            Debug.Log($"AI wants to spawn worker");
             return true;
         }
         else if (numWorkers < GameManager.Instance.GetMaxWorkerAmount())
@@ -261,6 +271,7 @@ public class EnemyAI : MonoBehaviour
             {
                 actionType = ActionType.Upgrade;
                 actionCard = worker;
+                Debug.Log($"AI wants to upgrade worker");
                 return true;
             }
             else if (economy != null)
@@ -269,6 +280,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     actionType = ActionType.Build;
                     actionCard = economy;
+                    Debug.Log($"AI wants to build economy");
                     return true;
                 }
                 else if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().GetBuilding().GetCard().BuildingType == BuildingType.Economy
@@ -276,6 +288,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     actionType = ActionType.Upgrade;
                     actionCard = economy;
+                    Debug.Log($"AI wants to upgrade economy");
                     return true;
                 }
             }
@@ -289,10 +302,11 @@ public class EnemyAI : MonoBehaviour
         {
             actionType = ActionType.Spawn;
             actionCard = worker;
+            Debug.Log($"AI wants to spawn worker");
         }
         else
         {
-            int x = (GameManager.Instance.GetMaxWorkerAmount() - PlayerRed.Instance.GetNumberOfWorkers()) * 10;
+            int x = (GameManager.Instance.GetMaxWorkerAmount() - player.GetNumberOfWorkers()) * 10;
             if (MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
                 x += 0;
             else
@@ -304,13 +318,14 @@ public class EnemyAI : MonoBehaviour
             {
                 actionType = ActionType.Build;
                 actionCard = economy;
+                Debug.Log($"AI wants to build economy");
             }
             else
             {
                 actionType = ActionType.Spawn;
                 actionCard = worker;
-            }
-            
+                Debug.Log($"AI wants to spawn worker");
+            } 
         }
 
         return true;
@@ -347,11 +362,16 @@ public class EnemyAI : MonoBehaviour
             rand = Random.Range(-100, 100) + x;
 
             if (rand < 0)
+            {
                 actionCard = worker;
+                Debug.Log($"AI wants to upgrade worker");
+            }
             else
+            {
                 actionCard = economy;
-        } 
-
+                Debug.Log($"AI wants to upgrade economy");
+            }
+        }
         return true;
     }
 
@@ -366,6 +386,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     actionType = ActionType.Upgrade;
                     actionCard = defense;
+                    Debug.Log($"AI wants to upgrade defense");
                     return true;
                 }
             }
@@ -414,7 +435,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        foreach (GameObject unit in PlayerRed.Instance.GetSpawnedMilitary())
+        foreach (GameObject unit in player.GetSpawnedMilitary())
         {
             if (weights.ContainsKey(unit.name))
             {
@@ -433,6 +454,7 @@ public class EnemyAI : MonoBehaviour
             {
                 actionType = ActionType.Upgrade;
                 actionCard = cards[key];
+                Debug.Log($"AI wants to upgrade {actionCard}");
                 return true;
             }
             else
@@ -447,66 +469,181 @@ public class EnemyAI : MonoBehaviour
         {
             actionType = ActionType.Build;
             actionCard = defense;
+            Debug.Log($"AI wants to build defense");
             return true;
         }
         return false;
     }
     private bool DevelopMilitaryOrCastSpell()
     {
-        int numEnemies = 0, rand = Random.Range(0, 100);
-        if (rand < numEnemies)
+        int numEnemies = GetNumEnemiesNearFurthestUnit();
+        int spellChance = (5 * (int)Mathf.Pow(numEnemies, 2)) - (5 * numEnemies);
+        int rand = Random.Range(0, 100);
+
+        if (rand < spellChance)
         {
-            //Cast Spell
+            actionType = ActionType.Cast;
+            actionCard = spells[Random.Range(0, spells.Count)];
+            Debug.Log($"AI wants to cast {actionCard}");
         }
         else
         {
-            float ranged = 0, melee = 0;
-            foreach (GameObject unit in PlayerRed.Instance.GetSpawnedMilitary())
-            {
-                if (unit.GetComponent<Character>() != null)
-                {
-                    if (unit.GetComponent<Character>().GetCard().CharacterType == CharacterType.Ranged)
-                        ranged++;
-                    else if (unit.GetComponent<Character>().GetCard().CharacterType == CharacterType.Melee)
-                        melee++;
-                }
-            }
+            actionType = ActionType.Spawn;
+            actionCard = ChooseMilitaryUnitToSpawn();
+            Debug.Log($"AI wants to spawn {actionCard}");
         }
 
         return true;
+    }
+    private int GetNumEnemiesNearFurthestUnit()
+    {
+        int numEnemies = 0;
+        float detectionRange = 4f;
+        foreach (GameObject unit in player.GetSpawnedMilitary())
+        {
+            int numColliders = 0;
+            Collider[] hitColliders = Physics.OverlapSphere(unit.transform.position, detectionRange, unit.GetComponent<Entity>().GetTargetLayer());
+            foreach (Collider collider in hitColliders)
+                if (collider is BoxCollider)
+                    numColliders++;
+
+            if (numColliders > numEnemies)
+                numEnemies = numColliders;
+        }
+
+        return numEnemies;
+    }
+    private CharacterCardSO ChooseMilitaryUnitToSpawn()
+    {
+        Dictionary<CharacterCardSO, float> cardList = new Dictionary<CharacterCardSO, float>();
+        CharacterCardSO unitToSpawn = null;
+        int rangedCount = 0, meleeCount = 0;
+        float cumulativeWeight = 0;
+
+        //Calculate unit weights using spawned units
+        foreach (GameObject unit in player.GetSpawnedMilitary())
+        {
+            if (unit.GetComponent<Character>() != null)
+            {
+                CharacterCardSO card = unit.GetComponent<Character>().GetCard();
+                if (card.CharacterType == CharacterType.Ranged)
+                    rangedCount++;
+                else if (card.CharacterType == CharacterType.Melee)
+                    meleeCount++;
+            }
+        }
+
+        //Generate list of weights for each spawnable unit
+        foreach (CharacterCardSO card in meleeUnits)
+        {
+            float unitValue = 0;
+            unitValue = card.GetCardStrength() / (float)card.cardCost[card.level - 1] * (1 + ((rangedCount - meleeCount) * 0.1f));
+
+            if (unitValue > 0)
+            {
+                cardList.Add(card, unitValue);
+                cumulativeWeight += unitValue;
+            }
+        }
+
+        foreach (CharacterCardSO card in rangedUnits)
+        {
+            float unitValue = 0;
+            unitValue = card.GetCardStrength() / (float)card.cardCost[card.level - 1] * (1 + ((meleeCount - rangedCount) * 0.1f));
+            
+            if (unitValue > 0)
+            {
+                cardList.Add(card, unitValue);
+                cumulativeWeight += unitValue;
+            }
+        }
+
+        //Get random unit based on random float generated
+        float rand = Random.Range(0, cumulativeWeight);
+        foreach (CharacterCardSO card in cardList.Keys)
+        {
+            if (rand <= cardList[card])
+            {
+                unitToSpawn = card;
+                break;
+            }
+
+            rand -= cardList[card];
+        }
+
+        return unitToSpawn;
     }
     #endregion  
     
     private void ExecuteAction()
     {
-        int Gold = PlayerRed.Instance.GetGold();
+        int Gold = player.GetGold();
         switch (actionType)
         {
             case ActionType.Spawn:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.SpawnCharacter(actionCard, transform.position);
+                    if (actionCard.cardType == CardSO.CardType.Character)
+                    {
+                        Vector3 spawnPos = Vector3.zero;
+                        float attackRange = (actionCard as CharacterCardSO).AttackRange;
+                        if (player.playerColor == Player.PlayerColor.Blue)
+                            spawnPos = new Vector3(player.GetBaseLocation().x + player.GetFurthestControlledArea() - attackRange, 0.5f, 0);
+                        else
+                            spawnPos = new Vector3(player.GetBaseLocation().x - player.GetFurthestControlledArea() + attackRange, 0.5f, 0);
+
+                        player.SpawnCharacter(actionCard, spawnPos);
+                    }
+                    else
+                    {
+                        if (player.playerColor == Player.PlayerColor.Blue)
+                            player.SpawnWorker(actionCard, MapManager.Instance.mines[0]);
+                        else
+                            player.SpawnWorker(actionCard, MapManager.Instance.mines[1]);
+                    }
                     Debug.Log("AI is spawning a " + actionCard.name);
+                    ChooseAction();
                 }
                 break;
             case ActionType.Upgrade:
                 if (Gold >= actionCard.upgradeCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.SubtractGold(actionCard.upgradeCost[actionCard.level - 1]);
+                    player.SubtractGold(actionCard.upgradeCost[actionCard.level - 1]);
                     actionCard.IncreaseCardLevel();
                     Debug.Log("AI upgraded " + actionCard.name + " from level " + (actionCard.level - 1) + " to level " + actionCard.level);
+                    ChooseAction();
                 }
                 break;
             case ActionType.Build:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    PlayerRed.Instance.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[2]);
+                    player.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[2]);
                     Debug.Log("AI is building a " + actionCard.name);
+                    ChooseAction();
                 }
                 break;
             case ActionType.Cast:
+                if (Gold >= actionCard.cardCost[actionCard.level - 1])
+                {
+                    Vector3 castPos = Vector3.zero;
+                    if (player.playerColor == Player.PlayerColor.Blue)
+                    {
+                        castPos = PlayerRed.Instance.GetFurthestUnitPos();
+                        castPos = new Vector3(castPos.x + (float)(actionCard as SpellCardSO).Size / 3, castPos.y, castPos.z);
+                    }
+                    else
+                    {
+                        castPos = PlayerBlue.Instance.GetFurthestUnitPos();
+                        castPos = new Vector3(castPos.x - (float)(actionCard as SpellCardSO).Size / 3, castPos.y, castPos.z);
+                    }
 
-                break;   
+                    player.SpawnSpell(actionCard, castPos);
+                    Debug.Log("AI is casting " + actionCard.name);
+                    ChooseAction();
+                }
+                break;
+            case ActionType.None:
+                break;
         }
     }
     
@@ -529,6 +666,7 @@ public struct AlertMetrics
 
 public enum ActionType
 {
+    None,
     Spawn,
     Upgrade,
     Build,

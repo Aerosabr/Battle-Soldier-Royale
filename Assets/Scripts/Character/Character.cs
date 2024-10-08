@@ -28,7 +28,6 @@ public class Character : Entity, IDamageable, IEffectable
 
     protected Player player;
     protected CharacterCardSO card;
-    protected LayerMask targetLayer;
 
 	[SerializeField] protected GameObject indicator;
 	[SerializeField] protected Material allowed;
