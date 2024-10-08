@@ -51,5 +51,17 @@ public class EquippedLoadoutManager : MonoBehaviour
         }
     }
 
+    public IEnumerator ReplaceAllCards(List<CardSO> cardList)
+    {
+        equippedCardSOList.Clear();
+        foreach (var card in cardList)
+        {
+            equippedCardSOList.Add(card);
+            yield return null;
+        }
+        UpdateEquippedLoadout();
+        PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
+	}
+
 
 }

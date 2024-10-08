@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GamemodeText : MonoBehaviour
 {
-	[SerializeField] Text gamemodeText;
+	[SerializeField] TMP_Text gamemodeText;
 	private string difficulty = "Easy";
 	private string gamemode = "Bot";
 

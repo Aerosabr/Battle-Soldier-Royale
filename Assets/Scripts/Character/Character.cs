@@ -41,6 +41,8 @@ public class Character : Entity, IDamageable, IEffectable
 		indicator.SetActive(true);
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
+		float hover = transform.position.y + 0.05f;
+		transform.GetComponent<Rigidbody>().useGravity = false;
 		MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
 		if (layerMask == 6)
 		{
@@ -59,7 +61,7 @@ public class Character : Entity, IDamageable, IEffectable
 			if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
 			{
 				Vector3 worldPosition = hit.point;
-				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+				transform.position = new Vector3(worldPosition.x, hover, worldPosition.z);
 				transform.rotation = Quaternion.Euler(rotation);
 			}
 			if (IsCharacterInSpawnArea())
