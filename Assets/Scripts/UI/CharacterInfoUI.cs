@@ -26,6 +26,8 @@ public class CharacterInfoUI : MonoBehaviour
     [SerializeField] private Button LevelViewButton;
     [SerializeField] private TextMeshProUGUI LevelViewText;
 
+    [SerializeField] private Image CardImage;
+
     public bool showingCurrent = true;
     private CardSO currentCard;
 
@@ -86,6 +88,7 @@ public class CharacterInfoUI : MonoBehaviour
 
         Name.text = buildingCard.Name;
         Level.text = (level + 1).ToString();
+        CardImage.sprite = buildingCard.backgroundVertical[level];
 
         Health.text = buildingCard.Health[level].ToString();
         Health.transform.parent.gameObject.SetActive(true);
@@ -135,6 +138,7 @@ public class CharacterInfoUI : MonoBehaviour
 
         Name.text = characterCard.Name;
         Level.text = (level + 1).ToString();
+        CardImage.sprite = characterCard.backgroundVertical[level];
 
         Health.text = characterCard.Health[level].ToString();
         Health.transform.parent.gameObject.SetActive(true);
@@ -176,6 +180,7 @@ public class CharacterInfoUI : MonoBehaviour
 
         Name.text = spellCard.Name;
         Level.text = (level + 1).ToString();
+        CardImage.sprite = spellCard.backgroundVertical[level];
 
         Attack.text = spellCard.Attack[level].ToString();
         Attack.transform.parent.gameObject.SetActive(true);
@@ -194,6 +199,7 @@ public class CharacterInfoUI : MonoBehaviour
 
         Name.text = characterCard.Name;
         Level.text = (level + 1).ToString();
+        CardImage.sprite = characterCard.backgroundVertical[level];
 
         Health.text = characterCard.Health[level].ToString();
         Health.transform.parent.gameObject.SetActive(true);
