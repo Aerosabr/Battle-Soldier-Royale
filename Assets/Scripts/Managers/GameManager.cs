@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private int MaxWorkerAmount;
     private float soundVolume;
     private float musicVolume;
-    private int gamemode = 2;
+    private int gamemode;
     private int difficulty = 0;
 
 
@@ -37,7 +37,10 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         if (PlayerManager.Instance.CheckForOneAttackCharacter())
+        {
+            gamemode = 2;
             CameraAnimation.Instance.MoveUp("MainScene");
+        }
         else
             WarningSign.Instance.ActivateWithTimer();
     }
