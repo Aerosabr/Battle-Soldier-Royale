@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CardSlotVisual : MonoBehaviour
 {
 	[SerializeField] private Image icon;
-	[SerializeField] private Text text;
+	[SerializeField] private TMP_Text text;
 	public CardSO cardSO;
 
 	public void InitializeCard(CardSO cardSO)
