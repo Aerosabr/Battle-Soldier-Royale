@@ -47,6 +47,6 @@ public class GameManager : MonoBehaviour
 
     public void GameEnded()
     {
-
+        CameraBattleAnimation.Instance.MoveUp("MainMenu");
     }
 }

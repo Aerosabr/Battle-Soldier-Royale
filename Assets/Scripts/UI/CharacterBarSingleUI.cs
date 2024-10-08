@@ -32,7 +32,8 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-        if (!cooldownUI.gameObject.activeSelf)
+
+        if (!cooldownUI.gameObject.activeSelf && PlayerBlue.Instance.GetGold() >= cost)
         {
             PlayerControlManager.Instance.CardSelected(cardSO);
             CharacterBarUI.Instance.SetCurrentButtonSelected(this.transform);

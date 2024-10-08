@@ -35,6 +35,7 @@ public class ArrowBarrage : Spell
 			elapsedTime += damageInterval;
 		}
 		yield return null;
+		Destroy(gameObject);
 	}
 
 	#region Entities in Range Handler
