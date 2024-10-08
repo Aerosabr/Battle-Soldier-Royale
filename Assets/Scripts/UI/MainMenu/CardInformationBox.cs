@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CardInformationBox : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class CardInformationBox : MonoBehaviour
 	private CardSO cardSO;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         Instance = this;
@@ -36,8 +36,8 @@ public class CardInformationBox : MonoBehaviour
 		foreach (var stat in list)
 		{
 			var box = Instantiate(statBoxTemplate);
-			box.transform.GetChild(0).GetComponent<Text>().text = stat.ToString();
-			box.transform.SetParent(statBoxParent);
+			box.transform.GetChild(0).GetComponent<TMP_Text>().text = stat.ToString();
+			box.transform.SetParent(statBoxParent, false);
 			statBox.Add(box);
 		}
 		statBoxTemplate.SetActive(false);
@@ -53,8 +53,8 @@ public class CardInformationBox : MonoBehaviour
 		level1.interactable = false;
 		level2.interactable = true;
 		level3.interactable = true;
-		level2.transform.GetChild(1).GetComponent<Text>().text = "Cost: " + cardSO.upgradeCost[0].ToString() + " (Level 2)";
-		level3.transform.GetChild(1).GetComponent<Text>().text = "Cost: " + cardSO.upgradeCost[1].ToString() + " (Level 3)";
+		level2.transform.GetChild(1).GetComponent<TMP_Text>().text = "Cost: " + cardSO.upgradeCost[0].ToString() + " (Level 2)";
+		level3.transform.GetChild(1).GetComponent<TMP_Text>().text = "Cost: " + cardSO.upgradeCost[1].ToString() + " (Level 3)";
 		ViewCard(cardSO, level);
 	}
 
