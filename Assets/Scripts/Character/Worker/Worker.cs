@@ -21,6 +21,7 @@ public class Worker : Character
  
     [SerializeField] private WorkerVisual anim;
 
+    private bool isDepositing = false;
     private GameObject mine;
     private State state;
     private float miningTimer;
@@ -67,14 +68,14 @@ public class Worker : Character
     {
         float detectDistance = .2f;
         Debug.DrawRay(transform.position + new Vector3(0, 0.5f, 0), transform.forward * detectDistance, Color.green);
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, 1 << 8 ))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out RaycastHit hit, detectDistance, targetLayer))
         {
-			if (hit.collider.gameObject.tag == "Mine" && hit.collider.gameObject == mine)
+			if (hit.collider.gameObject.tag == "Mine" && hit.collider.gameObject == mine && !isDepositing)
             {
                 StartMining();
                 transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
             }
-            else if (hit.collider.gameObject.tag == "Base")
+            else if (hit.collider.gameObject.tag == "Base" && isDepositing)
             {
                 Deposit();
                 transform.rotation = Quaternion.Euler(0, -transform.localEulerAngles.y, 0);
@@ -83,8 +84,7 @@ public class Worker : Character
     }
 
     private void StartMining()
-    {
-        Debug.Log("Started mining");
+    { 
         state = State.Mining;
         GetComponent<BoxCollider>().enabled = false;
         anim.gameObject.SetActive(false);
@@ -98,15 +98,20 @@ public class Worker : Character
         GetComponent<BoxCollider>().enabled = true;
         anim.gameObject.SetActive(true);
         anim.AnimAction(IS_WALKING);
+        isDepositing = true;
+        targetLayer = 1 << gameObject.layer;
     }
 
     private void Deposit()
     {
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
+        isDepositing = false;
         if (player.playerColor == Player.PlayerColor.Blue)
             PlayerBlue.Instance.AddGold(attack);
         else
             PlayerRed.Instance.AddGold(attack);
+
+        targetLayer = 1 << 8;
     }
 
     public override void Damaged(int damage)
@@ -140,14 +145,16 @@ public class Worker : Character
         if (gameObject.layer == 6)
         {
             player = PlayerBlue.Instance;
-            targetLayer = 1 << 7;
+            //targetLayer = 1 << 7;
         }
         else
         {
             player = PlayerRed.Instance;
-            targetLayer = 1 << 6;
+            //targetLayer = 1 << 6;
         }
-        player.AddToMilitary(gameObject);
+        targetLayer = (1 << 8);
+        //targetLayer = (1 << 8) | (1 << 9);
+        player.AddToEconomy(gameObject, true);
     }
 
 	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)

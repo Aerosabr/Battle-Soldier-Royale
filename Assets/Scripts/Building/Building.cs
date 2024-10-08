@@ -18,7 +18,6 @@ public class Building : Entity, IDamageable
     protected Player player;
     protected BuildingCardSO card;
     protected BuildingSlot buildingSlot;
-    protected LayerMask targetLayer;
 
     public virtual void Damaged(int damage) { }
     protected void HealthChangedVisual()

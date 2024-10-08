@@ -5,18 +5,12 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public event EventHandler<OnGameEndedEventArgs> OnGameEnded;
-    public class OnGameEndedEventArgs : EventArgs
-    {
-        public Player.PlayerColor color;
-    }
-
     public static GameManager Instance;
     private float MapSize;
     private int MaxWorkerAmount;
     private float soundVolume;
     private float musicVolume;
-    private int gamemode = 2;
+    private int gamemode;
     private int difficulty = 0;
 
 
@@ -40,20 +34,19 @@ public class GameManager : MonoBehaviour
     public float GetMapSize() => MapSize;
     public int GetMaxWorkerAmount() => MaxWorkerAmount; 
 
-    public void GameEnded(Player.PlayerColor color)
-    {
-        OnGameEnded?.Invoke(this, new OnGameEndedEventArgs
-        {
-            color = color
-        });
-    }
-
     public void GameStart()
     {
         if (PlayerManager.Instance.CheckForOneAttackCharacter())
+        {
+            gamemode = 2;
             CameraAnimation.Instance.MoveUp("MainScene");
+        }
         else
             WarningSign.Instance.ActivateWithTimer();
     }
 
+    public void GameEnded()
+    {
+
+    }
 }

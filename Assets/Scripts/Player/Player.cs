@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     protected float passiveGoldTimer;
     protected float passiveGoldTimerMax = .1f;
 
+    [SerializeField] private Base homeBase;
     [SerializeField] private Vector3 spawnRotation;
     public GameObject spawnArea;
 
@@ -68,7 +69,7 @@ public class Player : MonoBehaviour
 		}
         else if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
         {
-            Transform building = Instantiate(CSO.spawnableObject, transform.position, Quaternion.identity).transform;
+            Transform building = Instantiate(CSO.spawnableObject, buildingSlot.transform.position, Quaternion.identity).transform;
 			building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, buildingSlot.GetComponent<BuildingSlot>());
 		}
 		SubtractGold(CSO.cardCost[CSO.level - 1]);
@@ -106,7 +107,6 @@ public class Player : MonoBehaviour
 		character.position = placement;
         character.GetComponent<Worker>().InitializeWorker(gameObject.layer, spawnRotation, CSO, mine);
 		SubtractGold(CSO.cardCost[CSO.level - 1]);
-		AddToMilitary(character.gameObject);
 		CSO.timesCasted++;
     }
 
@@ -175,6 +175,8 @@ public class Player : MonoBehaviour
         return maxXRange;
     }
 
+    public Vector3 GetBaseLocation() => homeBase.transform.position;
+
     public void AddToEconomy(GameObject character, bool isWorker)
     {
         if (isWorker)
@@ -195,6 +197,30 @@ public class Player : MonoBehaviour
     public void AddToMilitary(GameObject character) => Military.Add(character);
     public void RemoveFromMilitary(GameObject character) => Military.Remove(character);
     public List<GameObject> GetSpawnedMilitary() => Military;   
+
+    public Vector3 GetFurthestUnitPos()
+    {
+        Vector3 unitPos = homeBase.transform.position;
+        if (playerColor == PlayerColor.Blue)
+        {
+            foreach (GameObject unit in Military)
+            {
+                if (unit.transform.position.x > unitPos.x)
+                    unitPos = unit.transform.position;
+            }
+        }
+        else
+        {
+            foreach (GameObject unit in Military)
+            {
+                if (unit.transform.position.x < unitPos.x)
+                    unitPos = unit.transform.position;
+            }
+        }
+
+        return unitPos;
+    }
+
     public float GetFurthestControlledArea()
     {
         float area = 0;

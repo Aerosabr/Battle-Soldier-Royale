@@ -26,6 +26,24 @@ public class CharacterCardSO : CardSO
     public CharacterType CharacterType;
     public AttackType AttackType;
 
+    public int GetCardStrength()
+    {
+        int cardStrength = 0;
+        cardStrength += Health[level - 1] / 2;
+        switch (AttackType)
+        {
+            case AttackType.None:
+            case AttackType.Single:
+                cardStrength += (int)(Attack[level - 1] * AttackSpeed[level - 1] * AttackRange);
+                break;
+            case AttackType.AOE:
+                cardStrength += (int)(Attack[level - 1] * AttackSpeed[level - 1] * AttackRange);
+                break;
+        }
+
+        return cardStrength;
+    }
+
 	public override List<string> ViewCard(int level)
 	{
 		List<string> list = new List<string>();
