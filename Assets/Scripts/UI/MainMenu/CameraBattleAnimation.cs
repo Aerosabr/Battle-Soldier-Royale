@@ -19,6 +19,7 @@ public class CameraBattleAnimation : MonoBehaviour
 	{
 		animator.Play("CameraMoveUp", 0, 0f);
 		StartCoroutine(TransitionAfterMovingUp(sceneName));
+		FadeOut();
 	}
 	private IEnumerator TransitionAfterMovingUp(string sceneName)
 	{
@@ -33,15 +34,25 @@ public class CameraBattleAnimation : MonoBehaviour
 		SceneLoader.Instance.TransitionScene(sceneName);
 	}
 
-	public void FadeIn()
+	private void FadeOut()
 	{
-		StartCoroutine(FadeCoroutine(0, 1));
+		float delay = 0f;
+		float startAlpha = 0.5f;
+		float endAlpha = 0f;
+		StartCoroutine(FadeCoroutine(startAlpha, endAlpha, delay));
 	}
 
-	private IEnumerator FadeCoroutine(float startAlpha, float endAlpha)
+	private void FadeIn()
+	{
+		float delay = 1.5f;
+		float startAlpha = 0f;
+		float endAlpha = 1f;
+		StartCoroutine(FadeCoroutine(startAlpha, endAlpha, delay));
+	}
+
+	private IEnumerator FadeCoroutine(float startAlpha, float endAlpha, float delay)
 	{
 		float elapsedTime = 0f;
-		float delay = 1.5f;
 
 		while (elapsedTime < delay)
 		{

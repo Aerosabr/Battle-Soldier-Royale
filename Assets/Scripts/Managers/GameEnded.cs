@@ -29,6 +29,7 @@ public class GameEnded : MonoBehaviour
         returnButton.onClick.AddListener(() =>
         {
             //Scene transition here
+            GameManager.Instance.GameEnded();
         });
     }
 

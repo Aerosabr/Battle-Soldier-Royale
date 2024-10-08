@@ -35,13 +35,15 @@ public class CameraAnimation : MonoBehaviour
 
 	public void FadeIn()
 	{
-		StartCoroutine(FadeCoroutine(0, 1));
+		float startAlpha = 0f;
+		float endAlpha = 1f;
+		StartCoroutine(FadeCoroutine(startAlpha, endAlpha));
 	}
 
 	private IEnumerator FadeCoroutine(float startAlpha, float endAlpha)
 	{
 		float elapsedTime = 0f;
-		float delay = 1.5f;
+		float delay = 1f;
 
 		while(elapsedTime < delay)
 		{
