@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameEnded : MonoBehaviour
 {
@@ -13,16 +14,38 @@ public class GameEnded : MonoBehaviour
         public Player.PlayerColor color;
     }
 
+    [SerializeField] private GameObject victoryText;
+    [SerializeField] private GameObject defeatText;
+    [SerializeField] private GameObject background;
+    [SerializeField] private Button returnButton;
+
     private void Awake()
     {
         Instance = this;
     }
 
-    public void EndGame(Player.PlayerColor color)
+    private void Start()
     {
-        OnGameEnded?.Invoke(this, new OnGameEndedEventArgs
+        returnButton.onClick.AddListener(() =>
         {
-            color = color
+            //Scene transition here
         });
+    }
+
+    public void EndGame(Player.PlayerColor color)
+    { 
+        background.SetActive(true);
+        if (color == Player.PlayerColor.Blue)
+        {
+            //Defeat
+            defeatText.SetActive(true);
+        }
+        else
+        {
+            //Victory
+            victoryText.SetActive(true);
+        }
+
+        //Disable inputs
     }
 }
