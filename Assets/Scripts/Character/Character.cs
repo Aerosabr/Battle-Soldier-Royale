@@ -45,6 +45,7 @@ public class Character : Entity, IDamageable, IEffectable
 		float hover = transform.position.y + 0.05f;
 		transform.GetComponent<Rigidbody>().useGravity = false;
 		MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
+
 		if (layerMask == 6)
 		{
 			player = PlayerBlue.Instance;
@@ -55,9 +56,21 @@ public class Character : Entity, IDamageable, IEffectable
 			player = PlayerRed.Instance;
 			targetLayer = 1 << 6;
 		}
-		while (Mouse.current.leftButton.isPressed)
+
+		while (Mouse.current.leftButton.isPressed || (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed))
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Vector2 inputPosition = Vector2.zero;
+
+			if (Mouse.current.leftButton.isPressed)
+			{
+				inputPosition = Mouse.current.position.ReadValue();
+			}
+			else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+			{
+				inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+			}
+
+			Ray ray = Camera.main.ScreenPointToRay(inputPosition);
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
 			{
@@ -65,12 +78,15 @@ public class Character : Entity, IDamageable, IEffectable
 				transform.position = new Vector3(worldPosition.x, hover, worldPosition.z);
 				transform.rotation = Quaternion.Euler(rotation);
 			}
+
 			if (IsCharacterInSpawnArea())
 				meshRenderer.material = allowed;
 			else
 				meshRenderer.material = denied;
+
 			yield return null;
 		}
+
 		if (IsMouseOverUI() || !IsCharacterInSpawnArea())
 		{
 			Destroy(gameObject);
@@ -80,12 +96,12 @@ public class Character : Entity, IDamageable, IEffectable
 			CharacterBarUI.Instance.ActivateCooldown();
 			player.SpawnCharacter(card, transform.position);
 			Destroy(gameObject);
-
 		}
+
 		player.spawnArea.gameObject.SetActive(false);
 		PlayerControlManager.Instance.CardHandled();
-
 	}
+
 	public int GetAttack() => attack;
     public CharacterCardSO GetCard() => card;
     public int GetUnitStrength()
@@ -113,8 +129,20 @@ public class Character : Entity, IDamageable, IEffectable
 		{
 			return false;
 		}
-		Vector3 mousePosition = Input.mousePosition;
-		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+
+		Vector3 inputPosition = Vector3.zero;
+
+		if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+		{
+			inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+		}
+		else
+		{
+			inputPosition = Input.mousePosition;
+		}
+
+		if (inputPosition.x >= corners[0].x && inputPosition.x <= corners[2].x &&
+			inputPosition.y >= corners[0].y && inputPosition.y <= corners[2].y)
 		{
 			return true;
 		}
