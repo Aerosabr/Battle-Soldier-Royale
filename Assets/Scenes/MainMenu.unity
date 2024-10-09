@@ -887,6 +887,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1eddd20ef6cd0a4d84f41141a758864, type: 2}
   - {fileID: 11400000, guid: 18aa9c1a9918c0b4493afea9347f02c8, type: 2}
   - {fileID: 11400000, guid: c6be0f50e79c07c41bacd4ff6f3529f9, type: 2}
+  - {fileID: 11400000, guid: 5074492746820b741a19371015dc03f7, type: 2}
   availableSpellCardList:
   - {fileID: 11400000, guid: c55fc63988ef4784d933dd3d84ed1a46, type: 2}
   - {fileID: 11400000, guid: d99ef67c94fefac40a2d06f1d76b3bee, type: 2}
@@ -7575,7 +7576,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245896023}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
