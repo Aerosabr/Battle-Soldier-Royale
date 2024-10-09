@@ -5,10 +5,11 @@ using System;
 
 public class EquippedLoadoutManager : MonoBehaviour
 {
-    public static EquippedLoadoutManager Instance;
-    private List<CardSO> equippedCardSOList;
-    [SerializeField] private List<EquippedCardSlotVisual> equippedVisualList;
+    private const int MAXEQUIPPEDLOADOUT = 8;
 
+	public static EquippedLoadoutManager Instance;
+    [SerializeField] private List<CardSO> equippedCardSOList;
+    [SerializeField] private List<EquippedCardSlotVisual> equippedVisualList;
 	void Start()
     {
         Instance = this;
@@ -18,7 +19,7 @@ public class EquippedLoadoutManager : MonoBehaviour
 
     public void AddCard(CardSO cardSO)
     {
-        if (!equippedCardSOList.Contains(cardSO))
+        if (!equippedCardSOList.Contains(cardSO) && equippedCardSOList.Count < MAXEQUIPPEDLOADOUT)
         {
             equippedCardSOList.Add(cardSO);
             UpdateEquippedLoadout();
