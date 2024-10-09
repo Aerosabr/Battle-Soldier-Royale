@@ -24,19 +24,23 @@ public class AvailableLoadoutManager : MonoBehaviour
 
     private void GenerateAvailableLoadout()
     {
-        foreach (var card in availableBuildingCardList)
+		GameObject cardObject = null;
+
+		foreach (var card in availableBuildingCardList)
         {
-            GameObject cardObject = Instantiate(CardVisual, CardContent, false);
+            cardObject = Instantiate(CardVisual, CardContent, false);
             cardObject.GetComponent<CardSlotVisual>().InitializeCard(card);
         }
+		cardObject = Instantiate(CardVisual, CardContent, false);
+		cardObject.GetComponent<CardSlotVisual>().InitializeCard(worker);
 		foreach (var card in availableCharacterCardList)
 		{
-			GameObject cardObject = Instantiate(CardVisual, CardContent, false);
+			cardObject = Instantiate(CardVisual, CardContent, false);
 			cardObject.GetComponent<CardSlotVisual>().InitializeCard(card);
 		}
 		foreach (var card in availableSpellCardList)
 		{
-			GameObject cardObject = Instantiate(CardVisual, CardContent, false);
+			cardObject = Instantiate(CardVisual, CardContent, false);
 			cardObject.GetComponent<CardSlotVisual>().InitializeCard(card);
 		}
 		CardVisual.SetActive(false);

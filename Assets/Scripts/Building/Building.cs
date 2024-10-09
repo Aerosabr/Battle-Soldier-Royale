@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Building : Entity, IDamageable
 {
@@ -34,12 +35,78 @@ public class Building : Entity, IDamageable
             damage = damage
         });
     }
+	public virtual void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot) { }
 
-    public virtual void InitializeBuilding(LayerMask layerMask, CardSO card, BuildingSlot buildingSlot) => Debug.Log("Initialize not implemented");
-    public virtual IEnumerator Project(LayerMask layerMask, CardSO card) { yield return null; }
-    protected virtual void BuildingBuilt() => Debug.Log("Built not implemented");
+	protected virtual void BuildingBuilt() => Debug.Log("Built not implemented");
     protected virtual void BuildingDestroyed() => Debug.Log("Destroyed not implemented");
     public int GetAttack() => attack;
+	public virtual IEnumerator Project(LayerMask layerMask, CardSO card)
+	{
+		bool OnPlaceable = false;
+		transform.GetComponent<BoxCollider>().enabled = false;
+		transform.gameObject.layer = 0;
+		BuildingSlot slot = null;
+		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
+		LayerMask neutralWallMask = 1 << neutralWallLayer;
+		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
+		LayerMask buildableWallMask = 1 << buildableWallLayer;
+
+		while (Mouse.current.leftButton.isPressed || (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed))
+		{
+			Vector2 inputPosition = Vector2.zero;
+
+			if (Mouse.current.leftButton.isPressed)
+			{
+				inputPosition = Mouse.current.position.ReadValue();
+			}
+			else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+			{
+				inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+			}
+
+			Ray ray = Camera.main.ScreenPointToRay(inputPosition);
+			RaycastHit hit;
+
+			if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildableWallMask))
+			{
+				if (!hit.transform.parent.GetComponent<BuildingSlot>().ContainsBuilding())
+				{
+					OnPlaceable = true;
+					slot = hit.transform.parent.GetComponent<BuildingSlot>();
+					Transform hitTransform = hit.transform;
+					transform.position = hitTransform.position;
+				}
+			}
+			else if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
+			{
+				OnPlaceable = false;
+				Vector3 worldPosition = hit.point;
+				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+			}
+			yield return null;
+		}
+
+		if (IsMouseOverUI() || OnPlaceable == false)
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			if (layerMask == 6)
+			{
+				PlayerBlue.Instance.BuildBuilding(card, slot.gameObject);
+			}
+			else
+			{
+				PlayerRed.Instance.BuildBuilding(card, slot.gameObject);
+			}
+			CharacterBarUI.Instance.ActivateCooldown();
+			Destroy(gameObject);
+		}
+
+		MapManager.Instance.HideAllBuildingSlotsIndicator();
+		PlayerControlManager.Instance.CardHandled();
+	}
 	protected bool IsMouseOverUI()
 	{
 		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
@@ -47,13 +114,26 @@ public class Building : Entity, IDamageable
 		{
 			return false;
 		}
-		Vector3 mousePosition = Input.mousePosition;
-		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+
+		Vector3 inputPosition = Vector3.zero;
+
+		if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+		{
+			inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+		}
+		else
+		{
+			inputPosition = Input.mousePosition;
+		}
+
+		if (inputPosition.x >= corners[0].x && inputPosition.x <= corners[2].x &&
+			inputPosition.y >= corners[0].y && inputPosition.y <= corners[2].y)
 		{
 			return true;
 		}
 
 		return false;
 	}
-    public BuildingCardSO GetCard() => card;
+
+	public BuildingCardSO GetCard() => card;
 }

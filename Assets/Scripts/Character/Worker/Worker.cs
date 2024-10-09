@@ -164,6 +164,7 @@ public class Worker : Character
 	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
 	{
 		transform.GetComponent<BoxCollider>().enabled = false;
+        transform.gameObject.layer = 0;
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
