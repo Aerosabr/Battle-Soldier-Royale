@@ -5059,6 +5059,7 @@ MonoBehaviour:
   allowed: {fileID: 2100000, guid: b53bdb1384abdab4ab46aa26a8cb10c3, type: 2}
   denied: {fileID: 2100000, guid: 26afb457bb4cc3a43a50c5610aedeb48, type: 2}
   anim: {fileID: 7023078922825290736}
+  hpBar: {fileID: 981324755380584844}
 --- !u!65 &1113284561125372729
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21727,6 +21728,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+--- !u!1 &981324755380584844 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4906900927304782939, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+  m_PrefabInstance: {fileID: 5298077932613834199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2329661272414087673 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7625178399059835950, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
