@@ -45,17 +45,31 @@ public class Spell : MonoBehaviour
 		float cameraDistance = 0.75f;
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
-		while (Mouse.current.leftButton.isPressed)
+
+		while (Mouse.current.leftButton.isPressed || (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed))
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Vector2 inputPosition = Vector2.zero;
+
+			if (Mouse.current.leftButton.isPressed)
+			{
+				inputPosition = Mouse.current.position.ReadValue();
+			}
+			else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+			{
+				inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+			}
+
+			Ray ray = Camera.main.ScreenPointToRay(inputPosition);
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit))
 			{
 				Vector3 worldPosition = hit.point;
 				transform.position = new Vector3(worldPosition.x, transform.position.y, cameraDistance);
 			}
+
 			yield return null;
 		}
+
 		if (layerMask == 6)
 		{
 			player = PlayerBlue.Instance;
@@ -66,18 +80,20 @@ public class Spell : MonoBehaviour
 			player = PlayerRed.Instance;
 			targetLayer = 1 << 6;
 		}
+
 		if (IsMouseOverUI())
 		{
 			Destroy(gameObject);
-
 		}
 		else
 		{
 			player.SpawnSpell(cardSO, transform.position);
 			Destroy(gameObject);
 		}
+
 		PlayerControlManager.Instance.CardHandled();
 	}
+
 	private bool IsMouseOverUI()
 	{
 		Vector3[] corners = CharacterBarUI.Instance.GetCancelArea();
@@ -85,14 +101,27 @@ public class Spell : MonoBehaviour
 		{
 			return false;
 		}
-		Vector3 mousePosition = Input.mousePosition;
-		if (mousePosition.x >= corners[0].x && mousePosition.x <= corners[2].x && mousePosition.y >= corners[0].y && mousePosition.y <= corners[2].y)
+
+		Vector3 inputPosition = Vector3.zero;
+
+		if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+		{
+			inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+		}
+		else
+		{
+			inputPosition = Input.mousePosition;
+		}
+
+		if (inputPosition.x >= corners[0].x && inputPosition.x <= corners[2].x &&
+			inputPosition.y >= corners[0].y && inputPosition.y <= corners[2].y)
 		{
 			return true;
 		}
 
 		return false;
 	}
+
 	protected virtual IEnumerator HandleHitBox() { yield return null; }
 	protected virtual IEnumerator HandleAttack() { yield return null; }
 }
