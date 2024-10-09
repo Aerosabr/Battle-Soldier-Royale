@@ -38,6 +38,7 @@ public class Character : Entity, IDamageable, IEffectable
 	public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
 	{
 		transform.GetComponent<BoxCollider>().enabled = false;
+		transform.gameObject.layer = 0;
 		indicator.SetActive(true);
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
