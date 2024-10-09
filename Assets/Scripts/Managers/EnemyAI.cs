@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     private Player player;
 
     private float gameStateTimer;
-    private float gameStateTimerMax = 2f;
+    private float gameStateTimerMax = 1f;
     private AlertMetrics alertMetrics;
     private ActionType actionType;
     private CardSO actionCard;
@@ -465,13 +465,27 @@ public class EnemyAI : MonoBehaviour
     }
     private bool BuildDefense()
     {
-        if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
+        if (player.playerColor == Player.PlayerColor.Blue)
         {
-            actionType = ActionType.Build;
-            actionCard = defense;
-            Debug.Log($"AI wants to build defense");
-            return true;
+            if (!MapManager.Instance.buildingSlots[0].GetComponent<BuildingSlot>().ContainsBuilding())
+            {
+                actionType = ActionType.Build;
+                actionCard = defense;
+                Debug.Log($"AI wants to build defense");
+                return true;
+            }
         }
+        else if (player.playerColor == Player.PlayerColor.Red)
+        {
+            if (!MapManager.Instance.buildingSlots[2].GetComponent<BuildingSlot>().ContainsBuilding())
+            {
+                actionType = ActionType.Build;
+                actionCard = defense;
+                Debug.Log($"AI wants to build defense");
+                return true;
+            }
+        }
+
         return false;
     }
     private bool DevelopMilitaryOrCastSpell()
@@ -586,11 +600,16 @@ public class EnemyAI : MonoBehaviour
                     if (actionCard.cardType == CardSO.CardType.Character)
                     {
                         Vector3 spawnPos = Vector3.zero;
-                        float attackRange = (actionCard as CharacterCardSO).AttackRange;
-                        if (player.playerColor == Player.PlayerColor.Blue)
-                            spawnPos = new Vector3(player.GetBaseLocation().x + player.GetFurthestControlledArea() - attackRange, 0.5f, 0);
+                        if (CheckEnemyInBase())
+                            spawnPos = player.GetBaseLocation();
                         else
-                            spawnPos = new Vector3(player.GetBaseLocation().x - player.GetFurthestControlledArea() + attackRange, 0.5f, 0);
+                        {
+                            float attackRange = (actionCard as CharacterCardSO).AttackRange;
+                            if (player.playerColor == Player.PlayerColor.Blue)
+                                spawnPos = new Vector3(player.GetBaseLocation().x + player.GetFurthestControlledArea() - attackRange, 0.5f, 0);
+                            else
+                                spawnPos = new Vector3(player.GetBaseLocation().x - player.GetFurthestControlledArea() + attackRange, 0.5f, 0);
+                        }
 
                         player.SpawnCharacter(actionCard, spawnPos);
                     }
@@ -617,9 +636,23 @@ public class EnemyAI : MonoBehaviour
             case ActionType.Build:
                 if (Gold >= actionCard.cardCost[actionCard.level - 1])
                 {
-                    player.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[2]);
-                    Debug.Log("AI is building a " + actionCard.name);
-                    ChooseAction();
+                    if (CheckEnemyInBase())
+                        ChooseAction();
+                    else
+                    {
+                        if (player.playerColor == Player.PlayerColor.Blue)
+                        {
+                            player.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[0]);
+                            Debug.Log("AI is building a " + actionCard.name);
+                            ChooseAction();
+                        }
+                        else if (player.playerColor == Player.PlayerColor.Red)
+                        {
+                            player.BuildBuilding(actionCard, MapManager.Instance.buildingSlots[2]);
+                            Debug.Log("AI is building a " + actionCard.name);
+                            ChooseAction();
+                        }
+                    }
                 }
                 break;
             case ActionType.Cast:
@@ -647,6 +680,26 @@ public class EnemyAI : MonoBehaviour
         }
     }
     
+    public bool CheckEnemyInBase()
+    {
+        if (player.playerColor == Player.PlayerColor.Blue)
+        {
+            float unitDistance = Vector3.Distance(PlayerBlue.Instance.GetBaseLocation(), PlayerRed.Instance.GetFurthestUnitPos());
+            float buildingDistance = Vector3.Distance(PlayerBlue.Instance.GetBaseLocation(), MapManager.Instance.buildingSlots[0].transform.position);
+            if (unitDistance < buildingDistance)
+                return true;
+            
+        }
+        else if (player.playerColor == Player.PlayerColor.Red)
+        {
+            float unitDistance = Vector3.Distance(PlayerRed.Instance.GetBaseLocation(), PlayerBlue.Instance.GetFurthestUnitPos());
+            float buildingDistance = Vector3.Distance(PlayerRed.Instance.GetBaseLocation(), MapManager.Instance.buildingSlots[2].transform.position);
+            if (unitDistance < buildingDistance)
+                return true;
+        }
+
+        return false;
+    }
 }
 
 public enum AlertLevel
