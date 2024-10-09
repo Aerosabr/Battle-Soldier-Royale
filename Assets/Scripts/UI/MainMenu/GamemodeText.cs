@@ -17,6 +17,12 @@ public class GamemodeText : MonoBehaviour
 	public void UpdateDifficulty(string difficulty)
 	{
 		this.difficulty = difficulty;
+		if (difficulty == "Easy")
+			GameManager.Instance.SetDifficulty(0);
+		else if(difficulty == "Medium")
+			GameManager.Instance.SetDifficulty(1);
+		else if(difficulty == "Hard")
+			GameManager.Instance.SetDifficulty(2);
 		UpdateText();
 	}
 
