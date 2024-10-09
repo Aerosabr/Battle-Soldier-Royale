@@ -20,6 +20,7 @@ public class Worker : Character
     }
  
     [SerializeField] private WorkerVisual anim;
+    [SerializeField] private GameObject hpBar;
 
     private bool isDepositing = false;
     private GameObject mine;
@@ -88,6 +89,7 @@ public class Worker : Character
         state = State.Mining;
         GetComponent<BoxCollider>().enabled = false;
         anim.gameObject.SetActive(false);
+        hpBar.SetActive(false);
         anim.AnimAction(IS_WALKING);
     }
 
@@ -97,6 +99,8 @@ public class Worker : Character
         miningTimer = 0f;
         GetComponent<BoxCollider>().enabled = true;
         anim.gameObject.SetActive(true);
+        if (currentHealth < maxHealth)
+            hpBar.SetActive(true);
         anim.AnimAction(IS_WALKING);
         isDepositing = true;
         targetLayer = 1 << gameObject.layer;
