@@ -16,7 +16,6 @@ public class Building : Entity, IDamageable
     protected float attackRange;
     protected float buildTimer;
 
-    protected Player player;
     protected BuildingCardSO card;
     protected BuildingSlot buildingSlot;
 

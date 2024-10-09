@@ -881,8 +881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  buildingType: 0
-  attackType: 0
+  healthBarUI: {fileID: 1261569398930378152}
   farmVisual: {fileID: 939330349953713378}
 --- !u!1 &7705565740336527077
 GameObject:

@@ -134,6 +134,8 @@ public class Swordsman : Character
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
         }
+
+        healthBarUI.SetColor(player.playerColor);
     }
 	private void Card_OnLevelChanged(object sender, EventArgs e)
     {

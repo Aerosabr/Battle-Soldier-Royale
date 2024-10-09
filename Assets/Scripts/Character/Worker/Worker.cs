@@ -158,6 +158,8 @@ public class Worker : Character
         }
         targetLayer = (1 << 8);
         //targetLayer = (1 << 8) | (1 << 9);
+
+        healthBarUI.SetColor(player.playerColor);
         player.AddToEconomy(gameObject, true);
     }
 

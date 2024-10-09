@@ -2998,6 +2998,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7625178399059835950, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
   m_PrefabInstance: {fileID: 505048799}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &505048801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+  m_PrefabInstance: {fileID: 505048799}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7a2aaed6673ab4792a0eca89929751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &509149353
 GameObject:
   m_ObjectHideFlags: 0
@@ -6216,6 +6227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 999999
   maxHealth: 999999
+  healthBarUI: {fileID: 0}
   attack: 0
   indicator: {fileID: 0}
   allowed: {fileID: 0}
@@ -9673,6 +9685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 999999
   maxHealth: 999999
+  healthBarUI: {fileID: 0}
   attack: 0
   indicator: {fileID: 0}
   allowed: {fileID: 0}
@@ -10439,6 +10452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 1000
   maxHealth: 1000
+  healthBarUI: {fileID: 2091744561}
   playerColor: 1
 --- !u!65 &1867699065
 BoxCollider:
@@ -11858,6 +11872,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7625178399059835950, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
   m_PrefabInstance: {fileID: 2091744559}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2091744561 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+  m_PrefabInstance: {fileID: 2091744559}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7a2aaed6673ab4792a0eca89929751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2093959919
 GameObject:
   m_ObjectHideFlags: 0
@@ -12233,6 +12258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 1000
   maxHealth: 1000
+  healthBarUI: {fileID: 505048801}
   playerColor: 0
 --- !u!1 &2133425699
 GameObject:

@@ -10,6 +10,11 @@ public class Base : Entity, IDamageable
 
     [SerializeField] private Player.PlayerColor playerColor;
 
+    private void Start()
+    {
+        healthBarUI.SetColor(playerColor);
+    }
+
     public void Damaged(int damage)
     {
         currentHealth -= damage;

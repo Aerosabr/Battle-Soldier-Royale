@@ -16475,6 +16475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 99999
   maxHealth: 99999
+  healthBarUI: {fileID: 6785833557067585653}
   attack: 0
   indicator: {fileID: 8196403083303608651}
   allowed: {fileID: 2100000, guid: b53bdb1384abdab4ab46aa26a8cb10c3, type: 2}
@@ -21811,3 +21812,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7625178399059835950, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
   m_PrefabInstance: {fileID: 5896330221188011009}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6785833557067585653 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1152893683045993588, guid: b1338eb22a4c23c4ba1ebbccdc73d2c1, type: 3}
+  m_PrefabInstance: {fileID: 5896330221188011009}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570394515544899674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7a2aaed6673ab4792a0eca89929751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

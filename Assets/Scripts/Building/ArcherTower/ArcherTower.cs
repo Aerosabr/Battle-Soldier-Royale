@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Player;
 
 public class ArcherTower : Building
 {
@@ -171,6 +172,7 @@ public class ArcherTower : Building
             targetLayer = 1 << 6;
             gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
+        healthBarUI.SetColor(player.playerColor);
         state = State.Building;
         SetStats();
     }

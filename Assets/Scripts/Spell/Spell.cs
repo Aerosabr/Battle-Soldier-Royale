@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class Spell : MonoBehaviour
 {
-	[SerializeField] protected int targetLayer;
-	[SerializeField] protected Player player;
-	[SerializeField] protected SpellCardSO cardSO;
+	protected int targetLayer;
+	protected Player player;
+	protected SpellCardSO cardSO;
 
 	private GraphicRaycaster raycaster;
 	[SerializeField] protected BoxCollider hitBox;
