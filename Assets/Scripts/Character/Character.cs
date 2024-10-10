@@ -17,7 +17,7 @@ public class Character : Entity, IDamageable, IEffectable
     protected float baseAttackSpeed;
     protected float attackSpeed;
     protected float baseMoveSpeed;
-    protected float moveSpeed;
+	[SerializeField] protected float moveSpeed;
 
     protected float attackRange;
     protected float deathTimer;
@@ -192,8 +192,8 @@ public class Character : Entity, IDamageable, IEffectable
 		if (existingSlowed == null)
 		{
 			Slowed newSlowed = gameObject.AddComponent<Slowed>();
-			moveSpeed = moveSpeed - ((float)speed / 50);
-			attackSpeed = attackSpeed - ((float)speed / 50);
+			moveSpeed = ((100 - (float)speed) / 100) * moveSpeed;
+			attackSpeed = ((100 - (float)speed) / 100) * attackSpeed;
 		}
     }
     public void UnSlowed(int speed)
