@@ -187,7 +187,7 @@ public class Character : Entity, IDamageable, IEffectable
     #region IEffectable Components
     public void Slowed(int speed)
     {
-		Slowed existingSlowed = GetComponent<Slowed>();
+		Slowed existingSlowed = transform.GetComponent<Slowed>();
 
 		if (existingSlowed == null)
 		{
@@ -198,19 +198,18 @@ public class Character : Entity, IDamageable, IEffectable
     }
     public void UnSlowed(int speed)
     {
-		Slowed existingSlowed = GetComponent<Slowed>();
+		Slowed existingSlowed = transform.GetComponent<Slowed>();
 
-		if (existingSlowed == null)
+		if (existingSlowed != null)
 		{
 			moveSpeed = baseMoveSpeed;
 			attackSpeed = baseAttackSpeed;
 			Destroy(existingSlowed);
 		}
     }
-
 	public void Poisoned(int damage, int poisonDuration)
 	{
-		Poisoned existingPoisoned = GetComponent<Poisoned>();
+		Poisoned existingPoisoned = transform.GetComponent<Poisoned>();
 
 		if (existingPoisoned == null)
 		{
@@ -220,6 +219,25 @@ public class Character : Entity, IDamageable, IEffectable
 		else
 		{
 			existingPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+	}
+	public void ReduceAttack(int damageReduced)
+	{
+		AttackReduction existingAttack = GetComponent<AttackReduction>();
+		if(existingAttack == null)
+		{
+			existingAttack = gameObject.AddComponent<AttackReduction>();
+			attack = ((100 - damageReduced) / 100 ) * attack;
+		}
+
+	}
+	public void UnReduceAttack()
+	{
+		AttackReduction existingAttack = GetComponent<AttackReduction>();
+		if (existingAttack != null)
+		{
+			attack = baseAttack;
+			Destroy(existingAttack);
 		}
 	}
 	#endregion

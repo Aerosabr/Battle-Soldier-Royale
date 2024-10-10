@@ -58,7 +58,7 @@ public class SnowStorm : Spell
 	void OnTriggerEnter(Collider collision)
 	{
 		Debug.Log(collision.name);
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
@@ -66,7 +66,7 @@ public class SnowStorm : Spell
 				if (!characters.Contains(collidedCharacter))
 				{
 					characters.Add(collidedCharacter);
-					IEffectable effectedCharacter = characters as IEffectable;
+					IEffectable effectedCharacter = collidedCharacter as IEffectable;
 					effectedCharacter.Slowed(cardSO.Attack[cardSO.level-1]);
 				}
 			}
@@ -74,7 +74,7 @@ public class SnowStorm : Spell
 	}
 	void OnTriggerExit(Collider collision)
 	{
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
@@ -82,7 +82,7 @@ public class SnowStorm : Spell
 				if (characters.Contains(collidedCharacter))
 				{
 					characters.Remove(collidedCharacter);
-					IEffectable effectedCharacter = characters as IEffectable;
+					IEffectable effectedCharacter = collidedCharacter as IEffectable;
 					effectedCharacter.UnSlowed(cardSO.Attack[cardSO.level - 1]);
 				}
 			}

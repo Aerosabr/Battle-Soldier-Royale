@@ -10,7 +10,6 @@ public class PlayerControlManager : MonoBehaviour
 		Idle,
 		Command,
 		Cast,
-		Build,
 	}
 
 	public static PlayerControlManager Instance;
@@ -29,9 +28,7 @@ public class PlayerControlManager : MonoBehaviour
 			return 1;
 		else if(mode == Mode.Cast)
 			return 2;
-		else if(mode == Mode.Build)
-			return 3;
-		return 4;
+		return 3;
 	}
 
 	public void CardSelected(CardSO cardSO)
@@ -54,7 +51,7 @@ public class PlayerControlManager : MonoBehaviour
 		else if (cardSO.cardType == CardSO.CardType.Building)
 		{
 			PlayerBlue.Instance.ProjectCard(cardSO);
-			mode = Mode.Build;
+			mode = Mode.Cast;
 		}
 	}
 	

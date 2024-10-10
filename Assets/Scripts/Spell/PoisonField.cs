@@ -49,8 +49,7 @@ public class PoisonField : Spell
 	#region Entities in Range Handler
 	void OnTriggerEnter(Collider collision)
 	{
-		Debug.Log(collision.name);
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
@@ -58,13 +57,15 @@ public class PoisonField : Spell
 				if (!characters.Contains(collidedCharacter))
 				{
 					characters.Add(collidedCharacter);
+					IEffectable effectedCharacter = collidedCharacter as IEffectable;
+					effectedCharacter.ReduceAttack(cardSO.Attack[cardSO.level - 1]);
 				}
 			}
 		}
 	}
 	void OnTriggerExit(Collider collision)
 	{
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
@@ -72,6 +73,8 @@ public class PoisonField : Spell
 				if (characters.Contains(collidedCharacter))
 				{
 					characters.Remove(collidedCharacter);
+					IEffectable effectedCharacter = collidedCharacter as IEffectable;
+					effectedCharacter.UnReduceAttack();
 				}
 			}
 		}

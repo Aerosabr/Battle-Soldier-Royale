@@ -52,9 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19988a9cd9a191e408b6fb64c08e90c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer: 6
-  player: {fileID: 0}
-  cardSO: {fileID: 0}
   hitBox: {fileID: 865205287473903996}
   transparentObject: {fileID: 1872684086615307803}
   visualObject: {fileID: 4152139916092068735}

@@ -49,8 +49,8 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 			{
 				if (!EquipSlot)
 				{
-					EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO);
-					transform.GetComponent<CardSlotVisual>().EnableVisualEquipCard();
+					if(EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO))
+						transform.GetComponent<CardSlotVisual>().EnableVisualEquipCard();
 				}
 				else
 					EquippedLoadoutManager.Instance.RemoveCard(transform.GetComponent<EquippedCardSlotVisual>().cardSO);
