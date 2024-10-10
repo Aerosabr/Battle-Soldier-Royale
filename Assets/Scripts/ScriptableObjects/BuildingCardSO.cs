@@ -10,10 +10,10 @@ public enum BuildingType
 [CreateAssetMenu()]
 public class BuildingCardSO : CardSO
 {
-    public List<int> Health;
-    public List<int> Attack;
+    public List<float> Health;
+    public List<float> Attack;
     public List<float> AttackSpeed;
-    public int AttackRange;
+    public float AttackRange;
     public List<float> BuildTimer;
     public BuildingType BuildingType;
     public AttackType AttackType;

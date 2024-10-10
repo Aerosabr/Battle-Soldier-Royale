@@ -36,7 +36,7 @@ public class Fireball : Spell
 		{
 			if (character is Entity entity && entity.GetCurrentHealth() > 0)
 			{
-				character.Damaged(cardSO.Attack[cardSO.level - 1]);
+				character.Damaged(cardSO.Attack[cardSO.level - 1], CardSO.CardType.Spell);
 				yield return null;
 			}
 		}

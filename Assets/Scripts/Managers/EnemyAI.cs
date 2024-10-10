@@ -95,12 +95,12 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
-    private List<int> IncreaseStatInList(List<int> stats, float multiplier)
+    private List<float> IncreaseStatInList(List<float> stats, float multiplier)
     {
-        List<int> newStats = new List<int>();
-        foreach (int stat in stats)
+        List<float> newStats = new List<float>();
+        foreach (float stat in stats)
         {
-            int newStat = (int)(stat * multiplier);
+            float newStat = stat * multiplier;
             newStats.Add(newStat);
         }
 
@@ -175,7 +175,7 @@ public class EnemyAI : MonoBehaviour
 
     private void CalculateEMS(out AlertLevel effectiveMilitaryStrength)
     {
-        float EMS = GetEMSFromList(player.GetSpawnedMilitary()) / (float)GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
+        float EMS = GetEMSFromList(player.GetSpawnedMilitary()) / GetEMSFromList(PlayerBlue.Instance.GetSpawnedMilitary());
 
         if (EMS > 2)
             effectiveMilitaryStrength = AlertLevel.Favored;
@@ -185,9 +185,9 @@ public class EnemyAI : MonoBehaviour
             effectiveMilitaryStrength = AlertLevel.Even;
     }
 
-    private int GetEMSFromList(List<GameObject> MilitaryUnits)
+    private float GetEMSFromList(List<GameObject> MilitaryUnits)
     {
-        int EMS = 0;
+        float EMS = 0;
         foreach (GameObject unit in MilitaryUnits)
             EMS += unit.GetComponent<Character>().GetUnitStrength();
 
@@ -206,9 +206,9 @@ public class EnemyAI : MonoBehaviour
             goldPerMinute = AlertLevel.Even;
     }
 
-    private int GetGPMFromList(List<GameObject> EconomyUnits)
+    private float GetGPMFromList(List<GameObject> EconomyUnits)
     {
-        int GPM = 600;
+        float GPM = 600;
         foreach (GameObject unit in EconomyUnits)
         {
             if (unit.GetComponent<Character>() != null)

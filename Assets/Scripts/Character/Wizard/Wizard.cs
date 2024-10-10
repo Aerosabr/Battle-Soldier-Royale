@@ -101,7 +101,7 @@ public class Wizard : Character
             foreach (Collider collider in hitColliders)
             {
                 if (collider.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
-                    collider.transform.GetComponent<IDamageable>().Damaged(attack);
+                    collider.transform.GetComponent<IDamageable>().Damaged(attack, card.cardType);
             }
             
         }
@@ -109,7 +109,7 @@ public class Wizard : Character
             ChangeState(State.Idle);
     }
 
-    public override void Damaged(int damage)
+    public override void Damaged(float damage, CardSO.CardType cardType)
     {
         currentHealth -= damage;
         DamageVisuals(damage);

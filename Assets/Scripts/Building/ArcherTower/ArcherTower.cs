@@ -88,7 +88,7 @@ public class ArcherTower : Building
         }
     }
 
-    public override void Damaged(int damage)
+    public override void Damaged(float damage, CardSO.CardType cardType)
     {
         currentHealth -= damage;
         HealthChangedVisual();
@@ -143,7 +143,7 @@ public class ArcherTower : Building
         {
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
-                hit.transform.GetComponent<IDamageable>().Damaged(attack);
+                hit.transform.GetComponent<IDamageable>().Damaged(attack, card.cardType);
                 archerTowerVisual.AnimAction(IS_IDLE);
             }
         }

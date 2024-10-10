@@ -6,7 +6,7 @@ public class Poisoned : MonoBehaviour
 {
 	private float poisonDuration = 10f;
 	private float damageInterval = 1f;
-	private int damagePerTick = 2;
+	private float damagePerTick = 2;
 
 	private float poisonElapsed = 0f;
 	private float damageElapsed = 0f;
@@ -22,7 +22,7 @@ public class Poisoned : MonoBehaviour
 		}
 	}
 
-	public void UpdatePoison(int damage, int duration)
+	public void UpdatePoison(float damage, float duration)
 	{
 		poisonElapsed = 0;
 		damagePerTick = damage;
@@ -41,7 +41,7 @@ public class Poisoned : MonoBehaviour
 
 		if (damageElapsed >= damageInterval)
 		{
-			damageable.Damaged(damagePerTick);
+			damageable.Damaged(damagePerTick, CardSO.CardType.Spell);
 			damageElapsed = 0f;
 		}
 
