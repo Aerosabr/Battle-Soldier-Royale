@@ -48,7 +48,7 @@ public class Fireball : Spell
 	void OnTriggerEnter(Collider collision)
 	{
 		Debug.Log(collision.name);
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
@@ -68,7 +68,7 @@ public class Fireball : Spell
 
 	void OnTriggerExit(Collider collision)
 	{
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)

@@ -28,11 +28,14 @@ public class SpellCardSO : CardSO
 			if (SpellType == SpellType.Immediate)
 				list.Add("Damage: " + Attack[level - 1]);
 			else if (SpellType == SpellType.Poison)
+			{
 				list.Add("Damage per second: " + Attack[level - 1]);
+				list.Add("Attack Damage reduce: -" + ((float)Attack[level - 1]).ToString("F2") + "%");
+			}
 			else if (SpellType == SpellType.Slow)
 			{
-				list.Add("Movement reduce: -" + ((float)Attack[level - 1] / 50f).ToString("F2"));
-				list.Add("Attack reduce: -" + ((float)Attack[level - 1] / 50f).ToString("F2"));
+				list.Add("Movement reduce: -" + ((float)Attack[level - 1]).ToString("F2") + "%");
+				list.Add("Attack Speed reduce: -" + ((float)Attack[level - 1]).ToString("F2") + "%");
 			}
 		}
 		if (cardCost[level - 1] != 0)

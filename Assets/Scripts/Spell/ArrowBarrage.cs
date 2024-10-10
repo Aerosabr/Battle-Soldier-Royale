@@ -16,10 +16,6 @@ public class ArrowBarrage : Spell
 
 	protected override IEnumerator HandleAttack()
 	{
-		while(characters.Count == 0)
-		{
-			yield return null;
-		}
 		float elapsedTime = 0f;
 		float damageInterval = 0.5f;
 		while (elapsedTime < cardSO.Duration)
@@ -33,6 +29,7 @@ public class ArrowBarrage : Spell
 			}
 			yield return new WaitForSeconds(damageInterval);
 			elapsedTime += damageInterval;
+			Debug.Log(elapsedTime);
 		}
 		yield return null;
 		Destroy(gameObject);
@@ -42,7 +39,7 @@ public class ArrowBarrage : Spell
 	void OnTriggerEnter(Collider collision)
 	{
 		Debug.Log(collision.name);
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
@@ -62,7 +59,7 @@ public class ArrowBarrage : Spell
 
 	void OnTriggerExit(Collider collision)
 	{
-		if (collision.gameObject.layer == targetLayer)
+		if (collision.gameObject.layer == targetLayer && collision.transform.tag != "Base")
 		{
 			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)

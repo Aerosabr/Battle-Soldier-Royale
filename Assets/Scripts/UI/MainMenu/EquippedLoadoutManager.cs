@@ -17,14 +17,16 @@ public class EquippedLoadoutManager : MonoBehaviour
 
     }
 
-    public void AddCard(CardSO cardSO)
+    public bool AddCard(CardSO cardSO)
     {
         if (!equippedCardSOList.Contains(cardSO) && equippedCardSOList.Count < MAXEQUIPPEDLOADOUT)
         {
             equippedCardSOList.Add(cardSO);
             UpdateEquippedLoadout();
             PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
+            return true;
         }
+        return false;
 	}
 
     public void RemoveCard(CardSO cardSO)

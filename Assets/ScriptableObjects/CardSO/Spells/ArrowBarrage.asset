@@ -34,6 +34,6 @@ MonoBehaviour:
   timesCasted: 0
   Attack: 2c01000058020000b0040000
   Size: 9
-  Duration: 3
+  Duration: 4
   PostSpellDuration: 0
   SpellType: 0

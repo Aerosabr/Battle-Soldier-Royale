@@ -17,7 +17,7 @@ public class Character : Entity, IDamageable, IEffectable
     protected float baseAttackSpeed;
     protected float attackSpeed;
     protected float baseMoveSpeed;
-    protected float moveSpeed;
+	[SerializeField] protected float moveSpeed;
 
     protected float attackRange;
     protected float deathTimer;
@@ -187,30 +187,29 @@ public class Character : Entity, IDamageable, IEffectable
     #region IEffectable Components
     public void Slowed(int speed)
     {
-		Slowed existingSlowed = GetComponent<Slowed>();
+		Slowed existingSlowed = transform.GetComponent<Slowed>();
 
 		if (existingSlowed == null)
 		{
 			Slowed newSlowed = gameObject.AddComponent<Slowed>();
-			moveSpeed = moveSpeed - ((float)speed / 50);
-			attackSpeed = attackSpeed - ((float)speed / 50);
+			moveSpeed = ((100 - (float)speed) / 100) * moveSpeed;
+			attackSpeed = ((100 - (float)speed) / 100) * attackSpeed;
 		}
     }
     public void UnSlowed(int speed)
     {
-		Slowed existingSlowed = GetComponent<Slowed>();
+		Slowed existingSlowed = transform.GetComponent<Slowed>();
 
-		if (existingSlowed == null)
+		if (existingSlowed != null)
 		{
 			moveSpeed = baseMoveSpeed;
 			attackSpeed = baseAttackSpeed;
 			Destroy(existingSlowed);
 		}
     }
-
 	public void Poisoned(int damage, int poisonDuration)
 	{
-		Poisoned existingPoisoned = GetComponent<Poisoned>();
+		Poisoned existingPoisoned = transform.GetComponent<Poisoned>();
 
 		if (existingPoisoned == null)
 		{
@@ -220,6 +219,25 @@ public class Character : Entity, IDamageable, IEffectable
 		else
 		{
 			existingPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+	}
+	public void ReduceAttack(int damageReduced)
+	{
+		AttackReduction existingAttack = GetComponent<AttackReduction>();
+		if(existingAttack == null)
+		{
+			existingAttack = gameObject.AddComponent<AttackReduction>();
+			attack = ((100 - damageReduced) / 100 ) * attack;
+		}
+
+	}
+	public void UnReduceAttack()
+	{
+		AttackReduction existingAttack = GetComponent<AttackReduction>();
+		if (existingAttack != null)
+		{
+			attack = baseAttack;
+			Destroy(existingAttack);
 		}
 	}
 	#endregion
