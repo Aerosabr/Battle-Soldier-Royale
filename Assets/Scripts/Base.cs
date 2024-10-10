@@ -15,17 +15,14 @@ public class Base : Entity, IDamageable
         healthBarUI.SetColor(playerColor);
     }
 
-    public void Damaged(int damage)
+    public void Damaged(float damage, CardSO.CardType cardType)
     {
         currentHealth -= damage;
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
         {
-            healthPercentage = (float)currentHealth / maxHealth
+            healthPercentage = currentHealth / maxHealth
         });
-		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
-		{
-			damage = damage
-		});
+		
 		if (currentHealth <= 0)
             StartCoroutine(Died());
     }

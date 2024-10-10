@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface IEffectable
 {
-	public void Poisoned(int damage, int poisonDuration);
-	public void ReduceAttack(int damageReduce);
+	public void Poisoned(float damage, float poisonDuration);
+	public void ReduceAttack(float damageReduce);
 	public void UnReduceAttack();
 	public void Slowed(int speed);
 	public void UnSlowed(int speed);

@@ -18,26 +18,26 @@ public enum AttackType
 [CreateAssetMenu()]
 public class CharacterCardSO : CardSO
 {
-    public List<int> Health;
-    public List<int> Attack;
+    public List<float> Health;
+    public List<float> Attack;
     public List<float> AttackSpeed;
     public List<float> MoveSpeed;
     public float AttackRange;
     public CharacterType CharacterType;
     public AttackType AttackType;
 
-    public int GetCardStrength()
+    public float GetCardStrength()
     {
-        int cardStrength = 0;
+        float cardStrength = 0;
         cardStrength += Health[level - 1] / 2;
         switch (AttackType)
         {
             case AttackType.None:
             case AttackType.Single:
-                cardStrength += (int)(Attack[level - 1] * AttackSpeed[level - 1] * AttackRange);
+                cardStrength += (Attack[level - 1] * AttackSpeed[level - 1] * AttackRange);
                 break;
             case AttackType.AOE:
-                cardStrength += (int)(Attack[level - 1] * AttackSpeed[level - 1] * AttackRange);
+                cardStrength += (Attack[level - 1] * AttackSpeed[level - 1] * AttackRange);
                 break;
         }
 

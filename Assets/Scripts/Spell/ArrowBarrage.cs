@@ -17,14 +17,14 @@ public class ArrowBarrage : Spell
 	protected override IEnumerator HandleAttack()
 	{
 		float elapsedTime = 0f;
-		float damageInterval = 0.5f;
-		while (elapsedTime < cardSO.Duration)
+		float damageInterval = 1f;
+		while (elapsedTime <= cardSO.Duration)
 		{
 			foreach (IDamageable character in characters)
 			{
 				if (character is Entity entity && entity.GetCurrentHealth() > 0)
 				{
-					character.Damaged(cardSO.Attack[cardSO.level-1]);
+					character.Damaged(cardSO.Attack[cardSO.level-1], CardSO.CardType.Spell);
 				}
 			}
 			yield return new WaitForSeconds(damageInterval);

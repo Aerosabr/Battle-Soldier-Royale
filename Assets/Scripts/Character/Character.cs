@@ -12,8 +12,8 @@ public class Character : Entity, IDamageable, IEffectable
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
-    protected int baseAttack;
-    [SerializeField] protected int attack;
+    protected float baseAttack;
+    [SerializeField] protected float attack;
     protected float baseAttackSpeed;
     protected float attackSpeed;
     protected float baseMoveSpeed;
@@ -100,20 +100,20 @@ public class Character : Entity, IDamageable, IEffectable
 		PlayerControlManager.Instance.CardHandled();
 	}
 
-	public int GetAttack() => attack;
+	public float GetAttack() => attack;
     public CharacterCardSO GetCard() => card;
-    public int GetUnitStrength()
+    public float GetUnitStrength()
     {
-        int unitStrength = 0;
+        float unitStrength = 0;
         unitStrength += currentHealth / 2;
         switch (card.AttackType)
         {
             case AttackType.None:
             case AttackType.Single:
-                unitStrength += (int)(attack * attackSpeed * attackRange);
+                unitStrength += attack * attackSpeed * attackRange;
                 break;
             case AttackType.AOE:
-                unitStrength += (int)(attack * attackSpeed * attackRange * 2);
+                unitStrength += attack * attackSpeed * attackRange * 2;
                 break;
         }
 
@@ -168,12 +168,12 @@ public class Character : Entity, IDamageable, IEffectable
 	}
 
 	#region IDamageable Components
-	public virtual void Damaged(int damage) { }
-    protected void DamageVisuals(int damage)
+	public virtual void Damaged(float damage, CardSO.CardType cardType) { }
+    protected void DamageVisuals(float damage)
     {
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
         {
-            healthPercentage = (float)currentHealth / maxHealth
+            healthPercentage = currentHealth / maxHealth
         });
         /*
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
@@ -207,7 +207,7 @@ public class Character : Entity, IDamageable, IEffectable
 			Destroy(existingSlowed);
 		}
     }
-	public void Poisoned(int damage, int poisonDuration)
+	public void Poisoned(float damage, float poisonDuration)
 	{
 		Poisoned existingPoisoned = transform.GetComponent<Poisoned>();
 
@@ -221,13 +221,13 @@ public class Character : Entity, IDamageable, IEffectable
 			existingPoisoned.UpdatePoison(damage, poisonDuration);
 		}
 	}
-	public void ReduceAttack(int damageReduced)
+	public void ReduceAttack(float damageReduced)
 	{
 		AttackReduction existingAttack = GetComponent<AttackReduction>();
 		if(existingAttack == null)
 		{
 			existingAttack = gameObject.AddComponent<AttackReduction>();
-			attack = ((100 - damageReduced) / 100 ) * attack;
+			attack = ((100 - damageReduced) / 100 ) * baseAttack;
 		}
 
 	}

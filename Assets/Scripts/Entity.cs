@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] protected int currentHealth;
-    [SerializeField] protected int maxHealth;
+    [SerializeField] protected float currentHealth;
+    [SerializeField] protected float maxHealth;
 
     [SerializeField] protected HealthBarUI healthBarUI;
     protected Player player;
     protected LayerMask targetLayer;
 
-    public int GetCurrentHealth() => currentHealth;
+    public float GetCurrentHealth() => currentHealth;
     public LayerMask GetTargetLayer() => targetLayer;
 }

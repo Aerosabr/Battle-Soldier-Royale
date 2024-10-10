@@ -9,8 +9,8 @@ public class Building : Entity, IDamageable, IEffectable
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
 
-    protected int baseAttack;
-    protected int attack;
+    protected float baseAttack;
+    protected float attack;
     protected float baseAttackSpeed;
     protected float attackSpeed;
     protected float attackRange;
@@ -19,12 +19,12 @@ public class Building : Entity, IDamageable, IEffectable
     protected BuildingCardSO card;
     protected BuildingSlot buildingSlot;
 
-    public virtual void Damaged(int damage) { }
+    public virtual void Damaged(float damage, CardSO.CardType cardType) { }
     protected void HealthChangedVisual()
     {
         OnHealthChanged?.Invoke(this, new IDamageable.OnHealthChangedEventArgs
         {
-            healthPercentage = (float)currentHealth / maxHealth
+            healthPercentage = currentHealth / maxHealth
         });
     }
     protected void DamageTakenVisual(int damage)
@@ -38,7 +38,7 @@ public class Building : Entity, IDamageable, IEffectable
 
 	protected virtual void BuildingBuilt() => Debug.Log("Built not implemented");
     protected virtual void BuildingDestroyed() => Debug.Log("Destroyed not implemented");
-    public int GetAttack() => attack;
+    public float GetAttack() => attack;
 	public virtual IEnumerator Project(LayerMask layerMask, CardSO card)
 	{
 		bool OnPlaceable = false;
@@ -165,7 +165,7 @@ public class Building : Entity, IDamageable, IEffectable
 		}
 	}
 
-	public void Poisoned(int damage, int poisonDuration)
+	public void Poisoned(float damage, float poisonDuration)
 	{
 		Poisoned existingPoisoned = GetComponent<Poisoned>();
 
@@ -179,7 +179,7 @@ public class Building : Entity, IDamageable, IEffectable
 			existingPoisoned.UpdatePoison(damage, poisonDuration);
 		}
 	}
-	public void ReduceAttack(int damageReduced)
+	public void ReduceAttack(float damageReduced)
 	{
 		AttackReduction existingAttack = GetComponent<AttackReduction>();
 		if (existingAttack == null)

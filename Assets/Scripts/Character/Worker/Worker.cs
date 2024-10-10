@@ -60,6 +60,7 @@ public class Worker : Character
                 break;
             case State.Mining:
                 miningTimer += Time.deltaTime;
+                hpBar.SetActive(false);
                 if (miningTimer >= attackSpeed)
                     FinishMining();
                 break;
@@ -102,7 +103,6 @@ public class Worker : Character
         state = State.Mining;
         GetComponent<BoxCollider>().enabled = false;
         anim.gameObject.SetActive(false);
-        hpBar.SetActive(false);
         anim.AnimAction(IS_WALKING);
     }
 
@@ -124,19 +124,22 @@ public class Worker : Character
         // transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
         isDepositing = false;
         if (player.playerColor == Player.PlayerColor.Blue)
-            PlayerBlue.Instance.AddGold(attack);
+            PlayerBlue.Instance.AddGold((int)Mathf.Ceil(attack));
         else
-            PlayerRed.Instance.AddGold(attack);
+            PlayerRed.Instance.AddGold((int)Mathf.Ceil(attack));
 
         targetLayer = 1 << 8;
     }
 
-    public override void Damaged(int damage)
+    public override void Damaged(float damage, CardSO.CardType cardType)
     {
         currentHealth -= damage;
         DamageVisuals(damage);
-        state = State.Hit;
-        hitTimer = 0;
+        if (cardType != CardSO.CardType.Spell)
+        {
+            state = State.Hit;
+            hitTimer = 0;
+        }
 		if (currentHealth <= 0)
         {
             anim.AnimAction(IS_DEAD);

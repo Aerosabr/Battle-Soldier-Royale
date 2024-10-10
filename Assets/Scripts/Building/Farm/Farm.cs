@@ -58,7 +58,7 @@ public class Farm : Building
         currentHealth += (int)((maxHealth / buildTimer) * Time.deltaTime);
         HealthChangedVisual();
 
-        float hpPercent = (float)currentHealth / maxHealth;
+        float hpPercent = currentHealth / maxHealth;
         int progress = 0;
         for (int i = 1; i <= farmVisual.GetEvolutionVisual(card.level).bodyParts.Count; i++)
         {
@@ -79,7 +79,7 @@ public class Farm : Building
         }
     }
 
-    public override void Damaged(int damage)
+    public override void Damaged(float damage, CardSO.CardType cardType)
     {
         currentHealth -= damage;
         HealthChangedVisual();
