@@ -5054,12 +5054,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  healthBarUI: {fileID: 3642696052310252954}
   attack: 0
-  anim: {fileID: 5910953757751475656}
-  sound: {fileID: 6849717030443577735}
   indicator: {fileID: 8490479297360669913}
   allowed: {fileID: 2100000, guid: b53bdb1384abdab4ab46aa26a8cb10c3, type: 2}
   denied: {fileID: 2100000, guid: 26afb457bb4cc3a43a50c5610aedeb48, type: 2}
+  anim: {fileID: 5910953757751475656}
+  sound: {fileID: 6849717030443577735}
 --- !u!65 &8577889945637332760
 BoxCollider:
   m_ObjectHideFlags: 0

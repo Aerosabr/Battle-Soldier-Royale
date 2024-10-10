@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class Spell : MonoBehaviour
 {
-	[SerializeField] protected int targetLayer;
-	[SerializeField] protected Player player;
-	[SerializeField] protected SpellCardSO cardSO;
+	protected int targetLayer;
+	protected Player player;
+	protected SpellCardSO cardSO;
 
 	private GraphicRaycaster raycaster;
 	[SerializeField] protected BoxCollider hitBox;
@@ -87,7 +87,8 @@ public class Spell : MonoBehaviour
 		}
 		else
 		{
-			player.SpawnSpell(cardSO, transform.position);
+            CharacterBarUI.Instance.ActivateCooldown();
+            player.SpawnSpell(cardSO, transform.position);
 			Destroy(gameObject);
 		}
 

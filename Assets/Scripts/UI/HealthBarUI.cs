@@ -13,13 +13,14 @@ public class HealthBarUI : MonoBehaviour
     private void Start()
     {
         character = hasProgressGameObject.GetComponent<IDamageable>();
+
         if (character == null)
             Debug.LogError("Gameobject does not have a component that implements Character");
 
         character.OnHealthChanged += Character_OnHealthChanged;
         barImage.fillAmount = 0f;
 
-        Hide();
+        gameObject.SetActive(false);
     }
 
     private void Character_OnHealthChanged(object sender, IDamageable.OnHealthChangedEventArgs e)
@@ -27,18 +28,16 @@ public class HealthBarUI : MonoBehaviour
         barImage.fillAmount = e.healthPercentage;
 
         if (e.healthPercentage <= 0f || e.healthPercentage == 1f)
-            Hide();
+            gameObject.SetActive(false);
         else
-            Show();
+            gameObject.SetActive(true);
     }
 
-    private void Show()
+    public void SetColor(Player.PlayerColor color)
     {
-        gameObject.SetActive(true);
-    }
-
-    private void Hide()
-    {
-        gameObject.SetActive(false);
+        if (color == Player.PlayerColor.Blue)
+            barImage.color = Color.blue;
+        else
+            barImage.color = Color.red;
     }
 }

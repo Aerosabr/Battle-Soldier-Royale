@@ -14,6 +14,7 @@ public class Worker : Character
     {
         Ghost,
         Idle,
+        Hit,
         Walking,
         Mining,
         Dead
@@ -26,11 +27,14 @@ public class Worker : Character
     private GameObject mine;
     private State state;
     private float miningTimer;
+    private float hitTimer;
+    private float hitTimerMax = 1f;
 
     private void Awake()
     {
         state = State.Ghost;
         miningTimer = 0;
+        hitTimer = 0;
     }
 
     private void Update()
@@ -40,6 +44,15 @@ public class Worker : Character
             case State.Idle:
                 state = State.Walking;
                 anim.AnimAction(IS_WALKING);
+                break;
+            case State.Hit:
+                hitTimer += Time.deltaTime;
+                anim.AnimAction(IS_IDLE);
+                if (hitTimer >= hitTimerMax)
+                {
+                    state = State.Idle;
+                    hitTimer = 0;
+                }
                 break;
             case State.Walking:
                 Movement();
@@ -122,6 +135,8 @@ public class Worker : Character
     {
         currentHealth -= damage;
         DamageVisuals(damage);
+        state = State.Hit;
+        hitTimer = 0;
 		if (currentHealth <= 0)
         {
             anim.AnimAction(IS_DEAD);
@@ -158,6 +173,8 @@ public class Worker : Character
         }
         targetLayer = (1 << 8);
         //targetLayer = (1 << 8) | (1 << 9);
+
+        healthBarUI.SetColor(player.playerColor);
         player.AddToEconomy(gameObject, true);
     }
 

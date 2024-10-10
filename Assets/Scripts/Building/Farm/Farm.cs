@@ -90,7 +90,7 @@ public class Farm : Building
             farmVisual.ChangeBuildingVisual(card.level, farmVisual.GetEvolutionVisual(card.level).bodyParts.Count);
             state = State.Destroyed;
             GetComponent<BoxCollider>().enabled = false;
-            player.RemoveFromMilitary(gameObject);
+            player.RemoveFromEconomy(gameObject, false);
             farmVisual.AnimAction("Destroyed");
         }
     }
@@ -114,8 +114,9 @@ public class Farm : Building
             player = PlayerRed.Instance;
             targetLayer = 1 << 6;
         }
-        player.AddToMilitary(gameObject);
+        player.AddToEconomy(gameObject, false);
 
+        healthBarUI.SetColor(player.playerColor);
         state = State.Building;
         SetStats();
     }

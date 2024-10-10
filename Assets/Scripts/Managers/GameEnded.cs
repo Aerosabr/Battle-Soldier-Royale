@@ -8,12 +8,6 @@ public class GameEnded : MonoBehaviour
 {
     public static GameEnded Instance;
 
-    public event EventHandler<OnGameEndedEventArgs> OnGameEnded;
-    public class OnGameEndedEventArgs : EventArgs
-    {
-        public Player.PlayerColor color;
-    }
-
     [SerializeField] private GameObject victoryText;
     [SerializeField] private GameObject defeatText;
     [SerializeField] private GameObject background;
