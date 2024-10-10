@@ -30,12 +30,12 @@ public class PoisonField : Spell
 		{
 			for (int i = 0; i < characters.Count; i++)
 			{
-				Character character = characters[i];
+				IDamageable character = characters[i];
 				if (character != null)
 				{
-					if (character.GetCurrentHealth() > 0)
+					if (character is Entity entity && entity.GetCurrentHealth() > 0)
 					{
-						character.transform.GetComponent<IEffectable>().Poisoned(cardSO.Attack[cardSO.level-1], cardSO.PostSpellDuration);
+						entity.GetComponent<IEffectable>().Poisoned(cardSO.Attack[cardSO.level-1], cardSO.PostSpellDuration);
 					}
 				}
 			}
@@ -49,9 +49,10 @@ public class PoisonField : Spell
 	#region Entities in Range Handler
 	void OnTriggerEnter(Collider collision)
 	{
+		Debug.Log(collision.name);
 		if (collision.gameObject.layer == targetLayer)
 		{
-			Character collidedCharacter = collision.gameObject.GetComponent<Character>();
+			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
 			{
 				if (!characters.Contains(collidedCharacter))
@@ -65,7 +66,7 @@ public class PoisonField : Spell
 	{
 		if (collision.gameObject.layer == targetLayer)
 		{
-			Character collidedCharacter = collision.gameObject.GetComponent<Character>();
+			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
 			{
 				if (characters.Contains(collidedCharacter))

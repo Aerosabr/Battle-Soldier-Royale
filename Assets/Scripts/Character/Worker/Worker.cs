@@ -181,33 +181,48 @@ public class Worker : Character
 	public override IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)
 	{
 		transform.GetComponent<BoxCollider>().enabled = false;
-        transform.gameObject.layer = 0;
+		transform.gameObject.layer = 0;
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
 		LayerMask buildableWallMask = 1 << buildableWallLayer;
-        MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
-		while (Mouse.current.leftButton.isPressed)
+		MeshRenderer meshRenderer = indicator.GetComponent<MeshRenderer>();
+
+		while (Mouse.current.leftButton.isPressed || (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed))
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Vector2 inputPosition = Vector2.zero;
+
+			if (Mouse.current.leftButton.isPressed)
+			{
+				inputPosition = Mouse.current.position.ReadValue();
+			}
+			else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+			{
+				inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+			}
+
+			Ray ray = Camera.main.ScreenPointToRay(inputPosition);
 			RaycastHit hit;
+
 			if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildableWallMask))
 			{
-                mine = hit.transform.parent.gameObject;
+				mine = hit.transform.parent.gameObject;
 				Transform hitTransform = hit.transform;
 				transform.position = hitTransform.position;
-                meshRenderer.material = allowed;
+				meshRenderer.material = allowed;
 			}
 			else if (Physics.Raycast(ray, out hit, Mathf.Infinity, neutralWallMask))
 			{
-                mine = null;
+				mine = null;
 				Vector3 worldPosition = hit.point;
 				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
 				transform.rotation = Quaternion.Euler(rotation);
-                meshRenderer.material = denied;
+				meshRenderer.material = denied;
 			}
+
 			yield return null;
 		}
+
 		if (layerMask == 6)
 		{
 			player = PlayerBlue.Instance;
@@ -218,19 +233,22 @@ public class Worker : Character
 			player = PlayerRed.Instance;
 			targetLayer = 1 << 6;
 		}
+
 		if (IsMouseOverUI() || mine == null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            CharacterBarUI.Instance.ActivateCooldown();
-            player.SpawnWorker(card, mine);
-            Destroy(gameObject);
-        }
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			CharacterBarUI.Instance.ActivateCooldown();
+			player.SpawnWorker(card, mine);
+			Destroy(gameObject);
+		}
+
 		MapManager.Instance.HideAllMineSlotsIndicator();
 		PlayerControlManager.Instance.CardHandled();
 	}
+
 
 	private void Card_OnLevelChanged(object sender, EventArgs e)
     {

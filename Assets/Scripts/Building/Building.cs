@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Building : Entity, IDamageable
+public class Building : Entity, IDamageable, IEffectable
 {
     public event EventHandler<IDamageable.OnHealthChangedEventArgs> OnHealthChanged;
     public event EventHandler<IDamageable.OnDamageTakenEventArgs> OnDamageTaken;
@@ -49,7 +49,14 @@ public class Building : Entity, IDamageable
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
 		LayerMask buildableWallMask = 1 << buildableWallLayer;
-
+		if (layerMask == 6)
+		{
+			player = PlayerBlue.Instance;
+		}
+		else
+		{
+			player = PlayerRed.Instance;
+		}
 		while (Mouse.current.leftButton.isPressed || (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed))
 		{
 			Vector2 inputPosition = Vector2.zero;
@@ -82,6 +89,7 @@ public class Building : Entity, IDamageable
 				Vector3 worldPosition = hit.point;
 				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
 			}
+			player.CheckAvailableBuildingIndicator();
 			yield return null;
 		}
 
@@ -135,4 +143,41 @@ public class Building : Entity, IDamageable
 	}
 
 	public BuildingCardSO GetCard() => card;
+	#region IEffectable Components
+	public void Slowed(int speed)
+	{
+		Slowed existingSlowed = GetComponent<Slowed>();
+
+		if (existingSlowed == null)
+		{
+			Slowed newSlowed = gameObject.AddComponent<Slowed>();
+			attackSpeed = attackSpeed - ((float)speed / 50);
+		}
+	}
+	public void UnSlowed(int speed)
+	{
+		Slowed existingSlowed = GetComponent<Slowed>();
+
+		if (existingSlowed == null)
+		{
+			attackSpeed = baseAttackSpeed;
+			Destroy(existingSlowed);
+		}
+	}
+
+	public void Poisoned(int damage, int poisonDuration)
+	{
+		Poisoned existingPoisoned = GetComponent<Poisoned>();
+
+		if (existingPoisoned == null)
+		{
+			Poisoned newPoisoned = gameObject.AddComponent<Poisoned>();
+			newPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+		else
+		{
+			existingPoisoned.UpdatePoison(damage, poisonDuration);
+		}
+	}
+	#endregion
 }

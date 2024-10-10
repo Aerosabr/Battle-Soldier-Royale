@@ -14782,6 +14782,7 @@ GameObject:
   - component: {fileID: 8820015729650250570}
   - component: {fileID: 3450101657050937876}
   - component: {fileID: 3946871340495264867}
+  - component: {fileID: 1957928904591775119}
   m_Layer: 0
   m_Name: SnowStorm
   m_TagString: Untagged
@@ -14818,16 +14819,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177f26ef907c4aa43b4ce4ab5afc885f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellName: SnowStorm
-  damage: 0
-  cost: 0
   targetLayer: 0
   player: {fileID: 0}
+  cardSO: {fileID: 0}
   hitBox: {fileID: 3946871340495264867}
   transparentObject: {fileID: 8384625814945298157}
   visualObject: {fileID: 8644634290717101161}
-  characters: []
-  raycaster: {fileID: 0}
 --- !u!65 &3946871340495264867
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14847,8 +14844,35 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 9, y: 1, z: 9}
+  m_Size: {x: 9, y: 7, z: 12}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1957928904591775119
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6860637804374874791}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8847005793227687877
 GameObject:
   m_ObjectHideFlags: 0
