@@ -179,5 +179,24 @@ public class Building : Entity, IDamageable, IEffectable
 			existingPoisoned.UpdatePoison(damage, poisonDuration);
 		}
 	}
+	public void ReduceAttack(int damageReduced)
+	{
+		AttackReduction existingAttack = GetComponent<AttackReduction>();
+		if (existingAttack == null)
+		{
+			existingAttack = gameObject.AddComponent<AttackReduction>();
+			attack = ((100 - damageReduced) / 100) * attack;
+		}
+
+	}
+	public void UnReduceAttack()
+	{
+		AttackReduction existingAttack = GetComponent<AttackReduction>();
+		if (existingAttack != null)
+		{
+			attack = baseAttack;
+			Destroy(existingAttack);
+		}
+	}
 	#endregion
 }
