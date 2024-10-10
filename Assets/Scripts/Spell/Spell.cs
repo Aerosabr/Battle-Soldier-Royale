@@ -87,7 +87,8 @@ public class Spell : MonoBehaviour
 		}
 		else
 		{
-			player.SpawnSpell(cardSO, transform.position);
+            CharacterBarUI.Instance.ActivateCooldown();
+            player.SpawnSpell(cardSO, transform.position);
 			Destroy(gameObject);
 		}
 
