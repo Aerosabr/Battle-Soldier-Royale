@@ -35,7 +35,7 @@ public class SnowStorm : Spell
 				{
 					if (character is Entity entity && entity.GetCurrentHealth() > 0)
 					{
-						entity.GetComponent<IEffectable>().Slowed(cardSO.Attack[cardSO.level-1]);
+						entity.GetComponent<IEffectable>().Slowed((int)cardSO.Attack[cardSO.level-1]);
 					}
 				}
 			}
@@ -46,7 +46,7 @@ public class SnowStorm : Spell
 		{
 			if (character is Entity entity && entity.GetCurrentHealth() > 0)
 			{
-				entity.GetComponent<IEffectable>().UnSlowed(cardSO.Attack[cardSO.level - 1]);
+				entity.GetComponent<IEffectable>().UnSlowed((int)cardSO.Attack[cardSO.level - 1]);
 				yield return null;
 			}
 		}
@@ -67,7 +67,7 @@ public class SnowStorm : Spell
 				{
 					characters.Add(collidedCharacter);
 					IEffectable effectedCharacter = collidedCharacter as IEffectable;
-					effectedCharacter.Slowed(cardSO.Attack[cardSO.level-1]);
+					effectedCharacter.Slowed((int)cardSO.Attack[cardSO.level-1]);
 				}
 			}
 		}
@@ -83,7 +83,7 @@ public class SnowStorm : Spell
 				{
 					characters.Remove(collidedCharacter);
 					IEffectable effectedCharacter = collidedCharacter as IEffectable;
-					effectedCharacter.UnSlowed(cardSO.Attack[cardSO.level - 1]);
+					effectedCharacter.UnSlowed((int)cardSO.Attack[cardSO.level - 1]);
 				}
 			}
 		}

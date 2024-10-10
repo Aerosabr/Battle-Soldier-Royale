@@ -22,8 +22,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: eb2be7824316c72419607d4d2d4d79f6, type: 3}
   - {fileID: 21300000, guid: eb2be7824316c72419607d4d2d4d79f6, type: 3}
   - {fileID: 21300000, guid: eb2be7824316c72419607d4d2d4d79f6, type: 3}
-  cardCost: 5e0100005e0100005e010000
-  upgradeCost: bc0200007805000000000000
+  cardCost: a9010000a9010000a9010000
+  upgradeCost: 52030000a406000000000000
   spawnCooldown:
   - 5
   - 7
@@ -36,3 +36,4 @@ MonoBehaviour:
   Size: 7
   Duration: 0
   PostSpellDuration: 0
+  SpellType: 0

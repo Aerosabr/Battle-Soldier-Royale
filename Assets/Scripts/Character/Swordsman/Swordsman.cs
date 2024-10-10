@@ -94,14 +94,14 @@ public class Swordsman : Character
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
                 sound.Attack();
-                hit.transform.GetComponent<IDamageable>().Damaged(attack);             
+                hit.transform.GetComponent<IDamageable>().Damaged(attack, card.cardType);             
             }
         }
         else
             ChangeState(State.Idle);
     }
 
-    public override void Damaged(int damage)
+    public override void Damaged(float damage, CardSO.CardType cardType)
     {
         currentHealth -= damage;
         DamageVisuals(damage);

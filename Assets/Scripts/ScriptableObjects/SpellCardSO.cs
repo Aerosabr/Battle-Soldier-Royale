@@ -13,10 +13,10 @@ public enum SpellType
 [CreateAssetMenu()]
 public class SpellCardSO : CardSO
 {
-    public List<int> Attack;
-    public int Size;
+    public List<float> Attack;
+    public float Size;
     public float Duration;
-    public int PostSpellDuration;
+    public float PostSpellDuration;
 	public SpellType SpellType;
 
 	public override List<string> ViewCard(int level)

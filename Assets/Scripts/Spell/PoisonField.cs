@@ -58,7 +58,7 @@ public class PoisonField : Spell
 				{
 					characters.Add(collidedCharacter);
 					IEffectable effectedCharacter = collidedCharacter as IEffectable;
-					effectedCharacter.ReduceAttack(cardSO.Attack[cardSO.level - 1]);
+					effectedCharacter.ReduceAttack((int)cardSO.Attack[cardSO.level - 1]);
 				}
 			}
 		}

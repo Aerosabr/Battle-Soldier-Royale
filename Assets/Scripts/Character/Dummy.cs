@@ -14,7 +14,7 @@ public class Dummy : Character
         audioSource = GetComponent<AudioSource>();
     }
 
-    public override void Damaged(int damage)
+    public override void Damaged(float damage, CardSO.CardType cardType)
     {
         currentHealth -= damage;
         DamageVisuals(damage);

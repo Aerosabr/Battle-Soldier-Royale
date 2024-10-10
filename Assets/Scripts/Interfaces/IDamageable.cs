@@ -6,7 +6,7 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    public void Damaged(int damage);
+    public void Damaged(float damage, CardSO.CardType cardType);
 
     public event EventHandler<OnHealthChangedEventArgs> OnHealthChanged;
     public class OnHealthChangedEventArgs : EventArgs
@@ -17,6 +17,6 @@ public interface IDamageable
     public event EventHandler<OnDamageTakenEventArgs> OnDamageTaken;
     public class OnDamageTakenEventArgs : EventArgs
     {
-        public int damage;
+        public float damage;
     }
 }
