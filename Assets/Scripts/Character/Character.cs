@@ -26,13 +26,11 @@ public class Character : Entity, IDamageable, IEffectable
 
     protected bool canAttack = true;
 
-    protected Player player;
     protected CharacterCardSO card;
 
 	[SerializeField] protected GameObject indicator;
 	[SerializeField] protected Material allowed;
 	[SerializeField] protected Material denied;
-
 
 	public virtual void InitializeCharacter(LayerMask layerMask, Vector3 rotation, CardSO card) => Debug.Log("Initialize not implemented");
 	public virtual IEnumerator Project(LayerMask layerMask, Vector3 rotation, CardSO card)

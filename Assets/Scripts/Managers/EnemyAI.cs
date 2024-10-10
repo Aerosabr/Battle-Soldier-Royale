@@ -33,6 +33,7 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         player = PlayerRed.Instance;
+        ApplyDifficulty();
         ReadLoadout();
     }
 
@@ -45,6 +46,65 @@ public class EnemyAI : MonoBehaviour
             ExecuteAction();
             gameStateTimer = 0f;
         }   
+    }
+
+    private void ApplyDifficulty()
+    {
+        float multiplier = 0;
+        switch (GameManager.Instance.GetDifficulty())
+        {
+            case 0: //Easy - 100% stats
+                multiplier = 1;
+                break;
+            case 1: //Medium - 150% stats
+                multiplier = 1.5f;
+                break;
+            case 2: //Hard - 200% stats
+                multiplier = 2;
+                break;
+        }
+
+        foreach (CardSO card in player.GetLoadout())
+        {
+            switch (card.cardType)
+            {
+                case CardSO.CardType.Building:
+                    BuildingCardSO buildingCard = card as BuildingCardSO;
+                    buildingCard.Health = IncreaseStatInList(buildingCard.Health, multiplier);
+
+                    if (buildingCard.BuildingType == BuildingType.Defense)
+                        buildingCard.Attack = IncreaseStatInList(buildingCard.Attack, multiplier);
+
+                    break;
+                case CardSO.CardType.Character:
+                    CharacterCardSO characterCard = card as CharacterCardSO;
+                    characterCard.Health = IncreaseStatInList(characterCard.Health, multiplier);
+                    characterCard.Attack = IncreaseStatInList(characterCard.Attack, multiplier);
+
+                    break;
+                case CardSO.CardType.Spell:
+                    SpellCardSO spellCard = card as SpellCardSO;
+                    spellCard.Attack = IncreaseStatInList(spellCard.Attack, multiplier);
+
+                    break;
+                case CardSO.CardType.Worker:
+                    CharacterCardSO workerCard = card as CharacterCardSO;
+                    workerCard.Health = IncreaseStatInList(workerCard.Health, multiplier);
+
+                    break;
+            }
+        }
+    }
+    private List<int> IncreaseStatInList(List<int> stats, float multiplier)
+    {
+        List<int> newStats = new List<int>();
+        foreach (int stat in stats)
+        {
+            int newStat = (int)(stat * multiplier);
+            newStats.Add(newStat);
+        }
+
+        return newStats;
     }
 
     private void ReadLoadout()

@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     public event EventHandler OnGoldChanged;
+    public event EventHandler OnWorkerChanged;
 
     public enum PlayerColor
     {
@@ -184,14 +185,20 @@ public class Player : MonoBehaviour
     public void AddToEconomy(GameObject character, bool isWorker)
     {
         if (isWorker)
+        {
             numberOfWorkers++;
+            OnWorkerChanged?.Invoke(this, EventArgs.Empty);
+        }
 
         Economy.Add(character);
     }
     public void RemoveFromEconomy(GameObject character, bool isWorker)
     {
         if (isWorker)
+        {
             numberOfWorkers--;
+            OnWorkerChanged?.Invoke(this, EventArgs.Empty);
+        }
 
         Economy.Remove(character);
     }
