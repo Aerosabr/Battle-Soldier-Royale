@@ -16,7 +16,7 @@ public class Spell : MonoBehaviour
 	[SerializeField] protected Transform transparentObject;
 	[SerializeField] protected Transform visualObject;
 
-	[SerializeField] protected List<Character> characters = new List<Character>();
+	[SerializeField] protected List<IDamageable> characters = new List<IDamageable>();
 
 	public virtual void InitializeSpell(LayerMask layerMask, SpellCardSO cardSO) 
 	{

@@ -20,30 +20,42 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
-		currentTransform = transform.GetComponent<RectTransform>();
-		positionOnList = new Vector2(currentTransform.anchoredPosition.x, currentTransform.anchoredPosition.y);
-		transform.SetParent(parentDuringDrag);
+		if (EquipSlot || !transform.GetComponent<CardSlotVisual>().CheckVisualEquipCard())
+		{
+			currentTransform = transform.GetComponent<RectTransform>();
+			positionOnList = new Vector2(currentTransform.anchoredPosition.x, currentTransform.anchoredPosition.y);
+			transform.SetParent(parentDuringDrag);
+		}
 	}
 
 	public void OnDrag(PointerEventData eventData)
 	{
-		transform.position = Input.mousePosition;
+		if (EquipSlot || !transform.GetComponent<CardSlotVisual>().CheckVisualEquipCard())
+		{
+			transform.position = Input.mousePosition;
+		}
 	}
 
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
-		transform.SetParent(parentBeforeDrag);
-		transform.SetSiblingIndex(childIndex);
-		transform.GetComponent<RectTransform>().anchoredPosition = positionOnList;
-
-		if(IsDroppedOverSpecificUI())
+		if (EquipSlot || !transform.GetComponent<CardSlotVisual>().CheckVisualEquipCard())
 		{
-			if (!EquipSlot)
-				EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO);
-			else
-				EquippedLoadoutManager.Instance.RemoveCard(transform.GetComponent<EquippedCardSlotVisual>().cardSO);
+			transform.SetParent(parentBeforeDrag);
+			transform.SetSiblingIndex(childIndex);
+			transform.GetComponent<RectTransform>().anchoredPosition = positionOnList;
 
+			if (IsDroppedOverSpecificUI())
+			{
+				if (!EquipSlot)
+				{
+					EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO);
+					transform.GetComponent<CardSlotVisual>().EnableVisualEquipCard();
+				}
+				else
+					EquippedLoadoutManager.Instance.RemoveCard(transform.GetComponent<EquippedCardSlotVisual>().cardSO);
+
+			}
 		}
 	}
 

@@ -23,8 +23,8 @@ public class EquippedLoadoutManager : MonoBehaviour
         {
             equippedCardSOList.Add(cardSO);
             UpdateEquippedLoadout();
+            PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
         }
-        PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
 	}
 
     public void RemoveCard(CardSO cardSO)
@@ -33,8 +33,9 @@ public class EquippedLoadoutManager : MonoBehaviour
         {
             equippedCardSOList.Remove(cardSO);
             UpdateEquippedLoadout();
-        }
-		PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
+			PlayerManager.Instance.UpdatePlayerCardList(equippedCardSOList);
+            AvailableLoadoutManager.Instance.UnequipVisualCard(cardSO);
+		}
 	}
 
     private void UpdateEquippedLoadout()

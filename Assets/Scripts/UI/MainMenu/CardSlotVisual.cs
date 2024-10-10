@@ -9,6 +9,7 @@ public class CardSlotVisual : MonoBehaviour
 {
 	[SerializeField] private Image icon;
 	[SerializeField] private TMP_Text text;
+	public GameObject equippedIcon;
 	public CardSO cardSO;
 
 	public void InitializeCard(CardSO cardSO)
@@ -24,5 +25,22 @@ public class CardSlotVisual : MonoBehaviour
 			icon.sprite = null;
 			text.text = "";
 		}
+	}
+
+	public void EnableVisualEquipCard()
+	{
+		equippedIcon.SetActive(true);
+	}
+	public void DisableVisualEquipCard()
+	{
+		equippedIcon.SetActive(false);
+	}
+	public bool CheckVisualEquipCard()
+	{
+		if(equippedIcon.activeSelf)
+		{
+			return true;
+		}
+		return false;
 	}
 }

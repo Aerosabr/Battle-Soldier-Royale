@@ -24,11 +24,11 @@ public class ArrowBarrage : Spell
 		float damageInterval = 0.5f;
 		while (elapsedTime < cardSO.Duration)
 		{
-			foreach (Character character in characters)
+			foreach (IDamageable character in characters)
 			{
-				if (character.GetCurrentHealth() > 0)
+				if (character is Entity entity && entity.GetCurrentHealth() > 0)
 				{
-					character.transform.GetComponent<IDamageable>().Damaged(cardSO.Attack[cardSO.level-1]);
+					character.Damaged(cardSO.Attack[cardSO.level-1]);
 				}
 			}
 			yield return new WaitForSeconds(damageInterval);
@@ -41,9 +41,10 @@ public class ArrowBarrage : Spell
 	#region Entities in Range Handler
 	void OnTriggerEnter(Collider collision)
 	{
-		if(collision.gameObject.layer == targetLayer)
+		Debug.Log(collision.name);
+		if (collision.gameObject.layer == targetLayer)
 		{
-			Character collidedCharacter = collision.gameObject.GetComponent<Character>();
+			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
 			{
 				if (!characters.Contains(collidedCharacter))
@@ -63,7 +64,7 @@ public class ArrowBarrage : Spell
 	{
 		if (collision.gameObject.layer == targetLayer)
 		{
-			Character collidedCharacter = collision.gameObject.GetComponent<Character>();
+			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
 			{
 				if (characters.Contains(collidedCharacter))

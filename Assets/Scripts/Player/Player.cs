@@ -138,6 +138,10 @@ public class Player : MonoBehaviour
 		}
 
 	}
+    public void CheckAvailableBuildingIndicator()
+    {
+		MapManager.Instance.ShowPossibleBuildingSlotsIndicator(transform.position.x, GetFurthestControlledArea());
+	}
 
     public bool CheckCardPosition(float currentXPosition)
     {

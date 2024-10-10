@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1162088539647368327}
   - component: {fileID: 8398888882958961591}
   - component: {fileID: 865205287473903996}
+  - component: {fileID: 7239925738717619828}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -51,16 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd4840311a070043902c29a889b471f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellName: Fireball
-  damage: 10
-  cost: 0
   targetLayer: 7
   player: {fileID: 0}
+  cardSO: {fileID: 0}
   hitBox: {fileID: 865205287473903996}
   transparentObject: {fileID: 1872684086615307803}
   visualObject: {fileID: 4152139916092068735}
-  characters: []
-  raycaster: {fileID: 0}
 --- !u!65 &865205287473903996
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -80,8 +77,35 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0, y: 5, z: 9}
+  m_Size: {x: 0, y: 7, z: 12}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7239925738717619828
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283707321769500742}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8890378210636900745
 GameObject:
   m_ObjectHideFlags: 0

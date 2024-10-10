@@ -30,7 +30,7 @@ public class GameInput : MonoBehaviour
 	public Vector2 GetCameraMovement()
 	{
 		int mode = PlayerControlManager.Instance.CheckMode();
-		float speedMultiplier = 15.0f;
+		float speedMultiplier = 5.0f;
 
 		if (mode == 0 || mode == 1)
 		{
@@ -48,11 +48,21 @@ public class GameInput : MonoBehaviour
 			}
 			else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
 			{
-				Vector2 touchDelta = Touchscreen.current.primaryTouch.delta.ReadValue();
-				Vector2 inputDir = -touchDelta;
+				Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+				float screenWidth = Screen.width;
+				float edgeThreshold = screenWidth * 0.1f;
+				speedMultiplier = 3.0f;
 
-				inputDir = (inputDir.normalized * speedMultiplier);
-				return inputDir;
+				if (touchPosition.x < edgeThreshold)
+				{
+					Vector2 inputDir = new Vector2(-1, 0);
+					return (inputDir.normalized * speedMultiplier);
+				}
+				else if (touchPosition.x > screenWidth - edgeThreshold)
+				{
+					Vector2 inputDir = new Vector2(1, 0);
+					return (inputDir.normalized * speedMultiplier);
+				}
 			}
 		}
 		else if (mode == 2)

@@ -30,12 +30,12 @@ public class SnowStorm : Spell
 		{
 			for (int i = 0; i < characters.Count; i++)
 			{
-				Character character = characters[i];
+				IDamageable character = characters[i];
 				if (character != null)
 				{
-					if (character.GetCurrentHealth() > 0)
+					if (character is Entity entity && entity.GetCurrentHealth() > 0)
 					{
-						character.transform.GetComponent<IEffectable>().Slowed(cardSO.Attack[cardSO.level-1]);
+						entity.GetComponent<IEffectable>().Slowed(cardSO.Attack[cardSO.level-1]);
 					}
 				}
 			}
@@ -44,9 +44,9 @@ public class SnowStorm : Spell
 		}
 		foreach (Character character in characters)
 		{
-			if (character.GetCurrentHealth() > 0)
+			if (character is Entity entity && entity.GetCurrentHealth() > 0)
 			{
-				character.transform.GetComponent<IEffectable>().UnSlowed(cardSO.Attack[cardSO.level - 1]);
+				entity.GetComponent<IEffectable>().UnSlowed(cardSO.Attack[cardSO.level - 1]);
 				yield return null;
 			}
 		}
@@ -57,15 +57,17 @@ public class SnowStorm : Spell
 	#region Entities in Range Handler
 	void OnTriggerEnter(Collider collision)
 	{
+		Debug.Log(collision.name);
 		if (collision.gameObject.layer == targetLayer)
 		{
-			Character collidedCharacter = collision.gameObject.GetComponent<Character>();
+			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
 			{
 				if (!characters.Contains(collidedCharacter))
 				{
 					characters.Add(collidedCharacter);
-					collidedCharacter.GetComponent<IEffectable>().Slowed(cardSO.Attack[cardSO.level-1]);
+					IEffectable effectedCharacter = characters as IEffectable;
+					effectedCharacter.Slowed(cardSO.Attack[cardSO.level-1]);
 				}
 			}
 		}
@@ -74,13 +76,14 @@ public class SnowStorm : Spell
 	{
 		if (collision.gameObject.layer == targetLayer)
 		{
-			Character collidedCharacter = collision.gameObject.GetComponent<Character>();
+			IDamageable collidedCharacter = collision.gameObject.GetComponent<IDamageable>();
 			if (collidedCharacter != null)
 			{
 				if (characters.Contains(collidedCharacter))
 				{
 					characters.Remove(collidedCharacter);
-					collidedCharacter.GetComponent<IEffectable>().UnSlowed(cardSO.Attack[cardSO.level - 1]);
+					IEffectable effectedCharacter = characters as IEffectable;
+					effectedCharacter.UnSlowed(cardSO.Attack[cardSO.level - 1]);
 				}
 			}
 		}

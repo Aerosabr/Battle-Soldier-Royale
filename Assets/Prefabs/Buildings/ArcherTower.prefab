@@ -10734,8 +10734,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  buildingType: 1
-  attackType: 1
   archerTowerVisual: {fileID: 1490907628875926307}
   buildingAnim: {fileID: 4841138477124635169}
 --- !u!1 &5030259749476660050
