@@ -32,8 +32,14 @@ MonoBehaviour:
   spawnableObject: {fileID: 8642027716678164422, guid: 99a6caf0045606b4bb5d877278ccfac4, type: 3}
   level: 1
   timesCasted: 0
-  Health: 840300004605000034080000
-  Attack: fa0000007701000058020000
+  Health:
+  - 900
+  - 1350
+  - 2100
+  Attack:
+  - 250
+  - 375
+  - 600
   AttackSpeed:
   - 1
   - 1

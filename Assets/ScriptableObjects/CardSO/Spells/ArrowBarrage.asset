@@ -32,7 +32,10 @@ MonoBehaviour:
   spawnableObject: {fileID: 1162088539647368327, guid: a07096cf28167504ba90f832bc46fc6c, type: 3}
   level: 1
   timesCasted: 0
-  Attack: 2c01000058020000b0040000
+  Attack:
+  - 150
+  - 225
+  - 350
   Size: 9
   Duration: 4
   PostSpellDuration: 0
