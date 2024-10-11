@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CharacterInfoUI : MonoBehaviour
 {
     //Stat Components
+    [SerializeField] private Transform infoTemplate;
     [SerializeField] private TextMeshProUGUI Name;
     [SerializeField] private TextMeshProUGUI Level;
     [SerializeField] private TextMeshProUGUI Health; //Building, Character, Worker
