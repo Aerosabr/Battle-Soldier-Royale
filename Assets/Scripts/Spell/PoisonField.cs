@@ -26,7 +26,7 @@ public class PoisonField : Spell
 	protected override IEnumerator HandleAttack()
 	{
 		float elapsedTime = 0f;
-		while (elapsedTime < cardSO.Duration)
+		while (elapsedTime <= cardSO.Duration)
 		{
 			for (int i = 0; i < characters.Count; i++)
 			{
