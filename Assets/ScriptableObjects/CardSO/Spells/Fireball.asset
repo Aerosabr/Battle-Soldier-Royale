@@ -36,7 +36,7 @@ MonoBehaviour:
   - 800
   - 1200
   - 1800
-  Size: 5
+  Size: 7
   Duration: 0
   PostSpellDuration: 0
   SpellType: 0

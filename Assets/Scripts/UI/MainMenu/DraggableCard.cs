@@ -16,7 +16,8 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	private RectTransform currentTransform;
 	private int childIndex;
 	private Vector2 positionOnList;
-
+	private Vector3 startingPosition = Vector3.zero;
+	private bool isDragging = false;
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
@@ -25,6 +26,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 			currentTransform = transform.GetComponent<RectTransform>();
 			positionOnList = new Vector2(currentTransform.anchoredPosition.x, currentTransform.anchoredPosition.y);
 			transform.SetParent(parentDuringDrag);
+			isDragging = true;
 		}
 	}
 
@@ -35,7 +37,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 			transform.position = Input.mousePosition;
 		}
 	}
-
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
@@ -49,15 +50,26 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 			{
 				if (!EquipSlot)
 				{
-					if(EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO))
+					if (EquippedLoadoutManager.Instance.AddCard(transform.GetComponent<CardSlotVisual>().cardSO))
 						transform.GetComponent<CardSlotVisual>().EnableVisualEquipCard();
 				}
 				else
+				{
 					EquippedLoadoutManager.Instance.RemoveCard(transform.GetComponent<EquippedCardSlotVisual>().cardSO);
-
+				}
 			}
+			isDragging = false;
 		}
 	}
+
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		if (!isDragging)
+		{
+			OpenCardViewer();
+		}
+	}
+
 
 	private bool IsDroppedOverSpecificUI()
 	{
@@ -79,11 +91,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 		childIndex = transform.GetSiblingIndex();
 		pointerEventData = new PointerEventData(EventSystem.current);
 
-	}
-	public void OnPointerClick(PointerEventData eventData)
-	{
-		if(!IsDroppedOverSpecificUI())
-			OpenCardViewer();
 	}
 
 	private void OpenCardViewer()

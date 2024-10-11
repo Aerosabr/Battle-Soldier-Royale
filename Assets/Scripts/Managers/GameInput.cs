@@ -58,12 +58,18 @@ public class GameInput : MonoBehaviour
 			if (mousePosition.x < edgeThreshold)
 			{
 				Vector2 inputDir = new Vector2(-1, 0);
+				CursorManager.Instance.ShowLeftCursor();
 				return inputDir.normalized;
 			}
 			else if (mousePosition.x > screenWidth - edgeThreshold)
 			{
 				Vector2 inputDir = new Vector2(1, 0);
+				CursorManager.Instance.ShowRightCursor();
 				return inputDir.normalized;
+			}
+			else
+			{
+				CursorManager.Instance.ShowNormalCursor();
 			}
 		}
 		else if (Keyboard.current.aKey.isPressed || Keyboard.current.dKey.isPressed)
