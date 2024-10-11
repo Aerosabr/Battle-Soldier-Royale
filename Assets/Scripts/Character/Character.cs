@@ -95,7 +95,7 @@ public class Character : Entity, IDamageable, IEffectable
 			player.SpawnCharacter(card, transform.position);
 			Destroy(gameObject);
 		}
-
+		CharacterBarUI.Instance.ShowCharacterBar();
 		player.spawnArea.gameObject.SetActive(false);
 		PlayerControlManager.Instance.CardHandled();
 	}

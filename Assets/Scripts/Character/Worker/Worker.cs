@@ -247,7 +247,7 @@ public class Worker : Character
 			player.SpawnWorker(card, mine);
 			Destroy(gameObject);
 		}
-
+		CharacterBarUI.Instance.ShowCharacterBar();
 		MapManager.Instance.HideAllMineSlotsIndicator();
 		PlayerControlManager.Instance.CardHandled();
 	}

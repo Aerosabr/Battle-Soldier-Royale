@@ -91,7 +91,7 @@ public class Spell : MonoBehaviour
             player.SpawnSpell(cardSO, transform.position);
 			Destroy(gameObject);
 		}
-
+		CharacterBarUI.Instance.ShowCharacterBar();
 		PlayerControlManager.Instance.CardHandled();
 	}
 

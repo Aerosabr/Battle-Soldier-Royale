@@ -110,7 +110,7 @@ public class Building : Entity, IDamageable, IEffectable
 			CharacterBarUI.Instance.ActivateCooldown();
 			Destroy(gameObject);
 		}
-
+		CharacterBarUI.Instance.ShowCharacterBar();
 		MapManager.Instance.HideAllBuildingSlotsIndicator();
 		PlayerControlManager.Instance.CardHandled();
 	}
