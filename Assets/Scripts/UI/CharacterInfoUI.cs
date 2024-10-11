@@ -3,22 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.ComponentModel;
 
 public class CharacterInfoUI : MonoBehaviour
 {
     //Stat Components
+    [SerializeField] private Transform container;
+    [SerializeField] private Transform infoTemplate;
     [SerializeField] private TextMeshProUGUI Name;
-    [SerializeField] private TextMeshProUGUI Level;
-    [SerializeField] private TextMeshProUGUI Health; //Building, Character, Worker
-    [SerializeField] private TextMeshProUGUI Attack; //Building.Defense
-    [SerializeField] private TextMeshProUGUI AttackSpeed; //Character, Building.Defense
-    [SerializeField] private TextMeshProUGUI AttackRange; //Character, Building.Defense
-    [SerializeField] private TextMeshProUGUI AttackType; //Character, Building.Defense
-    [SerializeField] private TextMeshProUGUI MoveSpeed; //Character, Worker
-    [SerializeField] private TextMeshProUGUI Cost; //All
-    [SerializeField] private TextMeshProUGUI Cooldown; //All
-    [SerializeField] private TextMeshProUGUI Income; //Building.Economy, Worker
-    [SerializeField] private TextMeshProUGUI BuildTime; //Building
 
     //Button Components
     [SerializeField] private Button UpgradeButton;
@@ -80,49 +72,23 @@ public class CharacterInfoUI : MonoBehaviour
         BuildingCardSO buildingCard = currentCard as BuildingCardSO;
         int level = 0;
         if (showingCurrent)
-            level = buildingCard.level - 1;
-        else
             level = buildingCard.level;
+        else
+            level = buildingCard.level + 1;
 
         HideStats();
 
         Name.text = buildingCard.Name;
-        Level.text = (level + 1).ToString();
-        CardImage.sprite = buildingCard.backgroundVertical[level];
-
-        Health.text = buildingCard.Health[level].ToString();
-        Health.transform.parent.gameObject.SetActive(true);
-
-        if (buildingCard.BuildingType == BuildingType.Defense)
-        {
-            Attack.text = buildingCard.Attack[level].ToString();
-            Attack.transform.parent.gameObject.SetActive(true);
-
-            AttackSpeed.text = buildingCard.AttackSpeed[level].ToString();
-            AttackSpeed.transform.parent.gameObject.SetActive(true);
-
-            AttackRange.text = buildingCard.AttackRange.ToString();
-            AttackRange.transform.parent.gameObject.SetActive(true);
-
-            this.AttackType.text = buildingCard.AttackType.ToString();
-            AttackType.transform.parent.gameObject.SetActive(true);
-        }
-        else
-        {
-            Income.text = buildingCard.Attack[level].ToString() + "/s";
-            Income.transform.parent.gameObject.SetActive(true);
-        }
-
-        Cost.text = buildingCard.cardCost[level].ToString();
-        Cost.transform.parent.gameObject.SetActive(true);
-
-        Cooldown.text = buildingCard.spawnCooldown[level].ToString();
-        Cooldown.transform.parent.gameObject.SetActive(true);
-
-        BuildTime.text = buildingCard.BuildTimer[level].ToString();
-        BuildTime.transform.parent.gameObject.SetActive(true);
-
+        CardImage.sprite = buildingCard.backgroundVertical[level - 1];
         UpgradeCost.text = buildingCard.upgradeCost[buildingCard.level - 1].ToString();
+
+        foreach (string info in buildingCard.ViewCard(level))
+        {
+            Transform infoTransform = Instantiate(infoTemplate, container);
+            infoTransform.gameObject.SetActive(true);
+            string[] infoArray = info.Split(": ");
+            infoTransform.GetComponent<CharacterInfoSingleUI>().SetInfo(infoArray[0], infoArray[1]);
+        }
     }
 
     private void LoadCharacter()
@@ -130,41 +96,23 @@ public class CharacterInfoUI : MonoBehaviour
         CharacterCardSO characterCard = currentCard as CharacterCardSO;
         int level = 0;
         if (showingCurrent)
-            level = characterCard.level - 1;
-        else
             level = characterCard.level;
+        else
+            level = characterCard.level + 1;
 
         HideStats();
 
         Name.text = characterCard.Name;
-        Level.text = (level + 1).ToString();
-        CardImage.sprite = characterCard.backgroundVertical[level];
-
-        Health.text = characterCard.Health[level].ToString();
-        Health.transform.parent.gameObject.SetActive(true);
-
-        Attack.text = characterCard.Attack[level].ToString();
-        Attack.transform.parent.gameObject.SetActive(true);
-
-        AttackSpeed.text = characterCard.AttackSpeed[level].ToString();
-        AttackSpeed.transform.parent.gameObject.SetActive(true);
-
-        AttackRange.text = characterCard.AttackRange.ToString();
-        AttackRange.transform.parent.gameObject.SetActive(true);
-
-        this.AttackType.text = characterCard.AttackType.ToString();
-        AttackType.transform.parent.gameObject.SetActive(true);
-
-        MoveSpeed.text = characterCard.MoveSpeed[level].ToString();
-        MoveSpeed.transform.parent.gameObject.SetActive(true);
-
-        Cost.text = characterCard.cardCost[level].ToString();
-        Cost.transform.parent.gameObject.SetActive(true);
-
-        Cooldown.text = characterCard.spawnCooldown[level].ToString();
-        Cooldown.transform.parent.gameObject.SetActive(true);
-
+        CardImage.sprite = characterCard.backgroundVertical[level - 1];
         UpgradeCost.text = characterCard.upgradeCost[characterCard.level - 1].ToString();
+
+        foreach (string info in characterCard.ViewCard(level))
+        {
+            Transform infoTransform = Instantiate(infoTemplate, container);
+            infoTransform.gameObject.SetActive(true);
+            string[] infoArray = info.Split(": ");
+            infoTransform.GetComponent<CharacterInfoSingleUI>().SetInfo(infoArray[0], infoArray[1]);
+        }
     }
 
     private void LoadSpell()
@@ -172,18 +120,23 @@ public class CharacterInfoUI : MonoBehaviour
         SpellCardSO spellCard = currentCard as SpellCardSO;
         int level = 0;
         if (showingCurrent)
-            level = spellCard.level - 1;
-        else
             level = spellCard.level;
+        else
+            level = spellCard.level + 1;
 
         HideStats();
 
         Name.text = spellCard.Name;
-        Level.text = (level + 1).ToString();
-        CardImage.sprite = spellCard.backgroundVertical[level];
+        CardImage.sprite = spellCard.backgroundVertical[level - 1];
+        UpgradeCost.text = spellCard.upgradeCost[spellCard.level - 1].ToString();
 
-        Attack.text = spellCard.Attack[level].ToString();
-        Attack.transform.parent.gameObject.SetActive(true);
+        foreach (string info in spellCard.ViewCard(level))
+        {
+            Transform infoTransform = Instantiate(infoTemplate, container);
+            infoTransform.gameObject.SetActive(true);
+            string[] infoArray = info.Split(": ");
+            infoTransform.GetComponent<CharacterInfoSingleUI>().SetInfo(infoArray[0], infoArray[1]);
+        }
     }
 
     private void LoadWorker()
@@ -191,49 +144,33 @@ public class CharacterInfoUI : MonoBehaviour
         CharacterCardSO characterCard = currentCard as CharacterCardSO;
         int level = 0;
         if (showingCurrent)
-            level = characterCard.level - 1;
-        else
             level = characterCard.level;
+        else
+            level = characterCard.level + 1;
 
         HideStats();
 
         Name.text = characterCard.Name;
-        Level.text = (level + 1).ToString();
-        CardImage.sprite = characterCard.backgroundVertical[level];
-
-        Health.text = characterCard.Health[level].ToString();
-        Health.transform.parent.gameObject.SetActive(true);
-
-        Attack.text = characterCard.Attack[level].ToString();
-        Attack.transform.parent.gameObject.SetActive(true);
-
-        AttackSpeed.text = characterCard.AttackSpeed[level].ToString();
-        AttackSpeed.transform.parent.gameObject.SetActive(true);
-
-        MoveSpeed.text = characterCard.MoveSpeed[level].ToString();
-        MoveSpeed.transform.parent.gameObject.SetActive(true);
-
-        Cost.text = characterCard.cardCost[level].ToString();
-        Cost.transform.parent.gameObject.SetActive(true);
-
-        Cooldown.text = characterCard.spawnCooldown[level].ToString();
-        Cooldown.transform.parent.gameObject.SetActive(true);
-
+        CardImage.sprite = characterCard.backgroundVertical[level - 1];
         UpgradeCost.text = characterCard.upgradeCost[characterCard.level - 1].ToString();
+
+        foreach (string info in characterCard.ViewCard(level))
+        {
+            Transform infoTransform = Instantiate(infoTemplate, container);
+            infoTransform.gameObject.SetActive(true);
+            string[] infoArray = info.Split(": ");
+            infoTransform.GetComponent<CharacterInfoSingleUI>().SetInfo(infoArray[0], infoArray[1]);
+        }
     }
 
     private void HideStats()
     {
-        Health.transform.parent.gameObject.SetActive(false);
-        Attack.transform.parent.gameObject.SetActive(false);
-        AttackSpeed.transform.parent.gameObject.SetActive(false);
-        AttackRange.transform.parent.gameObject.SetActive(false);
-        AttackType.transform.parent.gameObject.SetActive(false);
-        MoveSpeed.transform.parent.gameObject.SetActive(false);
-        Cost.transform.parent.gameObject.SetActive(false);
-        Cooldown.transform.parent.gameObject.SetActive(false);
-        Income.transform.parent.gameObject.SetActive(false);
-        BuildTime.transform.parent.gameObject.SetActive(false);
+        foreach (Transform child in container)
+        {
+            if (child == infoTemplate) continue;
+
+            Destroy(child.gameObject);
+        }
     }
 
     private void SwitchStatView()

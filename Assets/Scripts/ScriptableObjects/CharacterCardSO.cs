@@ -48,32 +48,36 @@ public class CharacterCardSO : CardSO
 	{
 		List<string> list = new List<string>();
 
-		if (Health[level - 1] != 0)
+        list.Add("Level: " + level);
+        if (Health[level - 1] != 0)
 			list.Add("Health: " + Health[level - 1]);
 		if (Attack[level - 1] != 0)
 		{
 			if (CharacterType == CharacterType.Worker)
-				list.Add("Gold per second: " + Attack[level - 1]);
+				list.Add("Income: " + Attack[level - 1]);
 			else
 				list.Add("Attack: " + Attack[level - 1]);
 		}
 		if (AttackSpeed[level - 1] != 0)
 		{
-			if (CharacterType == CharacterType.Worker)
-				list.Add("Work Speed: " + AttackSpeed[level - 1]);
-			else
-				list.Add("Attack Speed: " + AttackSpeed[level - 1]);
+            if (CharacterType == CharacterType.Worker)
+            {
+                list.Add("Mining Time: " + AttackSpeed[level - 1] + "s");
+                list.Add("Max Amount: " + GameManager.Instance.GetMaxWorkerAmount());
+            }
+            else
+                list.Add("Attack Speed: " + AttackSpeed[level - 1]);
 		}
-		if (MoveSpeed[level-1] != 0)
-			list.Add("Movement Speed: " + MoveSpeed[level - 1]);
 		if (AttackRange != 0)
 			list.Add("Attack Range: " + AttackRange);
-		if (cardCost[level - 1] != 0)
+        if (AttackType != AttackType.None)
+            list.Add("Attack Type: " + AttackType);
+        if (MoveSpeed[level - 1] != 0)
+            list.Add("Movement Speed: " + MoveSpeed[level - 1]);
+        if (cardCost[level - 1] != 0)
 			list.Add("Cost: " + cardCost[level - 1]);
 		if (spawnCooldown[level - 1] != 0)
 			list.Add("Cooldown: " + spawnCooldown[level - 1] + "s");
-		if (AttackType != AttackType.None)
-			list.Add("Attack Type: " + AttackType);
 
 		return list;
 	}
