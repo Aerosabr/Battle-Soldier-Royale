@@ -64,6 +64,7 @@ public class CharacterBarSingleUI : MonoBehaviour, IPointerDownHandler
         {
             PlayerControlManager.Instance.CardSelected(cardSO);
             CharacterBarUI.Instance.SetCurrentButtonSelected(this.transform);
+            CharacterBarUI.Instance.HideCharacterBar();
         }
 	}
     

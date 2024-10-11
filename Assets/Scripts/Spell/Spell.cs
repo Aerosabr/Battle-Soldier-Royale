@@ -42,7 +42,7 @@ public class Spell : MonoBehaviour
 
 	public virtual IEnumerator Project(LayerMask layerMask, CardSO cardSO)
 	{
-		float cameraDistance = 0.75f;
+		float cameraDistance = 0f;
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
 
@@ -91,7 +91,7 @@ public class Spell : MonoBehaviour
             player.SpawnSpell(cardSO, transform.position);
 			Destroy(gameObject);
 		}
-
+		CharacterBarUI.Instance.ShowCharacterBar();
 		PlayerControlManager.Instance.CardHandled();
 	}
 

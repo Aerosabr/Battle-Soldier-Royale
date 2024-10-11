@@ -36,7 +36,7 @@ MonoBehaviour:
   - 150
   - 225
   - 350
-  Size: 9
-  Duration: 4
+  Size: 7
+  Duration: 3
   PostSpellDuration: 0
   SpellType: 0
