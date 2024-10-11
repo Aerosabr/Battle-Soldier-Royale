@@ -43,7 +43,23 @@ public class PoisonField : Spell
 			elapsedTime += Time.deltaTime;
 		}
 		yield return null;
+		ClearReduction();
+	}
+
+	private void ClearReduction()
+	{
+		foreach(var character in characters)
+		{
+			var characterTransform = (character as MonoBehaviour).transform;
+			var attackReductionComponent = characterTransform.GetComponent<AttackReduction>();
+
+			if (attackReductionComponent != null)
+			{
+				Destroy(attackReductionComponent);
+			}
+		}
 		Destroy(gameObject);
+
 	}
 
 	#region Entities in Range Handler
