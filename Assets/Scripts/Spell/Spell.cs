@@ -42,7 +42,7 @@ public class Spell : MonoBehaviour
 
 	public virtual IEnumerator Project(LayerMask layerMask, CardSO cardSO)
 	{
-		float cameraDistance = 0.75f;
+		float cameraDistance = 0f;
 		transparentObject.gameObject.SetActive(true);
 		visualObject.gameObject.SetActive(false);
 

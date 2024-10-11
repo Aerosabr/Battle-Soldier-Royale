@@ -6255,6 +6255,7 @@ MonoBehaviour:
   maxHealth: 999999
   healthBarUI: {fileID: 0}
   attack: 0
+  moveSpeed: 0
   indicator: {fileID: 0}
   allowed: {fileID: 0}
   denied: {fileID: 0}
@@ -9859,6 +9860,7 @@ MonoBehaviour:
   maxHealth: 999999
   healthBarUI: {fileID: 0}
   attack: 0
+  moveSpeed: 0
   indicator: {fileID: 0}
   allowed: {fileID: 0}
   denied: {fileID: 0}
