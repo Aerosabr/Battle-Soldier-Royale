@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static Player;
@@ -23,6 +24,7 @@ public class ArcherTower : Building
 
     private State state;
     [SerializeField] private ArcherTowerVisual archerTowerVisual;
+    [SerializeField] private ArcherTowerSound sound;
     [SerializeField] private Animator buildingAnim;
 
     private int buildingProgress = 0;
@@ -84,6 +86,8 @@ public class ArcherTower : Building
         if (currentHealth >= maxHealth)
         {
             state = State.Idle;
+            sound.Building(false);
+            sound.FinishBuilding();
             currentHealth = maxHealth;
         }
     }
@@ -143,6 +147,7 @@ public class ArcherTower : Building
         {
             if (hit.transform.GetComponent<Entity>().GetCurrentHealth() > 0)
             {
+                sound.Attack();
                 hit.transform.GetComponent<IDamageable>().Damaged(attack, card.cardType);
                 archerTowerVisual.AnimAction(IS_IDLE);
             }
@@ -174,6 +179,7 @@ public class ArcherTower : Building
         }
         healthBarUI.SetColor(player.playerColor);
         state = State.Building;
+        sound.Building(true);
         SetStats();
     }
     private void Card_OnLevelChanged(object sender, EventArgs e)

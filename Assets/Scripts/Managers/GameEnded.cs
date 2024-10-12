@@ -23,6 +23,7 @@ public class GameEnded : MonoBehaviour
         returnButton.onClick.AddListener(() =>
         {
             //Scene transition here
+            SoundManager.Instance.ButtonPressed();
             GameManager.Instance.GameEnded();
         });
     }
@@ -33,11 +34,13 @@ public class GameEnded : MonoBehaviour
         if (color == Player.PlayerColor.Blue)
         {
             //Defeat
+            SoundManager.Instance.Defeat();
             defeatText.SetActive(true);
         }
         else
         {
             //Victory
+            SoundManager.Instance.Victory();
             victoryText.SetActive(true);
         }
 

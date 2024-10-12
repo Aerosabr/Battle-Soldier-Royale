@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     protected float passiveGoldTimer;
     protected float passiveGoldTimerMax = .1f;
 
+    [SerializeField] private PlayerSound playerSounds;
     [SerializeField] private Base homeBase;
     [SerializeField] private Vector3 spawnRotation;
     public GameObject spawnArea;
@@ -74,16 +75,16 @@ public class Player : MonoBehaviour
 			building.GetComponent<Building>().InitializeBuilding(gameObject.layer, CSO, buildingSlot.GetComponent<BuildingSlot>());
 		}
 		SubtractGold(CSO.cardCost[CSO.level - 1]);
-		CSO.timesCasted++;
+        CSO.timesCasted++;
     }
 
     public void SpawnCharacter(CardSO CSO, Vector3 position)
     {
-
 		float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
 		Vector3 placement = new Vector3(position.x, spawnPos * 0.2f, spawnPos);
 		Transform character = Instantiate(CSO.spawnableObject, transform).transform;
-		character.position = placement;
+        playerSounds.UnitSpawned(position);
+        character.position = placement;
 		character.GetComponent<Character>().InitializeCharacter(gameObject.layer, spawnRotation, CSO);
 		SubtractGold(CSO.cardCost[CSO.level - 1]);
 		AddToMilitary(character.gameObject);
@@ -105,6 +106,7 @@ public class Player : MonoBehaviour
 		float spawnPos = UnityEngine.Random.Range(-0.5f, 0.5f);
 		Vector3 placement = new Vector3(transform.position.x, spawnPos * 0.2f, spawnPos);
 		Transform character = Instantiate(CSO.spawnableObject, transform).transform;
+        playerSounds.UnitSpawned(transform.position);
 		character.position = placement;
         character.GetComponent<Worker>().InitializeWorker(gameObject.layer, spawnRotation, CSO, mine);
 		SubtractGold(CSO.cardCost[CSO.level - 1]);

@@ -18,6 +18,7 @@ public class WarningSign : MonoBehaviour
 	public void ActivateWithTimer()
 	{
 		float duration = 3;
+        SoundManager.Instance.LoadoutError();
 		targetGameObject.SetActive(true);
 		StartCoroutine(DeactivateAfterDelay(duration));
 	}

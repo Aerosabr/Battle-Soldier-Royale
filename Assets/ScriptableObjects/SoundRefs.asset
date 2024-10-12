@@ -17,7 +17,6 @@ MonoBehaviour:
   cardEquipped: {fileID: 8300000, guid: 96b2f3491f6d75c489e7ee683d7150ac, type: 3}
   cardPickedUp: {fileID: 8300000, guid: bfbd56971cac0424fbed5183ca8d6e4c, type: 3}
   cardRandomized: {fileID: 8300000, guid: da8f1f124753a9b479db8329bf1d10aa, type: 3}
-  buttonPressed:
-  - {fileID: 8300000, guid: a317daaf6c7c1ef44849936fb55bba11, type: 3}
-  - {fileID: 8300000, guid: b49fcbfb828892b48929c83df6918c8b, type: 3}
-  - {fileID: 8300000, guid: 796a8150d6374b443a3cc08257638c1a, type: 3}
+  buttonPressed: {fileID: 8300000, guid: a317daaf6c7c1ef44849936fb55bba11, type: 3}
+  tabClosed: {fileID: 8300000, guid: aa5785eed24ce9942b923ef1230a16d5, type: 3}
+  loadoutError: {fileID: 8300000, guid: 2753bafefc8db804583251962db16253, type: 3}

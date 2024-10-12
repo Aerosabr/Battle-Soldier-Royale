@@ -8,6 +8,9 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance;
     [SerializeField] private SoundSO soundRefs;
 
+    [SerializeField] private AudioSource victory;
+    [SerializeField] private AudioSource defeat;
+
     private void Awake()
     {
         Instance = this;
@@ -27,10 +30,7 @@ public class SoundManager : MonoBehaviour
         Object.Destroy(gameObject, clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
 
-    public void MoneySpent()
-    {
-        CreateAudioObject(soundRefs.moneySpent, transform.position, GameManager.Instance.GetSoundVolume());
-    }
+    public void MoneySpent() => CreateAudioObject(soundRefs.moneySpent, transform.position, GameManager.Instance.GetSoundVolume());
 
     public void CardUpgraded()
     {
@@ -38,23 +38,19 @@ public class SoundManager : MonoBehaviour
         CreateAudioObject(soundRefs.cardUpgraded, transform.position, GameManager.Instance.GetSoundVolume());
     }
 
-    public void CardEquipped()
-    {
-        CreateAudioObject(soundRefs.cardEquipped, transform.position, GameManager.Instance.GetSoundVolume());
-    }
+    public void CardEquipped() => CreateAudioObject(soundRefs.cardEquipped, transform.position, GameManager.Instance.GetSoundVolume());
 
-    public void CardPickedUp()
-    {
-        CreateAudioObject(soundRefs.cardPickedUp, transform.position, GameManager.Instance.GetSoundVolume());
-    }
+    public void CardPickedUp() => CreateAudioObject(soundRefs.cardPickedUp, transform.position, GameManager.Instance.GetSoundVolume());
 
-    public void CardRandomized()
-    {
-        CreateAudioObject(soundRefs.cardRandomized, transform.position, GameManager.Instance.GetSoundVolume());
-    }
+    public void CardRandomized() => CreateAudioObject(soundRefs.cardRandomized, transform.position, GameManager.Instance.GetSoundVolume());
 
-    public void ButtonPressed()
-    {
-        CreateAudioObject(soundRefs.buttonPressed[Random.Range(0, soundRefs.buttonPressed.Count)], transform.position, GameManager.Instance.GetSoundVolume());
-    }
+    public void ButtonPressed() => CreateAudioObject(soundRefs.buttonPressed, transform.position, GameManager.Instance.GetSoundVolume());
+
+    public void TabClosed() => CreateAudioObject(soundRefs.tabClosed, transform.position, GameManager.Instance.GetSoundVolume());
+
+    public void LoadoutError() => CreateAudioObject(soundRefs.loadoutError, transform.position, GameManager.Instance.GetSoundVolume());
+
+    public void Victory() => victory.Play();
+
+    public void Defeat() => defeat.Play();
 }

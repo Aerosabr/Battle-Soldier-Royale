@@ -1596,6 +1596,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &651650206561746919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1104417125739685800}
+  - component: {fileID: 6781987837471822076}
+  m_Layer: 0
+  m_Name: WorkerSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1104417125739685800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651650206561746919}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7106265780312828477}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6781987837471822076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651650206561746919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db446298dac123b448bb82f2e82ba1ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deposit: {fileID: 8300000, guid: 8b6c95f350d6e7b4299a2339224a5aac, type: 3}
+  dead: {fileID: 8300000, guid: bd7f4339a22ec744c8fa20052311d8da, type: 3}
 --- !u!1 &662773294814823210
 GameObject:
   m_ObjectHideFlags: 0
@@ -5038,6 +5084,7 @@ Transform:
   - {fileID: 767884827079507321}
   - {fileID: 2329661272414087673}
   - {fileID: 600907290287818026}
+  - {fileID: 1104417125739685800}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4546734686575232076
@@ -5056,10 +5103,12 @@ MonoBehaviour:
   maxHealth: 0
   healthBarUI: {fileID: 5078208241137555875}
   attack: 0
+  moveSpeed: 0
   indicator: {fileID: 6408422585733720361}
   allowed: {fileID: 2100000, guid: b53bdb1384abdab4ab46aa26a8cb10c3, type: 2}
   denied: {fileID: 2100000, guid: 26afb457bb4cc3a43a50c5610aedeb48, type: 2}
   anim: {fileID: 7023078922825290736}
+  sound: {fileID: 6781987837471822076}
   hpBar: {fileID: 981324755380584844}
 --- !u!65 &1113284561125372729
 BoxCollider:
