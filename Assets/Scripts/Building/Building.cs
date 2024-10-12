@@ -27,7 +27,7 @@ public class Building : Entity, IDamageable, IEffectable
             healthPercentage = currentHealth / maxHealth
         });
     }
-    protected void DamageTakenVisual(int damage)
+    protected void DamageTakenVisual(float damage)
     {
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {

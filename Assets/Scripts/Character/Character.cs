@@ -175,12 +175,12 @@ public class Character : Entity, IDamageable, IEffectable
         {
             healthPercentage = currentHealth / maxHealth
         });
-        /*
+        
         OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
         {
             damage = damage
         });
-        */
+        
     }
     #endregion
 

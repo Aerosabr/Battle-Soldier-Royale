@@ -22,7 +22,10 @@ public class Base : Entity, IDamageable
         {
             healthPercentage = currentHealth / maxHealth
         });
-		
+		OnDamageTaken?.Invoke(this, new IDamageable.OnDamageTakenEventArgs
+		{
+			damage = damage
+		});
 		if (currentHealth <= 0)
             StartCoroutine(Died());
     }

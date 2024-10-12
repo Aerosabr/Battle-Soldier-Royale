@@ -30,23 +30,31 @@ public class GameInput : MonoBehaviour
 	public Vector2 GetCameraMovement()
 	{
 		int mode = PlayerControlManager.Instance.CheckMode();
-		float speedMultiplier = 5.0f;
-		if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+		float speedMultiplier = 2.0f;
+		if (Touchscreen.current != null)
 		{
-			Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
-			float screenWidth = Screen.width;
-			float edgeThreshold = screenWidth * 0.1f;
-			speedMultiplier = 3.0f;
+			var touch = Touchscreen.current.primaryTouch;
+			if (touch.press.isPressed)
+			{
+				Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+				float screenWidth = Screen.width;
+				float edgeThreshold = screenWidth * 0.1f;
+				speedMultiplier = 3.0f;
 
-			if (touchPosition.x < edgeThreshold)
-			{
-				Vector2 inputDir = new Vector2(-1, 0);
-				return (inputDir.normalized * speedMultiplier);
+				if (touchPosition.x < edgeThreshold)
+				{
+					Vector2 inputDir = new Vector2(-1, 0);
+					return (inputDir.normalized * speedMultiplier);
+				}
+				else if (touchPosition.x > screenWidth - edgeThreshold)
+				{
+					Vector2 inputDir = new Vector2(1, 0);
+					return (inputDir.normalized * speedMultiplier);
+				}
 			}
-			else if (touchPosition.x > screenWidth - edgeThreshold)
+			if (touch.press.wasReleasedThisFrame)
 			{
-				Vector2 inputDir = new Vector2(1, 0);
-				return (inputDir.normalized * speedMultiplier);
+				return Vector2.zero;
 			}
 		}
 		else if (!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
@@ -59,13 +67,13 @@ public class GameInput : MonoBehaviour
 			{
 				Vector2 inputDir = new Vector2(-1, 0);
 				CursorManager.Instance.ShowLeftCursor();
-				return inputDir.normalized;
+				return (inputDir.normalized * speedMultiplier);
 			}
 			else if (mousePosition.x > screenWidth - edgeThreshold)
 			{
 				Vector2 inputDir = new Vector2(1, 0);
 				CursorManager.Instance.ShowRightCursor();
-				return inputDir.normalized;
+				return (inputDir.normalized * speedMultiplier);
 			}
 			else
 			{
@@ -75,7 +83,7 @@ public class GameInput : MonoBehaviour
 		else if (Keyboard.current.aKey.isPressed || Keyboard.current.dKey.isPressed)
 		{
 			Vector2 inputDir = playerControls.Player.Move.ReadValue<Vector2>();
-			inputDir = inputDir.normalized;
+			inputDir = (inputDir.normalized * speedMultiplier);
 			return inputDir;
 		}
 		

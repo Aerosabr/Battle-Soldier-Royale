@@ -1956,6 +1956,7 @@ GameObject:
   - component: {fileID: -2476830759847121632}
   - component: {fileID: 8254592365918963167}
   - component: {fileID: 7134165483072167114}
+  - component: {fileID: 8316996687956432513}
   m_Layer: 0
   m_Name: Spearman
   m_TagString: Untagged
@@ -1998,6 +1999,7 @@ MonoBehaviour:
   maxHealth: 0
   healthBarUI: {fileID: 8910188194215581894}
   attack: 0
+  moveSpeed: 0
   indicator: {fileID: 5380678285254252009}
   allowed: {fileID: 2100000, guid: b53bdb1384abdab4ab46aa26a8cb10c3, type: 2}
   denied: {fileID: 2100000, guid: 26afb457bb4cc3a43a50c5610aedeb48, type: 2}
@@ -2072,6 +2074,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.114809126
   m_Center: {x: 0, y: 0.09902164, z: 0}
+--- !u!114 &8316996687956432513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935169726024975132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c97b43a4aafa3948bd6ab0ac4356486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
+  hasProgressGameObject: {fileID: 935169726024975132}
 --- !u!1 &946652454072010995
 GameObject:
   m_ObjectHideFlags: 0

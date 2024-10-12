@@ -4518,6 +4518,7 @@ GameObject:
   - component: {fileID: 3408945106415334056}
   - component: {fileID: -7355054660305033053}
   - component: {fileID: 5975301724443634893}
+  - component: {fileID: 3701781032356245801}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -4560,6 +4561,7 @@ MonoBehaviour:
   maxHealth: 0
   healthBarUI: {fileID: 6450603981800991571}
   attack: 0
+  moveSpeed: 0
   indicator: {fileID: 5527420658667759296}
   allowed: {fileID: 2100000, guid: b53bdb1384abdab4ab46aa26a8cb10c3, type: 2}
   denied: {fileID: 2100000, guid: 26afb457bb4cc3a43a50c5610aedeb48, type: 2}
@@ -4635,6 +4637,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.114809126
   m_Center: {x: 0, y: 0.09902164, z: 0}
+--- !u!114 &3701781032356245801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2266915314425856969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c97b43a4aafa3948bd6ab0ac4356486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
+  hasProgressGameObject: {fileID: 2266915314425856969}
 --- !u!1 &2326492647748452720
 GameObject:
   m_ObjectHideFlags: 0
