@@ -29,7 +29,7 @@ public class CursorManager : MonoBehaviour
 	}
 	public void ShowNormalCursor()
 	{
-		cursorHotspot = new Vector2(normalCursorTexture.width / 2, normalCursorTexture.height / 2);
+		cursorHotspot = new Vector2(0 , 0);
 		Cursor.SetCursor(normalCursorTexture, cursorHotspot, CursorMode.Auto);
 	}
 }

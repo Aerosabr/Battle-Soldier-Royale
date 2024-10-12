@@ -86,7 +86,7 @@ public class Farm : Building
     {
         currentHealth -= damage;
         HealthChangedVisual();
-        //DamageTakenVisual(damage);
+        DamageTakenVisual(damage);
 
         if (currentHealth <= 0)
         {

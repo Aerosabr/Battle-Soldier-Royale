@@ -10674,6 +10674,7 @@ GameObject:
   - component: {fileID: 9061059631562401876}
   - component: {fileID: 8159287981465381697}
   - component: {fileID: 8984222869952324304}
+  - component: {fileID: 9112743942463984811}
   m_Layer: 0
   m_Name: ArcherTower
   m_TagString: Untagged
@@ -10739,6 +10740,20 @@ MonoBehaviour:
   archerTowerVisual: {fileID: 1490907628875926307}
   sound: {fileID: 5989316688016144702}
   buildingAnim: {fileID: 4841138477124635169}
+--- !u!114 &9112743942463984811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026292317502202516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c97b43a4aafa3948bd6ab0ac4356486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
+  hasProgressGameObject: {fileID: 5026292317502202516}
 --- !u!1 &5030259749476660050
 GameObject:
   m_ObjectHideFlags: 0
@@ -12872,7 +12887,6 @@ GameObject:
   - component: {fileID: 6098483475043667500}
   - component: {fileID: 3575049539167518893}
   - component: {fileID: 663597320688983323}
-  - component: {fileID: 7854899763823765199}
   - component: {fileID: 1535734054191688595}
   m_Layer: 5
   m_Name: ProgressBarUI
@@ -12979,20 +12993,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasProgressGameObject: {fileID: 5026292317502202516}
   barImage: {fileID: 8561707023405234549}
---- !u!114 &7854899763823765199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5843358074193015554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c97b43a4aafa3948bd6ab0ac4356486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
-  hasProgressGameObject: {fileID: 5026292317502202516}
 --- !u!114 &1535734054191688595
 MonoBehaviour:
   m_ObjectHideFlags: 0

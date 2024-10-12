@@ -5014,6 +5014,7 @@ GameObject:
   - component: {fileID: 8577889945637332760}
   - component: {fileID: -4978870371350234402}
   - component: {fileID: 1096658619089652731}
+  - component: {fileID: 5658902288366223796}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -5056,6 +5057,7 @@ MonoBehaviour:
   maxHealth: 0
   healthBarUI: {fileID: 3642696052310252954}
   attack: 0
+  moveSpeed: 0
   indicator: {fileID: 8490479297360669913}
   allowed: {fileID: 2100000, guid: b53bdb1384abdab4ab46aa26a8cb10c3, type: 2}
   denied: {fileID: 2100000, guid: 26afb457bb4cc3a43a50c5610aedeb48, type: 2}
@@ -5130,6 +5132,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.114809126
   m_Center: {x: 0, y: 0.09902164, z: 0}
+--- !u!114 &5658902288366223796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2205606452309650044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c97b43a4aafa3948bd6ab0ac4356486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
+  hasProgressGameObject: {fileID: 2205606452309650044}
 --- !u!1 &2257842624145801394
 GameObject:
   m_ObjectHideFlags: 0
@@ -9320,7 +9336,6 @@ GameObject:
   - component: {fileID: 1074634489386431772}
   - component: {fileID: 5667046275532871649}
   - component: {fileID: 3642696052310252954}
-  - component: {fileID: 7299240896103588266}
   - component: {fileID: 2003837800459676187}
   m_Layer: 5
   m_Name: ProgressBarUI
@@ -9427,20 +9442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasProgressGameObject: {fileID: 2205606452309650044}
   barImage: {fileID: 3890881466074793554}
---- !u!114 &7299240896103588266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504078575095543978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c97b43a4aafa3948bd6ab0ac4356486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageTextObject: {fileID: 5547350398449228084, guid: b9fe943b258ab16418a43f3a96f5bd4d, type: 3}
-  hasProgressGameObject: {fileID: 2205606452309650044}
 --- !u!114 &2003837800459676187
 MonoBehaviour:
   m_ObjectHideFlags: 0

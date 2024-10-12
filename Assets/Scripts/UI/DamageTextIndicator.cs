@@ -12,7 +12,7 @@ public class DamageTextIndicator : MonoBehaviour
 
 	private IDamageable character;
 
-	private void Start()
+	private void Awake()
 	{
 		character = hasProgressGameObject.GetComponent<IDamageable>();
 		if (character == null)
@@ -28,6 +28,14 @@ public class DamageTextIndicator : MonoBehaviour
 		Vector3 spawnPoint = characterHead.transform.position + new Vector3(0, 2, 0);
 		GameObject damageText = Instantiate(damageTextObject, spawnPoint, Quaternion.identity);
 		damageText.transform.SetParent(characterHead.transform);
+		Color customBlue;
+		ColorUtility.TryParseHtmlString("#617EFF", out customBlue);
+		Color customRed;
+		ColorUtility.TryParseHtmlString("#FF626E", out customRed);
+		if (characterHead.gameObject.layer == 6)
+			damageText.GetComponent<TextMeshPro>().color = customRed;
+		else
+			damageText.GetComponent<TextMeshPro>().color = customBlue;
 		damageText.GetComponent<TextMeshPro>().text = e.damage.ToString();
 		if (gameObject.activeSelf)
 			StartCoroutine(MoveAndDestroyText(damageText));
@@ -41,6 +49,11 @@ public class DamageTextIndicator : MonoBehaviour
 
 		while (elapsedTime < duration && gameObject.activeSelf)
 		{
+			if (!gameObject.activeSelf)
+			{
+				Destroy(textObject);
+				yield break;
+			}
 			textObject.transform.position += direction * Time.deltaTime;
 			elapsedTime += Time.deltaTime;
 			yield return null;

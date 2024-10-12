@@ -35,9 +35,13 @@ public class HealthBarUI : MonoBehaviour
 
     public void SetColor(Player.PlayerColor color)
     {
-        if (color == Player.PlayerColor.Blue)
-            barImage.color = Color.blue;
+		Color customBlue;
+		ColorUtility.TryParseHtmlString("#617EFF", out customBlue);
+		Color customRed;
+		ColorUtility.TryParseHtmlString("#FF626E", out customRed);
+		if (color == Player.PlayerColor.Blue)
+            barImage.color = customBlue;
         else
-            barImage.color = Color.red;
+            barImage.color = customRed;
     }
 }
