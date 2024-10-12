@@ -23,6 +23,7 @@ public class GameEnded : MonoBehaviour
         returnButton.onClick.AddListener(() =>
         {
             //Scene transition here
+            SoundManager.Instance.ButtonPressed();
             GameManager.Instance.GameEnded();
         });
     }

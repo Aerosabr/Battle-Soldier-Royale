@@ -15,6 +15,7 @@ public class Farm : Building
 
     private State state;
     [SerializeField] private FarmVisual farmVisual;
+    [SerializeField] private FarmSound sound;
 
     private int buildingProgress = 0;
     private float passiveGoldTimer;
@@ -75,6 +76,8 @@ public class Farm : Building
         if (currentHealth >= maxHealth)
         {
             state = State.Farming;
+            sound.Building(false);
+            sound.FinishBuilding();
             currentHealth = maxHealth;
         }
     }
@@ -118,6 +121,7 @@ public class Farm : Building
 
         healthBarUI.SetColor(player.playerColor);
         state = State.Building;
+        sound.Building(true);
         SetStats();
     }
 	private void Card_OnLevelChanged(object sender, EventArgs e)
