@@ -8,7 +8,9 @@ using UnityEngine.InputSystem;
 
 public class PoisonField : Spell
 {
-	protected override IEnumerator HandleHitBox()
+    [SerializeField] private PoisonFieldSound sound;
+
+    protected override IEnumerator HandleHitBox()
 	{
 		float duration = 0.3f;
 		float elapsedTime = 0f;
@@ -26,7 +28,8 @@ public class PoisonField : Spell
 	protected override IEnumerator HandleAttack()
 	{
 		float elapsedTime = 0f;
-		while (elapsedTime <= cardSO.Duration)
+        sound.Attack();
+        while (elapsedTime <= cardSO.Duration)
 		{
 			for (int i = 0; i < characters.Count; i++)
 			{

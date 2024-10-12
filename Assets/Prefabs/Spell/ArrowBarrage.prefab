@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6102383073415003971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5081733482078135306}
+  - component: {fileID: 2365046969283859422}
+  m_Layer: 0
+  m_Name: ArrowBarrageSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5081733482078135306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6102383073415003971}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.000000029802322, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1162088539647368327}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2365046969283859422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6102383073415003971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d1c0f85be011f64eafa2a640f3518db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barrage: {fileID: 8300000, guid: 69cd03be060539a4492b9f4c16841c0a, type: 3}
 --- !u!1 &8283707321769500742
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +78,7 @@ RectTransform:
   m_Children:
   - {fileID: 1872684086615307803}
   - {fileID: 4152139916092068735}
+  - {fileID: 5081733482078135306}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -55,6 +101,7 @@ MonoBehaviour:
   hitBox: {fileID: 865205287473903996}
   transparentObject: {fileID: 1872684086615307803}
   visualObject: {fileID: 4152139916092068735}
+  sound: {fileID: 2365046969283859422}
 --- !u!65 &865205287473903996
 BoxCollider:
   m_ObjectHideFlags: 0

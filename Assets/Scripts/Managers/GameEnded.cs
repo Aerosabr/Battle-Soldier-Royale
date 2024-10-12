@@ -33,11 +33,13 @@ public class GameEnded : MonoBehaviour
         if (color == Player.PlayerColor.Blue)
         {
             //Defeat
+            SoundManager.Instance.Defeat();
             defeatText.SetActive(true);
         }
         else
         {
             //Victory
+            SoundManager.Instance.Victory();
             victoryText.SetActive(true);
         }
 

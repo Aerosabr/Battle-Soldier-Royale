@@ -21,6 +21,7 @@ public class Worker : Character
     }
  
     [SerializeField] private WorkerVisual anim;
+    [SerializeField] private WorkerSound sound;
     [SerializeField] private GameObject hpBar;
 
     private bool isDepositing = false;
@@ -128,6 +129,7 @@ public class Worker : Character
         else
             PlayerRed.Instance.AddGold((int)Mathf.Ceil(attack));
 
+        sound.Deposit();
         targetLayer = 1 << 8;
     }
 
@@ -142,6 +144,7 @@ public class Worker : Character
         }
 		if (currentHealth <= 0)
         {
+            sound.Died();
             anim.AnimAction(IS_DEAD);
             state = State.Dead;
             GetComponent<BoxCollider>().enabled = false;

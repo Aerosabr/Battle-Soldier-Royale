@@ -23,6 +23,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	{
 		if (EquipSlot || !transform.GetComponent<CardSlotVisual>().CheckVisualEquipCard())
 		{
+            SoundManager.Instance.CardPickedUp();
 			currentTransform = transform.GetComponent<RectTransform>();
 			positionOnList = new Vector2(currentTransform.anchoredPosition.x, currentTransform.anchoredPosition.y);
 			transform.SetParent(parentDuringDrag);
@@ -58,7 +59,8 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 					EquippedLoadoutManager.Instance.RemoveCard(transform.GetComponent<EquippedCardSlotVisual>().cardSO);
 				}
 			}
-			isDragging = false;
+            SoundManager.Instance.CardEquipped();
+            isDragging = false;
 		}
 	}
 
@@ -66,7 +68,8 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	{
 		if (!isDragging)
 		{
-			OpenCardViewer();
+            SoundManager.Instance.CardPickedUp();
+            OpenCardViewer();
 		}
 	}
 

@@ -8,17 +8,20 @@ using UnityEngine.InputSystem;
 
 public class ArrowBarrage : Spell
 {
-	protected override IEnumerator HandleHitBox()
+    [SerializeField] private ArrowBarrageSound sound;
+
+    protected override IEnumerator HandleHitBox()
 	{
 		hitBox.size = new Vector3(cardSO.Size, hitBox.size.y, hitBox.size.z);
-		yield return null;
+        yield return null;
 	}
 
 	protected override IEnumerator HandleAttack()
 	{
 		float elapsedTime = 0f;
 		float damageInterval = 1f;
-		while (elapsedTime <= cardSO.Duration)
+        sound.Attack();
+        while (elapsedTime <= cardSO.Duration)
 		{
 			foreach (IDamageable character in characters)
 			{

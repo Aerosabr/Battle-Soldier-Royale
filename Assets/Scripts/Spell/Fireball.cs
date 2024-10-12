@@ -8,7 +8,9 @@ using UnityEngine.InputSystem;
 
 public class Fireball : Spell
 {
-	protected override IEnumerator HandleHitBox()
+    [SerializeField] private FireballSound sound;
+
+    protected override IEnumerator HandleHitBox()
 	{
 		float duration = 0.3f;
 		float elapsedTime = 0f;
@@ -20,6 +22,7 @@ public class Fireball : Spell
 			elapsedTime += Time.deltaTime;
 			yield return null;
 		}
+
 		hitBox.size = new Vector3(cardSO.Size, hitBox.size.y, hitBox.size.z);
 	}
 
@@ -27,12 +30,16 @@ public class Fireball : Spell
 	{
 		float delay = 0.85f;
 		float elapsedTime = 0f;
-		while (elapsedTime < delay)
+
+        while (elapsedTime < delay)
 		{
 			elapsedTime += Time.deltaTime;
 			yield return null;
 		}
-		foreach (IDamageable character in characters)
+
+        sound.Attack();
+
+        foreach (IDamageable character in characters)
 		{
 			if (character is Entity entity && entity.GetCurrentHealth() > 0)
 			{
@@ -40,7 +47,7 @@ public class Fireball : Spell
 				yield return null;
 			}
 		}
-		yield return null;
+		yield return new WaitForSeconds(1.25f);
 		Destroy(gameObject);
 	}
 

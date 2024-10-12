@@ -31,6 +31,7 @@ public class CharacterInfoUI : MonoBehaviour
             {
                 PlayerBlue.Instance.SubtractGold(currentCard.upgradeCost[currentCard.level - 1]);
                 currentCard.IncreaseCardLevel();
+                SoundManager.Instance.CardUpgraded();
                 showingCurrent = true;
                 LoadCardStats(currentCard);
                 CharacterBarUI.Instance.UpdateVisual();
@@ -178,9 +179,15 @@ public class CharacterInfoUI : MonoBehaviour
         showingCurrent = !showingCurrent;
 
         if (showingCurrent)
+        {
             LevelViewText.text = "Next Lv";
+            SoundManager.Instance.ButtonPressed();
+        }
         else
+        {
             LevelViewText.text = "Current Lv";
+            SoundManager.Instance.TabClosed();
+        }
 
         LoadCardStats(currentCard);
     }

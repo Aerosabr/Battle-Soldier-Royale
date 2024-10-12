@@ -25,11 +25,13 @@ public class UpgradesUI : MonoBehaviour
         upgradesButton.onClick.AddListener(() =>
         {
             OpenUpgradesTab();
+            SoundManager.Instance.CardPickedUp();
         });
 
         closeButton.onClick.AddListener(() =>
         {
             CloseUpgradesTab();
+            SoundManager.Instance.TabClosed();
         });
 
         LoadLoadout();
@@ -53,6 +55,7 @@ public class UpgradesUI : MonoBehaviour
                 if (currentTab == temp)
                     return;
 
+                SoundManager.Instance.CardPickedUp();
                 UnloadCurrentCharacterTab();
                 LoadCharacterTab(temp);
             });

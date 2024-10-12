@@ -9,5 +9,7 @@ public class SoundSO : ScriptableObject
     public AudioClip cardEquipped;
     public AudioClip cardPickedUp;
     public AudioClip cardRandomized;
-    public List<AudioClip> buttonPressed;
+    public AudioClip buttonPressed;
+    public AudioClip tabClosed;
+    public AudioClip loadoutError;
 }
