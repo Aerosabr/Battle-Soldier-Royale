@@ -50,19 +50,7 @@ public class EnemyAI : MonoBehaviour
 
     private void ApplyDifficulty()
     {
-        float multiplier = 0;
-        switch (GameManager.Instance.GetDifficulty())
-        {
-            case 0: //Easy - 100% stats
-                multiplier = 1;
-                break;
-            case 1: //Medium - 150% stats
-                multiplier = 1.5f;
-                break;
-            case 2: //Hard - 200% stats
-                multiplier = 2;
-                break;
-        }
+        float multiplier = GameManager.Instance.GetDifficulty();
 
         foreach (CardSO card in player.GetLoadout())
         {

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private float soundVolume;
     private float musicVolume;
     private int gamemode;
-    private int difficulty = 0;
+    private float difficulty = 1f;
 
 
     private void Awake()
@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
 	}
 
     public void SetGamemode(int gamemode) => this.gamemode = gamemode;
-    public void SetDifficulty(int difficulty) => this.difficulty = difficulty;
-    public int GetDifficulty() => difficulty;
+    public void SetDifficulty(float difficulty) => this.difficulty = difficulty;
+    public float GetDifficulty() => difficulty;
     public int GetGamemode() => gamemode;
     public void SetSoundVolume(float volume) => soundVolume = volume;
     public void SetMusicVolume(float volume) => musicVolume = volume;

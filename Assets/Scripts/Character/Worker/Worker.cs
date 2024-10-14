@@ -188,6 +188,8 @@ public class Worker : Character
 	{
 		transform.GetComponent<BoxCollider>().enabled = false;
 		transform.gameObject.layer = 0;
+		transform.GetComponent<Rigidbody>().useGravity = false;
+		float hover = transform.position.y + 0.05f;
 		int neutralWallLayer = LayerMask.NameToLayer("NeutralWall");
 		LayerMask neutralWallMask = 1 << neutralWallLayer;
 		int buildableWallLayer = LayerMask.NameToLayer("BuildingWall");
@@ -221,7 +223,7 @@ public class Worker : Character
 			{
 				mine = null;
 				Vector3 worldPosition = hit.point;
-				transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.z);
+				transform.position = new Vector3(worldPosition.x, hover, worldPosition.z);
 				transform.rotation = Quaternion.Euler(rotation);
 				meshRenderer.material = denied;
 			}
